@@ -97,6 +97,22 @@ your team.
 All test data the AI creates starts with `ZZTEST`, so it is easy to spot
 and delete afterwards. It never writes to the old app's database directly.
 
+## REA (reverse engineer anything), only for programs you own
+
+The kit has an optional `/rea` step built on [REA](https://github.com/morluto/rea), the open-source
+tool that lets Claude Code drive Ghidra, IDA or Hopper and read a program file. It is for programs
+you own (your own old software), open-source parts, or a program whose maker gave written permission.
+A licensed product bought from a vendor is normally not one, and for those the kit stays outside-only.
+
+How it works: `/rea` asks one question ("own code, written permission, open source, or no?") and writes
+the answer to `state/binary-permission.json`; every binary tool stays blocked by the kit's own guard until
+that file says yes. When allowed, a subagent uses REA to pull facts (table names, SQL, message texts,
+form resources, rules, backends) into `docs/raw/binary/`, and the spec uses them as evidence marked
+`binary`. Decompiled code is never stored or copied into the new system; the twin is written from the spec.
+
+Setup, once, by you: install Node.js 22 or newer and run `npx rea-agents setup` in a terminal (it adds
+REA's MCP server to Claude Code with your approval), then restart Claude Code.
+
 ## Honest limits
 
 - The twin does the same things. It is not a byte-for-byte copy.

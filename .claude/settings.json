@@ -11,6 +11,7 @@
       "Bash(python scripts/testdata.py:*)",
       "Bash(python scripts/uat_checklist.py:*)",
       "Bash(python scripts/daily_summary.py:*)",
+      "Bash(python scripts/binary_permission.py:*)",
       "Bash(pip install -r scripts/requirements.txt)",
       "Bash(tasklist:*)",
       "Read(docs/**)",

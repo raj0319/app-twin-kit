@@ -56,7 +56,14 @@ The only things you still stop for:
 - **Outside only.** Use the accessibility tree, the app's own help files,
   exports, reports, printouts, log files, config files, its local database
   if it is readable, and its network traffic. Never run a decompiler on the
-  executable.
+  executable, with one exception: `/rea` (REA, Reverse Engineer Anything)
+  may look inside a program the user owns, has written permission to
+  analyse, or that is open source. `/rea` asks that question first and
+  records the answer in `state/binary-permission.json`; the Bash guard
+  hook blocks REA, Ghidra, IDA, Hopper and decompilers until the record
+  says yes. A licensed product bought from a vendor is normally a "no".
+  Findings go to `docs/raw/binary/` as facts; decompiled code is never
+  stored or copied into `app/`.
 - **Same layout, own look.** Behaviour comes from the control tree, the
   data the app writes, and what probing shows. Each screen's layout is
   copied from the original: where every control sits, its size, the field
@@ -189,6 +196,7 @@ with frontmatter (`name`, `description`, `model`, `tools`).
 | `designer` | sonnet | Draws the new system's screens as HTML mockups in `docs/design/` from the spec, for approval before coding. |
 | `builder` | sonnet | Implements one spec item at a time in `app/`, with tests. |
 | `comparator` | sonnet | Runs one task on both systems, diffs data, files and screen layout, appends to `docs/verify/gaps.md`. |
+| `binary-analyst` | sonnet | Optional, only via `/rea` after the permission question: uses REA to pull table names, SQL, messages, form resources and rules out of a program the user owns. Writes `docs/raw/binary/`. |
 
 Project skills in `.claude/skills/<name>/SKILL.md`:
 
@@ -198,6 +206,8 @@ Project skills in `.claude/skills/<name>/SKILL.md`:
   and reading the results.
 - `snapshot-diff`: how to snapshot the app's data (database, files)
   before and after an action and diff it.
+- `binary-insight`: how to get facts out of a program file with REA, only
+  when `state/binary-permission.json` allows it.
 - `compare-run`: how to run one task on both systems and record the
   result in the standard gap format.
 
@@ -209,7 +219,8 @@ Hooks in `.claude/settings.json` (scripts in `scripts/hooks/`):
   ask the user.
 
 Slash commands in `.claude/commands/`: `/start`, `/stop`, `/progress`,
-`/status`, `/summary`, `/mode <name>`, `/gaps` (and `/gaps fix`). Prefer these over
+`/status`, `/summary`, `/mode <name>`, `/gaps` (and `/gaps fix`), `/rea`
+(optional binary insight; asks the ownership question first). Prefer these over
 free text when the user types the same words.
 
 MCP servers in `.mcp.json`: `windows-mcp` (see and click the original app
@@ -255,6 +266,7 @@ state/
   queue.json        screens found, running, done (DISCOVER)
   progress.json     last progress line, percent, minutes left
   testdata.json     shared ZZTEST values every agent uses
+  binary-permission.json  the user's answer to the /rea ownership question
   summary-url.txt   artifact URL of the daily summary
   progress.md       what is done, what is next (one screen long)
 docs/
@@ -263,6 +275,7 @@ docs/
     probes/         one file per screen: inputs tried, results, rules learned
     tasks/          one file per recorded task
     data-model.md   tables, files, fields found
+    binary/         optional, from /rea: tables, messages, screens, rules, backends read from the program file
   spec/             clean spec, one file per task and per screen
     layout/         one JSON per screen: window size, every control's position and id
   rules.md          validation rules, calculations, status flows

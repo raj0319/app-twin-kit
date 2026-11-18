@@ -22,6 +22,10 @@ You write the spec a builder can implement without ever seeing the original app.
 - For rules: every calculation, rounding, status flow, numbering scheme, and
   permission rule found anywhere in docs/raw/. One line each, with the source file.
 - Mark anything not proven as "UNCONFIRMED" so VERIFY mode checks it.
+- When `docs/raw/binary/` exists (the optional /rea step), use its facts like any
+  other raw file, cite them as `binary`, and write rules seen only there as
+  "UNCONFIRMED (binary)" until a probe or a verify run has seen them. Never
+  paste code from it; it holds names, texts and formulas only.
 
 ## Output you return
 Three lines: file written, number of open questions, number of UNCONFIRMED items.
