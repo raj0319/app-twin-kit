@@ -24,10 +24,11 @@ The AI never opens the old app's program code. It works from the real
 control names, the data the app writes, and what it learns by trying, so
 the twin behaves the same. Each screen also keeps the original's layout:
 every field, button and grid sits in the same place at the same size, read
-from the control positions, with one screenshot per screen as a reference.
-Your users find everything where they expect it. The twin uses its own
-colours, fonts and icons and never copies the old app's logos or branding.
-A layout check scores every screen and lists anything out of place.
+from the control positions, with the screen pictures App Watcher captured as
+a reference. Your users find everything where they expect it. The twin uses
+its own colours, fonts and icons and never copies the old app's logos or
+branding. A layout check and a state check score every screen and list
+anything out of place.
 
 ## What you need
 
@@ -71,6 +72,7 @@ Commands you can type at any time:
 | `/summary` | Today's one-page summary as a shareable link |
 | `/mode verify` | Switch mode (discover, spec, build, verify, fix) |
 | `/gaps` | List open differences; `/gaps fix` starts fixing them |
+| `/rea` | Optional: read facts from a program file you own (asks first; see below) |
 
 Optional extras:
 
@@ -88,7 +90,10 @@ your team.
 
 - `docs/spec/` – a readable description of every task and screen.
 - `app/` – the new system, with setup instructions and test data loaded.
-- `docs/verify/report.html` – each task passing on both apps.
+- `docs/verify/report.html` – each task passing on both apps, with the
+  layout and state-check score per screen.
+- `docs/verify/rules-confirmed.md` – each calculated and numbering rule
+  tested over the real data (when a snapshot or export was available).
 - `docs/verify/uat-checklist.html` – a tick list for one of your users to
   try the twin with their own hands.
 - `docs/summary/` – one page per day: what was learned, built, and what is
