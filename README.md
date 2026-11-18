@@ -8,18 +8,23 @@ You have a desktop software your team uses every day. You want a new system
 that does the same things. This kit tells an AI (Claude Code) how to do that
 job from start to finish:
 
-1. **Watch** the real app the way a person would: open every screen, click
-   every button, read every field, see what it saves and prints.
-2. **Write down** everything it found as a clear spec: each task, each
+1. **Watch** the real app the way a person would: open every screen, read
+   every field and button, see what it saves and prints.
+2. **Try things** itself: type real and wrong values into search boxes,
+   filters and forms, and learn from what comes back. It never presses
+   Save, Send, Pay or Delete.
+3. **Write down** everything it found as a clear spec: each task, each
    screen, each rule, each output.
-3. **Build** a new system that does the same things. The AI picks the
+4. **Build** a new system that does the same things. The AI picks the
    technology and database itself.
-4. **Check** the new system against the old one, task by task, and fix the
+5. **Check** the new system against the old one, task by task, and fix the
    differences until they match.
 
-The AI never opens the old app's program code. It only looks at the app
-from the outside, like a user with full access. That keeps you on the
-right side of the software license.
+The AI never opens the old app's program code, and it does not build from
+screenshots. It works from the real control names, the data the app
+writes, and what it learns by trying. That keeps you on the right side of
+the software license and gives a twin that behaves the same, not one that
+only looks the same.
 
 ## What you need
 
@@ -33,9 +38,16 @@ right side of the software license.
 2. Open the folder in Claude Code.
 3. Type: `start`
 
-The AI will ask you a few short questions (which app, where it is, what
-it is used for) and then begin on its own. It works in modes so it does
-not waste effort or tokens:
+The AI asks four short questions (which app, where it is, what it is used
+for, any screen it must not touch) and then runs on its own until the twin
+is done. No approvals, no more questions. Every few minutes it prints one
+line like:
+
+```
+DISCOVER: 40% done | 12 of 30 screens | about 25 min left
+```
+
+It works in modes so it does not waste effort or tokens:
 
 | Mode | What it does |
 |---|---|
@@ -45,14 +57,13 @@ not waste effort or tokens:
 | VERIFY | Runs the same tasks on both apps and lists the gaps |
 | FIX | Closes the gaps, then goes back to VERIFY |
 
-Before it writes any code it shows you two things for a yes or no: the
-technology plan in plain words, and clickable mockups of the main screens.
-
 Commands you can type at any time:
 
 | Command | What it does |
 |---|---|
 | `/start` | Start, or pick up where it left off |
+| `/stop` | Stop now and save the place (Esc also stops) |
+| `/progress` | Percent done and approximate time left |
 | `/status` | One screen: mode, counts, open gaps |
 | `/mode verify` | Switch mode (discover, spec, build, verify, fix) |
 | `/gaps` | List open differences; `/gaps fix` starts fixing them |
@@ -78,10 +89,13 @@ your team.
 ## Honest limits
 
 - The twin does the same things. It is not a byte-for-byte copy.
-- Tasks nobody ever showed the AI will be missed the first time. The
-  VERIFY step with a real user catches them.
-- If a hidden rule (a formula, a rounding rule) cannot be seen from the
-  outside, the AI will tell you and ask instead of guessing silently.
+- It will never press Send, Pay, Print or Delete in the old app. Those
+  actions are recorded as "not pressed" and built from the spec.
+- A hidden rule it could not learn by trying is marked UNCONFIRMED in the
+  spec and checked in the VERIFY step instead of stopping the run.
+- Time estimates are rough. They get better after the first few screens.
+- The old app must be open on a real Windows desktop. It cannot be driven
+  over plain SSH.
 
 ## License
 

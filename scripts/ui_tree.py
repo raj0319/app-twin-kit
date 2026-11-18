@@ -2,7 +2,7 @@
 
 Usage:
   python scripts/ui_tree.py --list
-  python scripts/ui_tree.py --title "Invoice" --out docs/raw/screens/invoice.md [--depth 8]
+  python scripts/ui_tree.py --title "Invoice" --out docs/raw/screens/invoice.md [--depth 8] [--screenshot]
 
 Needs: pip install -r scripts/requirements.txt
 Read only: this script never clicks or types.
@@ -53,7 +53,7 @@ def walk(elem, depth, max_depth, rows):
         walk(child, depth + 1, max_depth, rows)
 
 
-def dump(title, out_path, max_depth):
+def dump(title, out_path, max_depth, screenshot=False):
     from pywinauto import Desktop
 
     desktop = Desktop(backend="uia")
@@ -64,12 +64,14 @@ def dump(title, out_path, max_depth):
 
     out_dir = os.path.dirname(out_path) or "."
     os.makedirs(out_dir, exist_ok=True)
-    png_path = os.path.splitext(out_path)[0] + ".png"
-    try:
-        win.capture_as_image().save(png_path)
-        shot = os.path.basename(png_path)
-    except Exception as exc:  # window may be minimised or off screen
-        shot = f"(screenshot failed: {exc})"
+    shot = "(not taken; pass --screenshot to keep one as evidence)"
+    if screenshot:
+        png_path = os.path.splitext(out_path)[0] + ".png"
+        try:
+            win.capture_as_image().save(png_path)
+            shot = os.path.basename(png_path)
+        except Exception as exc:  # window may be minimised or off screen
+            shot = f"(screenshot failed: {exc})"
 
     template = os.path.join("docs", "templates", "screen.md")
     header = ""
@@ -101,6 +103,10 @@ def main():
     parser.add_argument("--title", help="part of the window title")
     parser.add_argument("--out", help="output .md path")
     parser.add_argument("--depth", type=int, default=10)
+    parser.add_argument(
+        "--screenshot", action="store_true",
+        help="also save a PNG next to the .md (off by default; only for evidence)",
+    )
     args = parser.parse_args()
 
     try:
@@ -115,7 +121,7 @@ def main():
     if not (args.title and args.out):
         parser.print_help()
         return 1
-    dump(args.title, args.out, args.depth)
+    dump(args.title, args.out, args.depth, args.screenshot)
     return 0
 
 

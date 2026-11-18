@@ -11,17 +11,19 @@ python scripts/ui_tree.py --list
 ```
 Prints every top-level window title and process. Pick the one from state/project.json.
 
-## 2. Dump the control tree and screenshot
+## 2. Dump the control tree
 ```bash
 python scripts/ui_tree.py --title "<part of window title>" --out docs/raw/screens/<screen-name>.md
 ```
-Writes a Markdown file with every control (type, name, automation id, position)
-and saves a PNG next to it. Add `--depth 6` for very large screens to keep it short.
+Writes a Markdown file with every control (type, name, automation id, position).
+No screenshot is taken by default: the twin is built from the control tree, the
+data and the probes, not from pictures. Add `--depth 6` for very large screens.
 
 ## 3. If the tree is empty or useless
 Some apps (old VB6, Java, custom-drawn, some Delphi) do not expose controls.
 Then:
-- Take the screenshot anyway and read it. Describe the controls by eye.
+- Re-run with `--screenshot` so there is evidence, and read the PNG. Describe
+  the controls by eye.
 - Use a Windows computer-use MCP server (for example Windows-MCP) to see and
   click, if installed. Note in docs/decisions.md that this app needs vision mode.
 - Use the app's own help (F1, Help menu) and any PDF manual in the install folder.

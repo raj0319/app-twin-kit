@@ -14,15 +14,19 @@ You never change live data. You only open screens, read controls, and close them
 - Any screens or actions the user said not to touch (from state/project.json).
 
 ## How you work
-1. Run `python scripts/ui_tree.py --title "<window title>" --out docs/raw/screens/<screen-name>.md`
-   to dump the control tree and take a screenshot. One file per screen.
-2. Open the screen's menus, tabs and dialogs one at a time. Dump each one too.
-3. For every button or menu item, note what it opens or does. If it would change
+1. Mark the screen as started: `python scripts/queue.py start "<screen>"`.
+2. Run `python scripts/ui_tree.py --title "<window title>" --out docs/raw/screens/<screen-name>.md`
+   to dump the control tree. No screenshot by default. Add `--screenshot` only
+   when the tree has fewer than 5 controls, so there is evidence for vision mode.
+3. Open the screen's menus, tabs and dialogs one at a time. Dump each one too.
+   Every new screen or dialog you discover but do not finish goes on the queue:
+   `python scripts/queue.py add "<new screen>"`.
+4. For every button or menu item, note what it opens or does. If it would change
    data (save, post, delete, send, print), write "NOT PRESSED - changes data" and move on.
-4. Fill the screen record with: menu path, purpose, control table (type, label,
-   default value, required?), actions, screenshot path, and what each action changes.
-5. Use the template at docs/templates/screen.md.
+5. Fill the screen record (docs/templates/screen.md): menu path, purpose, control
+   table (type, label, default value, required?), actions, what each action changes.
+6. Mark it done: `python scripts/queue.py done "<screen>"`.
 
 ## Output you return
-A short list, max 15 lines: screens recorded (file names), screens still to explore,
-and anything you could not open and why. Do not paste file contents back.
+A short list, max 15 lines: screens recorded (file names), screens added to the
+queue, and anything you could not open and why. Do not paste file contents back.

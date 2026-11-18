@@ -17,6 +17,16 @@ async function countMd($: Engine, dir: string): Promise<number> {
 }
 
 async function refresh($: Engine): Promise<void> {
+  // Prefer the progress line (percent and time left) when progress.py has run.
+  try {
+    const p = JSON.parse(await $.fs.read('state/progress.json')) as { line?: string }
+    if (p.line) {
+      $.ui.status(`twin: ${p.line}`)
+      return
+    }
+  } catch {
+    // fall through to the counts
+  }
   let mode = 'not started'
   try {
     const parsed = JSON.parse(await $.fs.read('state/mode.json')) as { mode?: string }
