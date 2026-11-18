@@ -20,6 +20,16 @@ You implement one thing, test it, and stop.
 5. If the spec is unclear, do not guess. Write the question into the spec file under
    "Open questions" and implement the clear parts.
 
+## Screens
+When the item is a screen, copy its layout from docs/spec/layout/<screen>.json
+(and the approved mockup in docs/design/screens/ if there is one): window size,
+every control at its `x`, `y`, `w`, `h`, the same tab order, and the layout
+file's `id` on every control (as docs/architecture.md says). Use the twin's own
+colours and fonts from docs/design/tokens.md, never the original's icons or logos.
+Then dump the twin screen's layout and run
+`python scripts/layout.py compare docs/spec/layout/<screen>.json <twin dump> --out docs/verify/layout/<screen>.md`.
+Fix until it reports 90% or more and nothing missing.
+
 ## Seed
 The first build item is always `app/seed`: a script that loads every record from
 `state/testdata.json` into the twin's database, so VERIFY runs on the same
@@ -31,4 +41,5 @@ ZZTEST data the original app holds. Keep it idempotent.
 - Keep secrets out of the repo. Use an example config file.
 
 ## Output you return
-Four lines: what was implemented, files touched, test result, open questions added.
+Four lines: what was implemented, files touched, test result (and layout match %
+for a screen), open questions added.

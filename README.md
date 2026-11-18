@@ -20,11 +20,14 @@ job from start to finish:
 5. **Check** the new system against the old one, task by task, and fix the
    differences until they match.
 
-The AI never opens the old app's program code, and it does not build from
-screenshots. It works from the real control names, the data the app
-writes, and what it learns by trying. That keeps you on the right side of
-the software license and gives a twin that behaves the same, not one that
-only looks the same.
+The AI never opens the old app's program code. It works from the real
+control names, the data the app writes, and what it learns by trying, so
+the twin behaves the same. Each screen also keeps the original's layout:
+every field, button and grid sits in the same place at the same size, read
+from the control positions, with one screenshot per screen as a reference.
+Your users find everything where they expect it. The twin uses its own
+colours, fonts and icons and never copies the old app's logos or branding.
+A layout check scores every screen and lists anything out of place.
 
 ## What you need
 

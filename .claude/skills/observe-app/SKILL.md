@@ -13,17 +13,20 @@ Prints every top-level window title and process. Pick the one from state/project
 
 ## 2. Dump the control tree
 ```bash
-python scripts/ui_tree.py --title "<part of window title>" --out docs/raw/screens/<screen-name>.md
+python scripts/ui_tree.py --title "<part of window title>" --out docs/raw/screens/<screen-name>.md --screenshot
 ```
-Writes a Markdown file with every control (type, name, automation id, position).
-No screenshot is taken by default: the twin is built from the control tree, the
-data and the probes, not from pictures. Add `--depth 6` for very large screens.
+Writes a Markdown file with every control (type, name, automation id, position)
+and one PNG of the window next to it. The positions are what the twin's layout is
+copied from (`scripts/layout.py`); the PNG is the layout reference for the designer.
+Keep the window at its normal size while dumping. Add `--depth 6` for very large screens.
+Screens exported by App Watcher already have both (pictures in `docs/raw/screens/shots/`).
 
 ## 3. If the tree is empty or useless
 Some apps (old VB6, Java, custom-drawn, some Delphi) do not expose controls.
 Then:
-- Re-run with `--screenshot` so there is evidence, and read the PNG. Describe
-  the controls by eye.
+- Read the PNG and describe the controls by eye, with their approximate
+  position and size in pixels, in a control tree table of the same format, so
+  `scripts/layout.py` can still use it.
 - Use a Windows computer-use MCP server (for example Windows-MCP) to see and
   click, if installed. Note in docs/decisions.md that this app needs vision mode.
 - Use the app's own help (F1, Help menu) and any PDF manual in the install folder.

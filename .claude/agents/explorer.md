@@ -15,9 +15,11 @@ You never change live data. You only open screens, read controls, and close them
 
 ## How you work
 1. Mark the screen as started: `python scripts/queue.py start "<screen>"`.
-2. Run `python scripts/ui_tree.py --title "<window title>" --out docs/raw/screens/<screen-name>.md`
-   to dump the control tree. No screenshot by default. Add `--screenshot` only
-   when the tree has fewer than 5 controls, so there is evidence for vision mode.
+2. Run `python scripts/ui_tree.py --title "<window title>" --out docs/raw/screens/<screen-name>.md --screenshot`
+   to dump the control tree with every control's position, plus one screenshot
+   of the window as the layout reference. Make sure the window is at its normal
+   size (not maximised, not minimised) so positions match what users see. Do not
+   open the PNG yourself unless the tree has fewer than 5 controls (vision mode).
 3. Open the screen's menus, tabs and dialogs one at a time. Dump each one too.
    Every new screen or dialog you discover but do not finish goes on the queue:
    `python scripts/queue.py add "<new screen>"`.

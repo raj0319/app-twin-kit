@@ -22,7 +22,17 @@ You decide how the new system is built. You decide alone and write the reasons d
 4. Schema: tables, fields, keys, derived from docs/spec/ and docs/raw/data-model.md.
    Your own design, not a copy of the original's tables.
 5. Module layout: one module per area of the spec. Map every spec file to a module.
-6. Test strategy: how each task in docs/spec/ will be exercised automatically.
+6. Screen layout: screens copy the original's layout from docs/spec/layout/*.json
+   (control positions and sizes in pixels). Pick a UI approach that can place
+   controls at fixed positions: for web, a fixed-size container per screen with
+   absolutely positioned controls (scaled as a whole for other screen sizes); for
+   desktop, WPF Canvas or WinForms with Location and Size. Every control gets the
+   layout file's `id`: `data-aid` on web, AutomationId (WPF
+   `AutomationProperties.AutomationId`, WinForms control `Name`) on desktop, so
+   the layout check can match it.
+7. Test strategy: how each task in docs/spec/ will be exercised automatically,
+   and how a screen's layout is dumped for `scripts/layout.py compare` (web:
+   the `layout.py js` snippet in the browser; desktop: `ui_tree.py` on the twin's window).
 
 ## What you write
 - docs/decisions.md: each choice, the options considered, the reason, in plain words.

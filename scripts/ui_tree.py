@@ -64,7 +64,7 @@ def dump(title, out_path, max_depth, screenshot=False):
 
     out_dir = os.path.dirname(out_path) or "."
     os.makedirs(out_dir, exist_ok=True)
-    shot = "(not taken; pass --screenshot to keep one as evidence)"
+    shot = "(not taken; pass --screenshot to keep one as the layout reference)"
     if screenshot:
         png_path = os.path.splitext(out_path)[0] + ".png"
         try:
@@ -105,7 +105,7 @@ def main():
     parser.add_argument("--depth", type=int, default=10)
     parser.add_argument(
         "--screenshot", action="store_true",
-        help="also save a PNG next to the .md (off by default; only for evidence)",
+        help="also save a PNG of the window next to the .md (the layout reference)",
     )
     args = parser.parse_args()
 

@@ -18,14 +18,22 @@ Start the new system the way docs/architecture.md says. Snapshot, run the task w
 the same inputs (through the UI with Playwright or pywinauto, or through the API),
 snapshot, diff. Save screenshots to docs/verify/shots/<task>/.
 
-## 4. Compare these five things, in this order
+## 4. Compare these six things, in this order
 1. Data rows added, removed, changed (field by field).
 2. Files produced (exports, PDFs, prints to file).
 3. Numbers shown on screen: totals, taxes, balances, counts.
 4. Messages: confirmations, validation errors, warnings, and when they appear.
 5. Flow: the order of screens and steps.
+6. Layout of each screen on the way, by control position and size:
+   ```bash
+   python scripts/layout.py js        # web twin: run this snippet with Playwright page.evaluate, save the string it returns as docs/verify/layout/<screen>.json
+   python scripts/ui_tree.py --title "<twin window>" --out docs/verify/layout/<screen>-twin.md   # desktop twin
+   python scripts/layout.py compare docs/spec/layout/<screen>.json <dump> --out docs/verify/layout/<screen>.md
+   ```
+   The report gives a match % and, per control, missing, moved or resized with
+   the pixels to fix. Target: 90% or more, nothing missing.
 
-Layout and colours are not compared.
+Colours, fonts and icons are not compared: the twin has its own look on purpose.
 
 ## 5. Record
 - For every difference, append a gap using docs/templates/gap.md to docs/verify/gaps.md.
@@ -34,4 +42,5 @@ Layout and colours are not compared.
 ## 6. Severity guide
 - blocks work: the user cannot finish the task.
 - wrong result: finishes, but a number, record or file is different.
-- cosmetic: same result, different wording or placement.
+- cosmetic: same result, different wording or placement (a moved or resized control).
+- A control missing from a screen is "blocks work" when the task uses it, else "wrong result".
