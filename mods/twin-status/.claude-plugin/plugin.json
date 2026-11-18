@@ -1,0 +1,5 @@
+{
+  "name": "twin-status",
+  "version": "0.1.0",
+  "description": "Keeps the App Twin mode, screen/task counts and open gaps in the status line."
+}

@@ -1,5 +1,7 @@
 state/
 docs/raw/screens/*.png
+docs/verify/shots/
 app/node_modules/
 app/.venv/
 __pycache__/
+mods/twin-status/.claude-plugin/types/

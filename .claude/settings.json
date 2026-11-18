@@ -1,4 +1,17 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(python scripts/ui_tree.py:*)",
+      "Bash(python scripts/snapshot_diff.py:*)",
+      "Bash(python scripts/status.py:*)",
+      "Bash(python scripts/report_html.py:*)",
+      "Bash(pip install -r scripts/requirements.txt)",
+      "Bash(tasklist:*)",
+      "Read(docs/**)",
+      "Read(state/**)",
+      "Read(app/**)"
+    ]
+  },
   "hooks": {
     "PostToolUse": [
       {

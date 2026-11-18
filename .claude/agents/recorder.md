@@ -24,6 +24,12 @@ You capture exactly one task, the way a user performs it in the original app.
 5. Note every file created, report printed, or message shown.
 6. Use the template at docs/templates/task.md. Save to docs/raw/tasks/<task>.md.
 
+## If the user prefers to show rather than explain
+Offer OpenAdapt once: `pip install openadapt-capture`, then
+`openadapt-capture record <task>` while they perform the task. Its output
+(screenshots, clicks, keys, timings) goes into the task record's steps table.
+Still take the before/after snapshots yourself.
+
 ## Rules
 - Never press anything that sends, posts, pays or deletes unless the brief says it is a test record.
 - If a step needs information you do not have, write "ASK USER: ..." in the record and stop.

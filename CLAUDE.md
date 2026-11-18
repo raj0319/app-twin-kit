@@ -60,9 +60,25 @@ You switch automatically when a mode's exit condition is met.
 |---|---|---|---|
 | DISCOVER | Explore the app, record screens, fields, actions, outputs, data changes | Sonnet for driving the app, Haiku for routine screen reads | Every reachable screen and menu item is logged and every daily task is recorded |
 | SPEC | Turn raw findings into a readable spec | Opus for structure, Sonnet for filling sections | Spec covers every task with inputs, rules, outputs, side effects |
-| BUILD | Design and build the new system | Opus for architecture, Sonnet for code | All spec items implemented and the app runs |
-| VERIFY | Run the same tasks on both apps, diff results | Sonnet, Haiku for diffing | Gap list produced |
+| BUILD | Design and build the new system | Opus for architecture, Sonnet for code and screens | All spec items implemented and the app runs |
+| VERIFY | Run the same tasks on both apps, diff results, publish the report | Sonnet, Haiku for diffing | Gap list produced and report published |
 | FIX | Close gaps from the gap list | Sonnet | Gap list empty, then return to VERIFY once more |
+
+BUILD mode has two approval gates before any code is written:
+
+1. **Plan gate.** After the architect writes `docs/decisions.md` and
+   `docs/architecture.md`, enter plan mode and present the stack, database
+   and module list to the user in plain words. Build nothing until they
+   approve. Do not ask them to choose technology; ask only yes or no.
+2. **Design gate.** Run the designer agent to draw the main screens as HTML
+   mockups in `docs/design/`. Publish `docs/design/index.html` as a private
+   artifact if the Artifact tool is available, otherwise tell the user to
+   open the file. Wait for a yes. Then start the builder.
+
+VERIFY mode ends by running `python scripts/report_html.py` and publishing
+`docs/verify/report.html` as a private artifact (or pointing the user to the
+file). Offer, once, to put the spec in Claude Docs so the user can comment on
+each screen; if they say yes, do it and read their comments at the next `/start`.
 
 Token rules that apply in every mode:
 
@@ -93,6 +109,7 @@ with frontmatter (`name`, `description`, `model`, `tools`).
 | `data-sleuth` | sonnet | Finds and reads the app's data: local DB files, config, exports, logs, network calls. Writes `docs/raw/data-model.md`. |
 | `spec-writer` | sonnet | Turns raw findings into `docs/spec/` (one file per task, one per screen, one for rules). |
 | `architect` | opus | Picks the stack and database, designs the schema and module layout, writes `docs/decisions.md` and `docs/architecture.md`. |
+| `designer` | sonnet | Draws the new system's screens as HTML mockups in `docs/design/` from the spec, for approval before coding. |
 | `builder` | sonnet | Implements one spec item at a time in `app/`, with tests. |
 | `comparator` | sonnet | Runs one task on both systems, diffs data, files and screenshots, appends to `docs/verify/gaps.md`. |
 
@@ -112,6 +129,20 @@ Hooks in `.claude/settings.json` (scripts in `scripts/hooks/`):
 - Before any Bash command containing `rm`, `del`, `drop`, or `truncate`,
   ask the user.
 
+Slash commands in `.claude/commands/`: `/start`, `/mode <name>`, `/status`,
+`/gaps` (and `/gaps fix`). Prefer these over free text when the user types
+the same words.
+
+MCP servers in `.mcp.json`: `windows-mcp` (see and click the original app
+when the UI tree is not enough) and `playwright` (drive a web twin). Claude
+Code asks the user once before starting them. Both need `uv` and Node
+installed; if they fail to start, say so in one line and continue with
+pywinauto and screenshots.
+
+Status line mod in `mods/twin-status/`: shows the mode, counts and open
+gaps. Loaded with `claude --plugin-dir mods/twin-status`; needs Claude Code
+2.1.300 or newer. If the user's version is older, skip it silently.
+
 ## 6. Tools you may set up for observing the app
 
 Install only what you need, and record what you installed in
@@ -122,7 +153,11 @@ Install only what you need, and record what you installed in
 - **Windows-MCP** or another Windows computer-use MCP server, so you can
   see and click the app yourself when the UI tree is not enough.
 - **OpenAdapt** (`openadapt-capture`) to record a user demonstrating a
-  task when they prefer to show rather than explain.
+  task when they prefer to show rather than explain. Optional; offer it
+  only when a user says "let me show you".
+- **screenpipe** for a week of passive screen history before DISCOVER, to
+  find tasks nobody remembers to demonstrate. Optional and heavy; only when
+  the user asks for it, and tell them it records everything on screen.
 - **Process Monitor** to see which files, registry keys and database the
   app touches during an action.
 - **mitmproxy** if the app talks to a server, to see its API calls.
@@ -148,13 +183,21 @@ docs/
   rules.md          validation rules, calculations, status flows
   decisions.md      why each technology and design choice was made
   architecture.md   schema and module layout of the new system
+  design/
+    tokens.md       colours, fonts, spacing for the new system
+    screens/        HTML mockups, one per screen
+    index.html      clickable flow through the mockups
   verify/
     gaps.md         open differences between old and new
     report.md       final pass/fail per task
+    report.html     generated by scripts/report_html.py, publishable
 app/                the new system
+mods/twin-status/   status line mod
+.mcp.json           windows-mcp and playwright servers
 .claude/
   agents/           subagents listed above
   skills/           project skills listed above
+  commands/         /start, /mode, /status, /gaps
   settings.json     hooks and permissions
 ```
 

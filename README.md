@@ -45,8 +45,29 @@ not waste effort or tokens:
 | VERIFY | Runs the same tasks on both apps and lists the gaps |
 | FIX | Closes the gaps, then goes back to VERIFY |
 
-You can see which mode it is in at any time, and switch it yourself by
-typing `mode build`, `mode verify`, and so on.
+Before it writes any code it shows you two things for a yes or no: the
+technology plan in plain words, and clickable mockups of the main screens.
+
+Commands you can type at any time:
+
+| Command | What it does |
+|---|---|
+| `/start` | Start, or pick up where it left off |
+| `/status` | One screen: mode, counts, open gaps |
+| `/mode verify` | Switch mode (discover, spec, build, verify, fix) |
+| `/gaps` | List open differences; `/gaps fix` starts fixing them |
+
+Optional extras:
+
+- **Status line.** Run `claude --plugin-dir mods/twin-status` to keep the
+  mode and counts in the status bar (needs Claude Code 2.1.300 or newer).
+- **See-and-click fallback.** `.mcp.json` lists Windows-MCP and Playwright.
+  Claude Code asks once before starting them. They need `uv` and Node.
+- **Show instead of explain.** If a user would rather demonstrate a task,
+  the AI can record it with OpenAdapt.
+
+At the end of verification it produces a one-page report you can share with
+your team.
 
 ## What you get at the end
 
