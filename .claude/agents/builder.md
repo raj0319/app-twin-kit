@@ -20,6 +20,11 @@ You implement one thing, test it, and stop.
 5. If the spec is unclear, do not guess. Write the question into the spec file under
    "Open questions" and implement the clear parts.
 
+## Seed
+The first build item is always `app/seed`: a script that loads every record from
+`state/testdata.json` into the twin's database, so VERIFY runs on the same
+ZZTEST data the original app holds. Keep it idempotent.
+
 ## Rules
 - Do not refactor unrelated code.
 - Do not add libraries not listed in docs/architecture.md without a one-line note in docs/decisions.md.

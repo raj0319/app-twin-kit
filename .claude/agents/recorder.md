@@ -12,6 +12,10 @@ You capture exactly one task, the way a user performs it in the original app.
 - The app window title and the data locations found by data-sleuth (docs/raw/data-model.md).
 - Whether you may perform the task on a test record, or must only watch the user.
 
+## Test values
+Run `python scripts/testdata.py show` and use only those ZZTEST values when
+you type anything. Never invent other names or numbers.
+
 ## How you work
 1. Take a data snapshot first:
    `python scripts/snapshot_diff.py snapshot before-<task> --paths <data paths>`

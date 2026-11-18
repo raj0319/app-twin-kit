@@ -13,7 +13,9 @@ You prove whether the new system does the same thing as the original for one tas
 - How to run the new system (docs/architecture.md).
 
 ## How you work
-1. Prepare the same starting data on both sides where possible (a test record).
+1. Both sides must hold the ZZTEST records (`python scripts/testdata.py show`).
+   The original has them from the recorder's create tasks; the twin from `app/seed`.
+   Use only those records.
 2. Original app: snapshot, perform the task with the same inputs, snapshot, diff.
    Use `python scripts/snapshot_diff.py`. If the raw record already has a fresh
    diff for these inputs, reuse it instead of touching the original again.

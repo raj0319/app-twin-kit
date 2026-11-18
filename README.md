@@ -65,6 +65,7 @@ Commands you can type at any time:
 | `/stop` | Stop now and save the place (Esc also stops) |
 | `/progress` | Percent done and approximate time left |
 | `/status` | One screen: mode, counts, open gaps |
+| `/summary` | Today's one-page summary as a shareable link |
 | `/mode verify` | Switch mode (discover, spec, build, verify, fix) |
 | `/gaps` | List open differences; `/gaps fix` starts fixing them |
 
@@ -83,8 +84,15 @@ your team.
 ## What you get at the end
 
 - `docs/spec/` – a readable description of every task and screen.
-- `app/` – the new system, with setup instructions.
-- `docs/verify/` – a report showing each task passing on both apps.
+- `app/` – the new system, with setup instructions and test data loaded.
+- `docs/verify/report.html` – each task passing on both apps.
+- `docs/verify/uat-checklist.html` – a tick list for one of your users to
+  try the twin with their own hands.
+- `docs/summary/` – one page per day: what was learned, built, and what is
+  still open. Shared as a link you can forward.
+
+All test data the AI creates starts with `ZZTEST`, so it is easy to spot
+and delete afterwards. It never writes to the old app's database directly.
 
 ## Honest limits
 
