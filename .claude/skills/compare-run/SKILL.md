@@ -33,6 +33,14 @@ snapshot, diff. Save screenshots to docs/verify/shots/<task>/.
    The report gives a match % and, per control, missing, moved or resized with
    the pixels to fix. Target: 90% or more, nothing missing.
 
+For a screen whose control tree was thin (an app that draws its own controls), read the labels and
+column headers App Watcher's OCR found that the tree missed:
+`python scripts/layout.py ocr-extra docs/raw/screens/<screen>.md`, and make sure the twin has them.
+
+7. State check of each screen: `python scripts/state_check.py expect docs/raw "<screen>" --out docs/spec/states/<screen>.json`
+   then `python scripts/state_check.py check docs/spec/states/<screen>.json <twin dump> --out docs/verify/state/<screen>.md`.
+   It scores fields, actions and grid columns present; target 90% or more, nothing the task needs missing.
+
 Colours, fonts and icons are not compared: the twin has its own look on purpose.
 
 ## 5. Record

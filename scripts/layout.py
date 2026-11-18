@@ -152,7 +152,39 @@ def load(path):
     data["screen"] = os.path.splitext(os.path.basename(path))[0]
     if shot:
         data["screenshot"] = os.path.normpath(os.path.join(os.path.dirname(path), shot)).replace("\\", "/")
+        attach_ocr(data, os.path.dirname(path), shot)
     return data
+
+
+def attach_ocr(data, base, shot):
+    """Improvement #6: when App Watcher read the screen picture with OCR, add the text it found.
+    Lines whose text is not already the name of a control become 'ocr_extra': labels and column
+    headers the control tree did not expose (apps that draw their own screens). Coordinates are in
+    the picture; they place a label, not a pixel-exact control, so they never change the layout score."""
+    ocr_path = os.path.join(base, shot + ".ocr.json")
+    if not os.path.exists(ocr_path):
+        return
+    try:
+        ocr = json.load(open(ocr_path, encoding="utf-8"))
+    except Exception:
+        return
+    names = {slug(c.get("name", "")) for c in data.get("controls", []) if c.get("name")}
+    lines = ocr.get("Lines") or ocr.get("lines") or []
+    def g(d, *keys):
+        for k in keys:
+            if k in d:
+                return d[k]
+        return 0
+    data["ocr_text"] = [(g(l, "Text", "text") or "") for l in lines]
+    extra = []
+    for l in lines:
+        txt = (g(l, "Text", "text") or "").strip()
+        if not txt or slug(txt) in names:
+            continue
+        if any(slug(txt) and (slug(txt) in n or n in slug(txt)) for n in names if n):
+            continue
+        extra.append({"text": txt, "x": g(l, "X", "x"), "y": g(l, "Y", "y"), "w": g(l, "W", "w"), "h": g(l, "H", "h")})
+    data["ocr_extra"] = extra
 
 
 # ---------------------------------------------------------------- compare
@@ -308,10 +340,33 @@ def main():
     c.add_argument("--out", help="write the Markdown report here")
     c.add_argument("--json", action="store_true", help="print the result as JSON")
     sub.add_parser("js", help="print the browser snippet for a web twin")
+    o = sub.add_parser("ocr-extra", help="text App Watcher's OCR found on a screen that the control tree did not expose")
+    o.add_argument("screen")
+    o.add_argument("--out")
     args = p.parse_args()
 
     if args.cmd == "js":
         print(JS)
+        return 0
+    if args.cmd == "ocr-extra":
+        data = load(args.screen)
+        extra = data.get("ocr_extra")
+        if extra is None:
+            print(f"No OCR layer for {args.screen} (App Watcher's ReadTextFromPictures was off, or no .ocr.json next to the picture).")
+            return 0
+        lines = [f"# Text on screen not in the control tree: {data.get('screen')}", "",
+                 "App Watcher read these with the built-in OCR. Use them as labels and column headers the "
+                 "accessibility tree did not give (apps that draw their own screens). Positions are in the picture.", "",
+                 "| Text | Position |", "|---|---|"]
+        for e in extra:
+            lines.append(f"| {e['text']} | {e['x']},{e['y']} {e['w']}x{e['h']} |")
+        text = "\n".join(lines) + "\n"
+        if args.out:
+            os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)
+            open(args.out, "w", encoding="utf-8").write(text)
+            print(f"Wrote {len(extra)} OCR text lines to {args.out}")
+        else:
+            print(text)
         return 0
     if args.cmd == "extract":
         data = load(args.screen)

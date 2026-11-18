@@ -97,6 +97,18 @@ your team.
 All test data the AI creates starts with `ZZTEST`, so it is easy to spot
 and delete afterwards. It never writes to the old app's database directly.
 
+## Checking the twin, state by state
+
+The kit does not only copy screens, it proves the twin matches the original. For each screen a task
+passes through it builds an expectation from what App Watcher recorded (fields, buttons, keyboard
+shortcuts, suggestion lists, the columns a search returns) and scores the twin against it with
+`scripts/state_check.py`, on top of the layout check. Where App Watcher read a screen with the built-in
+OCR (apps that draw their own controls), the labels and column headers it found that the control tree
+missed are added to the layout (`scripts/layout.py ocr-extra`). And when you have a data snapshot or a
+folder of exports, `scripts/confirm_rules.py` tests every calculated and numbering rule over all of it,
+so a rule is confirmed or rejected before anyone tests the twin by hand. Target: 90% or more per screen,
+nothing the task needs missing.
+
 ## REA (reverse engineer anything), only for programs you own
 
 The kit has an optional `/rea` step built on [REA](https://github.com/morluto/rea), the open-source
