@@ -1,0 +1,5 @@
+state/
+docs/raw/screens/*.png
+app/node_modules/
+app/.venv/
+__pycache__/
