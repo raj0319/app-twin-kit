@@ -379,8 +379,8 @@ def main():
     if args.cmd == "extract-all":
         n = 0
         for f in sorted(os.listdir(args.screens_dir)):
-            if not f.lower().endswith(".md"):
-                continue
+            if not f.lower().endswith(".md") or f.lower().endswith((".live.md", ".watcher.md")):
+                continue  # side files of the App Watcher vs live-app check (CLAUDE.md, section 3)
             data = load(os.path.join(args.screens_dir, f))
             if not data["controls"]:
                 print(f"skipped {f}: no control positions")

@@ -51,7 +51,7 @@ def main():
             touched[area] = touched.get(area, 0) + 1
     notes = [l[2:] for l in log if not re.search(r"(Write|Edit|MultiEdit): ", l)]
 
-    screens = len(glob.glob("docs/raw/screens/*.md"))
+    screens = len([f for f in glob.glob("docs/raw/screens/*.md") if not f.lower().endswith((".live.md", ".watcher.md"))])
     probes = len(glob.glob("docs/raw/probes/*.md"))
     tasks = len(glob.glob("docs/raw/tasks/*.md"))
     spec = len(glob.glob("docs/spec/*.md"))

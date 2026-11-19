@@ -7,7 +7,8 @@ import sys
 
 
 def count(pattern):
-    return len(glob.glob(pattern))
+    # *.live.md and *.watcher.md are side copies of a screen (App Watcher vs live app), not extra screens
+    return len([f for f in glob.glob(pattern) if not f.lower().endswith((".live.md", ".watcher.md"))])
 
 
 def main():

@@ -15,7 +15,10 @@ You never change live data. You only open screens, read controls, and close them
 
 ## How you work
 1. Mark the screen as started: `python scripts/queue.py start "<screen>"`.
-2. Run `python scripts/ui_tree.py --title "<window title>" --out docs/raw/screens/<screen-name>.md --screenshot`
+2. If `docs/raw/screens/<screen-name>.md` already exists and says "App Watcher", do not overwrite it:
+   use `--out docs/raw/screens/<screen-name>.live.md` below, then follow the rule "App Watcher notes and
+   the live app" in CLAUDE.md (compare, keep or swap, note any difference). Otherwise:
+   Run `python scripts/ui_tree.py --title "<window title>" --out docs/raw/screens/<screen-name>.md --screenshot`
    to dump the control tree with every control's position, plus one screenshot
    of the window as the layout reference. Make sure the window is at its normal
    size (not maximised, not minimised) so positions match what users see. Do not

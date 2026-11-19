@@ -86,6 +86,23 @@ The only things you still stop for:
 - **Own your decisions.** Technology, database, folder layout, libraries:
   decide, write the reason in `docs/decisions.md`, move on.
 
+- **App Watcher notes and the live app: the live app wins.** A record in
+  `docs/raw/` that says "App Watcher" is real-usage evidence: what staff did,
+  how often, the values they typed (as shapes), the pictures. Never overwrite
+  or delete it. When you explore a screen that already has one, write your
+  dump to `docs/raw/screens/<screen>.live.md` and compare:
+  `python scripts/layout.py compare docs/raw/screens/<screen>.md docs/raw/screens/<screen>.live.md --json`.
+  - **They agree** (score 90 or more, nothing missing or extra): keep the
+    App Watcher record as `<screen>.md`, it has the richer usage notes.
+  - **They differ** (a control added, removed, renamed or moved, another
+    message or rule): the live app wins. Rename the App Watcher record to
+    `<screen>.watcher.md`, rename the live dump to `<screen>.md`, and add one
+    line to `docs/raw/watcher-differences.md`: screen, what differs, both files.
+  - Usage facts only App Watcher has (how often, typical order, value shapes,
+    menu paths) stay valid unless the live app shows they are impossible.
+  - The scripts skip `*.live.md` and `*.watcher.md`, so no screen counts twice.
+    Mention the number of differences in the SPEC summary.
+
 ## 4. Modes (switchable, to save tokens)
 
 Work is split into modes. Only one mode is active. The active mode is

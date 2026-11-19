@@ -181,6 +181,8 @@ def _find(folder, title):
     want = norm(title)
     best = None
     for f in glob.glob(os.path.join(folder, "*.md")):
+        if f.lower().endswith((".live.md", ".watcher.md")):
+            continue  # side files of the App Watcher vs live-app check
         if norm(os.path.splitext(os.path.basename(f))[0]) == want:
             return f
         # title may be collapsed ("Invoice #"): match the file whose first heading matches
@@ -246,6 +248,8 @@ def main():
         os.makedirs(a.outdir, exist_ok=True)
         n = 0
         for f in glob.glob(os.path.join(a.raw, "screens", "*.md")):
+            if f.lower().endswith((".live.md", ".watcher.md")):
+                continue
             title = open(f, encoding="utf-8").readline().replace("# Screen:", "").strip() or os.path.splitext(os.path.basename(f))[0]
             out = os.path.join(a.outdir, os.path.basename(f).replace(".md", ".json"))
             _write_json(out, expect(a.raw, title))
