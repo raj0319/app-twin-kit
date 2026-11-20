@@ -7,9 +7,9 @@
 | P0 Versioned UAS | Schema validation, evidence links, version migration, relations, weights and unknowns implemented. |
 | P0 React/TypeScript | Deterministic generated app builds and runs in Playwright. Forms, validation, confirmation, navigation and history exercised. |
 | P0 FastAPI and PostgreSQL | Migrations, authorization hook, validation, transactions, uniqueness, foreign keys and pagination tested with a local PostgreSQL server. |
-| P0 Mapping and differential replay | Exact ID mapping generated for declared cases and paired against browser actions. UI state and persisted values compared. Generic ambiguous mappings still need review. |
+| P0 Mapping and differential replay | Exact, normalized, prefix-stripped and unique-label mappings resolve automatically with a role guard and a recorded method; ambiguous or unmatched controls are listed with candidates for review. UI state and persisted values compared; live fixture regression 7/7 after the change. |
 | P0 Repair and fidelity | Scoped rollback tested. Live seeded fault detected, repaired by authenticated Codex and retested. Weighted fixture coverage and a separate fail-closed release gate implemented. |
-| P1 Agent selection and routing | Auto/default and provider override tested locally. Health, time and call budget implemented. Codex model catalog and authenticated proposal flow verified live. Claude-backed execution remains unverified. |
+| P1 Agent selection and routing | Health checks sign-in through each CLI's status command. An explicit provider never falls back; `auto` skips signed-out CLIs and `run.json` records every attempt, outcome and cost. Claude calls drop a parent Claude Code session's variables, run outside the project, and enforce `--agent-budget-usd`. Codex catalog and repair verified live earlier inside the Codex app. Claude-backed execution remains unverified: the CLI is signed out (see blockers). |
 | P1 MCP and skills | Metadata inventory with no command execution. Automated authorized activation is incomplete. |
 | P1 Recovery and safety | Atomic checkpoints, run and desktop locks, write-ahead action evidence, exact allowlisting and redaction implemented. Interrupted fixtures require explicit reset. |
 | P2 Compatibility | WPF behavior and WinForms discovery measured. Additional framework and owner-drawn coverage remains open. |

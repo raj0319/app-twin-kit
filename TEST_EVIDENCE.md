@@ -21,6 +21,23 @@ Playwright 1.65.2 with Edge 157.0.4341.60, and PostgreSQL 18.0.
 | Legacy workflow | Existing tracked Claude instructions, skills, hooks, utilities and app tree had no diff. Python compiled the legacy scripts. The layout and UI tree commands displayed help. |
 | Lint and dependency scan | Ruff lint and format checks passed. The npm audit and Python dependency audit reported zero known vulnerabilities. |
 
+### Claude adapter session, November 20, 2026 (Claude Code)
+
+Same PC, Python 3.12.10 in a checkout `.venv`, Node 24.11.0, installed Edge,
+the checkout's private PostgreSQL 18 cluster on loopback port 55431.
+
+| Check | Observed result |
+|---|---|
+| Claude adapter failure | Reproduced: `claude -p` printed "Not logged in · Please run /login" (exit 1) with the inherited and with a cleaned environment. `claude auth status` reported `loggedIn: false`. |
+| Signed-out routing, live fixture | `twin start --agent claude` captured the WPF window, then stopped with "claude was selected but is not usable ... no fallback to another provider was used" and zero provider calls. `--agent auto` stopped with "No usable Claude Code or Codex CLI". Both checkpoints kept `capture` as completed. |
+| Codex reachability | The Codex CLI inside the Codex desktop package cannot be started by other processes (Access is denied); `twin models --agent codex` now reports `unavailable` instead of crashing. |
+| Paired replay, repeated | Two fresh runs on a new `prepare` (before and after the mapping change): 7/7 workflows, 21/21 weight, behavior 17/17, data 12/12, UI state 6/6, source and PostgreSQL records equal. |
+| Unit tests | 39 passed, 1 skipped (PostgreSQL integration, needs `TWIN_TEST_DATABASE_URL`), including adapter, routing, budget and mapping-resolution tests. Ruff lint and format pass for `engine`, `twin.py`, `tests` and `fixtures`; the legacy `scripts/` folder has 22 pre-existing lint findings. |
+
+Evidence: [docs/evidence/claude-session-2026-11-20](docs/evidence/claude-session-2026-11-20).
+Not measured in this session: any successful Claude request, Claude draft,
+Claude repair, Codex live calls, the PostgreSQL integration test.
+
 The denominator is the [seven-workflow inventory](docs/evidence/wpf/inventory.json).
 UI here measures visible validation and history state. The fixture baseline
 does not score visual similarity or behavior outside that inventory. The

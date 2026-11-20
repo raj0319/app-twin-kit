@@ -1,0 +1,20 @@
+{
+  "migration": "0001",
+  "source": [
+    {
+      "code": "ZZTEST_D33F0524",
+      "quantity": 3,
+      "unit_price": 11,
+      "total": 33
+    }
+  ],
+  "twin": [
+    {
+      "code": "ZZTEST_D33F0524",
+      "quantity": 3,
+      "unit_price": 11,
+      "total": 33
+    }
+  ],
+  "match": true
+}

@@ -38,7 +38,40 @@ UAS before generation can continue.
 `twin models --agent codex` queries the installed Codex model catalog. When
 Codex rejects its configured default and no explicit override was supplied,
 the CLI may retry once using the catalog default. Claude uses its CLI model
-configuration.
+configuration; it has no listing command, so `twin models --agent claude`
+reports `unavailable`.
+
+`twin doctor` shows, per provider, whether the CLI is installed and signed in
+(through `claude auth status` or `codex login status`; only yes/no and the
+method are kept). `auto` skips a signed-out CLI. An explicitly selected
+provider is never replaced by another one: the run stops instead. `twin
+status` lists every provider attempt with its outcome and, for Claude, its
+cost. `--agent-budget-usd 0.50` caps each Claude request through Claude's own
+`--max-budget-usd`; Codex cannot enforce a currency limit, so a budgeted run
+refuses Codex. Set `TWIN_CLAUDE_PATH` or `TWIN_CODEX_PATH` to use a CLI that is
+not on PATH. Sign the Claude CLI in from a normal terminal, not from a
+terminal inside the Claude desktop app, then check `twin doctor --agent claude`.
+
+### Claude-only proof
+
+With the CLI signed in, a disposable fixture database in `DATABASE_URL` and
+`TWIN_BROWSER_CHANNEL=msedge`:
+
+```powershell
+twin doctor --agent claude
+twin start --agent claude --agent-budget-usd 1 --agent-timeout 2 --root state/claude-proof --title "ZZTEST App Twin Order Entry" --pid <fixture pid>
+twin status --root state/claude-proof
+twin resume --agent claude --agent-budget-usd 1 --root state/claude-proof
+python -m fixtures.windows.demo prepare state/claude-repair
+npm ci --ignore-scripts --prefix state/claude-repair/app/frontend
+npm run build --prefix state/claude-repair/app/frontend
+$env:TWIN_AGENT_BUDGET_USD = '1'
+python -m fixtures.windows.demo seed-repair state/claude-repair --agent claude
+```
+
+The two-second timeout makes the first Claude call fail after the capture is
+saved; `status` must show the attempt, and `resume` must reuse the capture.
+`seed-repair` must report `all_workflows_pass` with `claude` as the agent.
 
 Review `state/twin/uas.json` for evidence links and unknowns. Capture additional
 screens or analyze sequential snapshots with `twin analyze-transitions`.
