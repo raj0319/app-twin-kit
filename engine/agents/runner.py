@@ -10,6 +10,16 @@ from threading import Thread
 from time import monotonic
 
 
+def parse_proposal(response):
+    text = response.strip().lstrip("\ufeff")
+    if fenced := re.fullmatch(r"```(?:json)?\s*\n(.*?)\n```", text, flags=re.DOTALL):
+        text = fenced[1]
+    result = json.loads(text)
+    if not isinstance(result, dict):
+        raise ValueError("provider proposal must be a JSON object")
+    return result
+
+
 def command_for(agent, prompt=None, *, model=None):
     if model and not re.fullmatch(r"[A-Za-z0-9_./:-]+", model):
         raise ValueError("invalid provider model identifier")

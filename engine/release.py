@@ -23,6 +23,17 @@ def check_artifact(root, entry):
     return path
 
 
+def passed_check(root, entry):
+    artifact = check_artifact(root, entry)
+    if not artifact:
+        return False
+    try:
+        result = json.loads(artifact.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return False
+    return isinstance(result, dict) and result.get("passed") is True
+
+
 def gate(spec_path, manifest_path):
     spec = UniversalAppSpec.load(spec_path)
     manifest_path = Path(manifest_path)
@@ -30,7 +41,7 @@ def gate(spec_path, manifest_path):
         return {"ready": False, "reason": "missing release evidence manifest"}
     root = manifest_path.resolve().parent
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    checks = {name: bool(check_artifact(root, manifest.get("checks", {}).get(name, {}))) for name in CHECKS}
+    checks = {name: passed_check(root, manifest.get("checks", {}).get(name, {})) for name in CHECKS}
     reports = [check_artifact(root, item) for item in manifest.get("paired_runs", [])]
     valid = len(reports) >= 2 and all(reports) and len(set(reports)) == len(reports)
     scores = []

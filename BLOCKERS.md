@@ -3,7 +3,8 @@
 - **Provider coverage.** Both CLI executables were found in the user desktop
   context. Claude Code returned an error for a synthetic request and its
   authentication was unconfirmed. Codex was signed in. Its configured default
-  model was rejected, and the installed CLI exposed a supported model catalog.
+  model was rejected. The installed CLI exposed a supported model catalog and
+  a catalog-selected model completed the live fixture repair.
 - **Desktop inference.** The stateful demo uses a reviewed probe matrix. Broad
   autonomous hypothesis selection, role discovery, native dialogs, global input
   recording, and automatic vision or OCR navigation are incomplete. Custom

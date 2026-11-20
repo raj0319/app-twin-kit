@@ -1,0 +1,4 @@
+{"time": "2026-11-20T13:27:36.804549+00:00", "event": "specification", "details": {"agent": "claude", "outcome": "RuntimeError"}}
+{"time": "2026-11-20T13:28:29.128019+00:00", "event": "specification", "details": {"agent": "codex", "outcome": "ValueError"}}
+{"time": "2026-11-20T13:28:32.885328+00:00", "event": "specification", "details": {"agent": "claude", "outcome": "RuntimeError"}}
+{"time": "2026-11-20T13:31:40.594645+00:00", "event": "specification", "details": {"outcome": "saved_draft_recovered"}}

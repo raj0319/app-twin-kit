@@ -23,6 +23,13 @@ generation, paired replay and release evaluation.
    supporting files and repeated reports, recalculates scores and requires
    matching runs and resolved unknowns. Artifact hashes establish integrity.
 
+The release manifest points to evidence relative to its own directory. Each
+entry supplies `path` and `sha256`. The `checks` object needs a JSON result
+with `passed: true` for each of `windows`, `browser`, `postgresql`, `security`,
+`installer` and `repair`. The `paired_runs` array needs two distinct JSON
+artifacts containing per-workflow `results`. Supply the manifest path with
+`twin release-gate --spec UAS.json --output release.json`.
+
 ## Fidelity
 
 Coverage is executed workflow weight divided by all predeclared workflow

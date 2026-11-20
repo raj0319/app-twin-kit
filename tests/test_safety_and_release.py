@@ -63,6 +63,32 @@ def test_process_lock(tmp_path):
         pass
 
 
+def test_draft_uses_real_capture_provenance(tmp_path, monkeypatch):
+    def capture(title, output, **kwargs):
+        snapshot = {"pid": 55, "captured_at": "2026-11-20T12:00:00Z", "controls": []}
+        atomic_json(output, snapshot)
+        return snapshot
+
+    monkeypatch.setattr("engine.orchestrator.explore", capture)
+    monkeypatch.setattr("engine.orchestrator.available", lambda _: True)
+    draft = {
+        "app_name": "Fixture",
+        "entities": [
+            {"id": "order", "title": "Orders", "fields": {"code": "text"}, "evidence_ids": ["capture"]}
+        ],
+        "evidence": [{"id": "capture", "artifact": "untrusted", "observed_at": "forged"}],
+        "unknowns": ["Persistence unconfirmed"],
+    }
+    monkeypatch.setattr(
+        "engine.orchestrator.run", lambda *args, **kwargs: "```json\n" + json.dumps(draft) + "\n```"
+    )
+    assert execute(tmp_path, title="Fixture", calls=1)["status"] == "awaiting_live_verification"
+    spec = UniversalAppSpec.load(tmp_path / "state/twin/uas.json")
+    assert spec.evidence[0].kind == "uia"
+    assert spec.evidence[0].artifact == "capture.json"
+    assert spec.evidence[0].observed_at == "2026-11-20T12:00:00Z"
+
+
 def test_release_rejects_incomplete_and_tampered_report(tmp_path):
     spec = tmp_path / "uas.json"
     inventory = [Workflow("basic", "Basic"), Workflow("critical", "Critical", weight=5)]
@@ -82,6 +108,10 @@ def test_release_rejects_incomplete_and_tampered_report(tmp_path):
     runs = [artifact(f"run{i}.json", {"results": completed}) for i in (1, 2)]
     atomic_json(manifest, {"checks": checks, "paired_runs": runs})
     assert gate(spec, manifest)["ready"]
+    failed_check = {**checks, "security": artifact("security-failure.json", {"passed": False})}
+    atomic_json(manifest, {"checks": failed_check, "paired_runs": runs})
+    assert not gate(spec, manifest)["ready"]
+    atomic_json(manifest, {"checks": checks, "paired_runs": runs})
     atomic_json(tmp_path / "run2.json", {"results": one_pass})
     assert not gate(spec, manifest)["ready"]
 

@@ -1,0 +1,25 @@
+{
+  "files": {
+    ".dockerignore": "137f121fd1ebeb791673fa9843833caec6d8d4ddf3e71ca39688ff4c5c9f2e3f",
+    "backend/alembic.ini": "fa12779adb7c500965a1988e7e42b418122f83cbbd6143adc8b8557189de6c8c",
+    "backend/db.py": "bb9f8ce1ae96cd8be9641e742075127d1836f336649b2c64cd11ab2453b56c66",
+    "backend/domain.json": "e8c81c62b25b787aaaa0940a4ffd06a47e197fae5af57e33fecd989024804d5f",
+    "backend/main.py": "131d1ce048a6ac1190ab5d08dff02ffc5e3b46311a62217a67356a5274ef8539",
+    "backend/migrations/env.py": "7f8c2db463fc3ae09ceb4108b833bd3413f8ba5db1a2757cb95da80e5a1692c0",
+    "backend/migrations/versions/0001_initial.py": "a3ae3d2a7b89f7e797dd65213eb445651fdb70ba8d07a4f9a7093b1861adfdb5",
+    "backend/requirements.txt": "ec30c6630820f0e77f55679872a95eaca575ad5cf865c6a8747cbc02dccc6937",
+    "backend/rules.py": "2df6745829d3b15b4cb6287440f9b2cd01a22e8ad6cf4adee50a69838ac80087",
+    "compose.yaml": "3804a75e5a228e12b31e7e1e3950f0f1efd502710c3fd58bf14c8b80cf09b643",
+    "DEPLOY.md": "6a0a0738924d42de6a1dfc5d69cfb22c5ddd01e6976a3011692bc4ea212eae2f",
+    "Dockerfile": "ff2ed210c6d8ef65870584689db1c9122e08b340e0b9bb2e6deffae22b49ba79",
+    "frontend/index.html": "e6f870486c7f61bd654a4b220aa1b1dbfbaecb96a80b66d76cd7f915f7779656",
+    "frontend/package-lock.json": "6c5ec38a8a0a5988116e86893e44062ac84edbc6c13a4067e70a99b8e0cd9463",
+    "frontend/package.json": "4bfbccc2abeaa07d32bf192e62616d1cf540f16e59019b443996dc435ba103d2",
+    "frontend/src/domain.json": "e8c81c62b25b787aaaa0940a4ffd06a47e197fae5af57e33fecd989024804d5f",
+    "frontend/src/main.tsx": "eb3993891a28d5c47707df8511e51d9f2f5896d9c7458464fd4a628ae758e47a",
+    "frontend/src/style.css": "adb22aa9919024ed8788edeb54898e72464829f07ad3d2fde5f7070f9cca9b5c",
+    "frontend/tsconfig.json": "7aadb6442c334a49f0c141b80963d39eb8bab15d03b1cd4e37adf897e7df6e33",
+    "frontend/vite.config.mjs": "3b5bc3cb143cb5997086f6506004b37f371aefb9111d97e34c99be173904920e"
+  },
+  "archive_sha256": "ee7b98cd438f5306721090f5584f375a2f99f5b0f7592cabe52301d760547307"
+}

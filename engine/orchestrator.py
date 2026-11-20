@@ -3,7 +3,7 @@
 import json
 from pathlib import Path
 
-from .agents.runner import available, run
+from .agents.runner import available, parse_proposal, run
 from .generate import generate
 from .model_router import select
 from .run_state import atomic_json, audit, exclusive
@@ -68,7 +68,12 @@ def execute(root, *, title=None, pid=None, agent=None, resume=False, timeout=900
             spec = state / "uas.json"
             if not spec.exists():
                 _specification(root, state, run_state, spec, timeout, calls)
-            UniversalAppSpec.load(spec)
+            draft = UniversalAppSpec.load(spec)
+            if not draft.entities:
+                run_state.update(status="awaiting_domain_evidence")
+                run_state.pop("failure", None)
+                atomic_json(checkpoint, run_state)
+                return run_state
             if "generate" not in run_state["completed"]:
                 generate(spec, state / "app")
                 run_state["completed"].append("generate")
@@ -83,15 +88,38 @@ def execute(root, *, title=None, pid=None, agent=None, resume=False, timeout=900
 
 
 def _specification(root, state, run_state, spec, timeout, calls):
+    capture = state / "capture.json"
+    snapshot = json.loads(capture.read_text(encoding="utf-8"))
+    candidate = state / "candidate.json"
+
+    def save_draft(draft):
+        if any(rule.get("status") == "confirmed" for rule in draft.get("rules", [])):
+            raise ValueError("read-only capture cannot confirm domain rules")
+        draft["evidence"] = [
+            {"id": "capture", "kind": "uia", "artifact": capture.name, "observed_at": snapshot["captured_at"]}
+        ]
+        atomic_json(candidate, draft)
+        UniversalAppSpec.load(candidate).save(spec)
+
+    if candidate.exists():
+        try:
+            save_draft(parse_proposal(candidate.read_text(encoding="utf-8")))
+            audit(state / "agent.jsonl", "specification", {"outcome": "saved_draft_recovered"})
+            return
+        except (OSError, ValueError, TypeError, KeyError):
+            pass
+
     prompt = (
         stage_prompt("SPEC", {"source_app": run_state["title"]})
         + "\nDraft one strict JSON UAS v0.2.0 object. Give top-level app_name, screens, workflows, "
         "evidence, entities, rules and unknowns. A screen has id/title/controls/evidence_ids, "
         "a control has id/role/name/automation_id/evidence_ids, an entity has id/title/fields/evidence_ids, "
-        "and fields map lowercase keys to text, integer or boolean. Use evidence ID capture and artifact capture.json "
-        "with observed_at from the snapshot. Mark any guess as unknown. Do not assert confirmation or invent "
-        "persistence, validation, or data semantics. Return JSON only. Snapshot data follows.\n"
-        + (state / "capture.json").read_text(encoding="utf-8")
+        "and fields map lowercase keys to text, integer or boolean. Use evidence ID capture. "
+        "The toolkit adds the evidence metadata. Mark any guess as unknown. Do not assert confirmation or invent "
+        "persistence, validation, or data semantics. You may draft a tentative entity from grouped "
+        "editable controls identified by automation_id, with unconfirmed persistence and field types "
+        "documented in unknowns. Use an empty entity list if even a plausible draft is unsupported. "
+        "Do not add prose. Snapshot data follows.\n" + capture.read_text(encoding="utf-8")
     )
     failures = {}
     while run_state["calls"] < calls:
@@ -100,17 +128,10 @@ def _specification(root, state, run_state, spec, timeout, calls):
         atomic_json(state / "run.json", run_state)
         try:
             response = run(chosen, prompt, root, timeout=timeout)
-            draft = json.loads(response)
-            if any(rule.get("status") == "confirmed" for rule in draft.get("rules", [])):
-                raise ValueError("read-only capture cannot confirm domain rules")
-            if not draft.get("entities"):
-                raise ValueError("capture has insufficient evidence for generation; provide a reviewed UAS")
-            candidate = state / "candidate.json"
-            atomic_json(candidate, draft)
-            UniversalAppSpec.load(candidate).save(spec)
+            save_draft(parse_proposal(response))
             audit(state / "agent.jsonl", "specification", {"agent": chosen, "outcome": "draft_saved"})
             return
-        except (OSError, RuntimeError, ValueError) as exc:
+        except (OSError, RuntimeError, ValueError, TypeError, KeyError) as exc:
             failures[chosen] = failures.get(chosen, 0) + 1
             audit(state / "agent.jsonl", "specification", {"agent": chosen, "outcome": type(exc).__name__})
     raise RuntimeError(

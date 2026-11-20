@@ -3,7 +3,7 @@
 import json
 from pathlib import Path
 
-from .agents.runner import run
+from .agents.runner import parse_proposal, run
 from .orchestrator import selected_agent
 from .run_state import atomic_json, exclusive
 
@@ -59,7 +59,10 @@ def repair_file(
             applied = False
             try:
                 response = run(chosen, prompt, app, timeout=timeout) if propose is None else propose(prompt)
-                content = json.loads(response)["content"].encode("utf-8")
+                replacement = parse_proposal(response).get("content")
+                if not isinstance(replacement, str):
+                    raise ValueError("repair proposal must have one content string")
+                content = replacement.encode("utf-8")
                 if content == start or len(content) > 100_000:
                     raise ValueError("empty or oversized repair")
                 backup.parent.mkdir(parents=True, exist_ok=True)

@@ -1,0 +1,221 @@
+{
+  "app_name": "ZZTEST App Twin Order Entry",
+  "source_platform": "windows",
+  "target_platform": "web",
+  "schema_version": "0.2.0",
+  "screens": [
+    {
+      "id": "4456807db61ba0efa86d",
+      "title": "ZZTEST App Twin Order Entry",
+      "controls": [
+        {
+          "id": "844f7e9fe84b12b9f4b2",
+          "role": "Button",
+          "name": "Entry",
+          "bounds": null,
+          "evidence_ids": [
+            "capture"
+          ],
+          "automation_id": "entry"
+        },
+        {
+          "id": "04692ae6804cdcaf987c",
+          "role": "Button",
+          "name": "Records",
+          "bounds": null,
+          "evidence_ids": [
+            "capture"
+          ],
+          "automation_id": "records"
+        },
+        {
+          "id": "6ff31c966acf0e3526c0",
+          "role": "Text",
+          "name": "Code",
+          "bounds": null,
+          "evidence_ids": [
+            "capture"
+          ],
+          "automation_id": ""
+        },
+        {
+          "id": "dd07d1b932e5349f5a4a",
+          "role": "Edit",
+          "name": "[redacted]",
+          "bounds": null,
+          "evidence_ids": [
+            "capture"
+          ],
+          "automation_id": "code"
+        },
+        {
+          "id": "258a06d921a84ae4e92c",
+          "role": "Text",
+          "name": "Quantity",
+          "bounds": null,
+          "evidence_ids": [
+            "capture"
+          ],
+          "automation_id": ""
+        },
+        {
+          "id": "63773a766b979aacf179",
+          "role": "Edit",
+          "name": "[redacted]",
+          "bounds": null,
+          "evidence_ids": [
+            "capture"
+          ],
+          "automation_id": "quantity"
+        },
+        {
+          "id": "8fa2ac71039fa268953a",
+          "role": "Text",
+          "name": "Unit price",
+          "bounds": null,
+          "evidence_ids": [
+            "capture"
+          ],
+          "automation_id": ""
+        },
+        {
+          "id": "752926e82005daddb05a",
+          "role": "Edit",
+          "name": "[redacted]",
+          "bounds": null,
+          "evidence_ids": [
+            "capture"
+          ],
+          "automation_id": "unit_price"
+        },
+        {
+          "id": "778103d7271b313c7111",
+          "role": "Button",
+          "name": "Calculate",
+          "bounds": null,
+          "evidence_ids": [
+            "capture"
+          ],
+          "automation_id": "calculate"
+        },
+        {
+          "id": "38479f2425acb0bc1d19",
+          "role": "Button",
+          "name": "Save",
+          "bounds": null,
+          "evidence_ids": [
+            "capture"
+          ],
+          "automation_id": "save"
+        },
+        {
+          "id": "b6d4ddca57b212f795fd",
+          "role": "Button",
+          "name": "Confirm",
+          "bounds": null,
+          "evidence_ids": [
+            "capture"
+          ],
+          "automation_id": "confirm_save"
+        },
+        {
+          "id": "8447d1641eeb66e33711",
+          "role": "Text",
+          "name": "Total",
+          "bounds": null,
+          "evidence_ids": [
+            "capture"
+          ],
+          "automation_id": ""
+        },
+        {
+          "id": "e2ec8095e56ab42a04ac",
+          "role": "Text",
+          "name": "",
+          "bounds": null,
+          "evidence_ids": [
+            "capture"
+          ],
+          "automation_id": "total"
+        },
+        {
+          "id": "3a93d3f7435b4483b60f",
+          "role": "Text",
+          "name": "Latest saved order",
+          "bounds": null,
+          "evidence_ids": [
+            "capture"
+          ],
+          "automation_id": ""
+        },
+        {
+          "id": "aacab3441933d71d401e",
+          "role": "Text",
+          "name": "",
+          "bounds": null,
+          "evidence_ids": [
+            "capture"
+          ],
+          "automation_id": "latest_code"
+        },
+        {
+          "id": "b286eed72ac16477494e",
+          "role": "Text",
+          "name": "",
+          "bounds": null,
+          "evidence_ids": [
+            "capture"
+          ],
+          "automation_id": "latest_total"
+        },
+        {
+          "id": "7a45f2987c981f18b4c5",
+          "role": "Text",
+          "name": "",
+          "bounds": null,
+          "evidence_ids": [
+            "capture"
+          ],
+          "automation_id": "status"
+        }
+      ],
+      "evidence_ids": [
+        "capture"
+      ]
+    }
+  ],
+  "workflows": [],
+  "evidence": [
+    {
+      "id": "capture",
+      "kind": "uia",
+      "artifact": "capture.json",
+      "observed_at": "2026-11-20T13:27:33.091393+00:00",
+      "confidence": 1.0
+    }
+  ],
+  "entities": [
+    {
+      "id": "order_entry",
+      "title": "Order entry",
+      "fields": {
+        "code": "text",
+        "quantity": "text",
+        "unit_price": "text"
+      },
+      "evidence_ids": [
+        "capture"
+      ],
+      "unique": [],
+      "relations": {}
+    }
+  ],
+  "rules": [],
+  "unknowns": [
+    "The order_entry entity is a tentative grouping of the code, quantity, and unit_price Edit controls by their automation IDs. Whether a corresponding data entity exists or persists is unknown.",
+    "The text field types are placeholders. Actual field types, accepted values, formats, validation, and data semantics are unknown.",
+    "The effects of Entry and Records, including any navigation and destination screen contents, are unknown.",
+    "The effects of Calculate and Save, including any calculation of Total, status changes, or persistence, are unknown.",
+    "The Confirm button, the Latest saved order text, and the latest_code and latest_total controls were hidden in the snapshot. Their visibility conditions, behavior, and relationship to Save are unknown."
+  ]
+}
