@@ -83,6 +83,20 @@ format. For an offline generator example run
 `twin generate --spec fixtures/example-uas.json --output state/example`.
 Generated projects include deployment and backup instructions in `DEPLOY.md`.
 
+## Probing, menus, dialogs, keys and OCR
+
+`twin infer-rules --report probes.json` with `{"probes": [...], "calculated": {"total": ["quantity", "unit_price"]}}`
+reports surviving and rejected hypotheses per field and the next probe to run.
+Replay plans accept `menu` (`"path": ["File", "Save"]`, allow `menu=File>Save`),
+`dialog_click` (`"dialog"`, `"button"`, allow `dialog_click=Confirm save|Yes`),
+`keys` (`"value": "^k"`, allow `keys=note:^k`; no Alt), `ocr_read` and
+`ocr_click` (`"label"`, `"min_confidence"`, allow `ocr_click=pad:HIGH`). OCR uses
+the OCR engine built into Windows and refuses clicks below the confidence
+threshold. Run `python -m fixtures.windows.menus_demo state/menus-run --repeat 3`
+for the live check. `twin generate --evolve` adds a migration to an existing app;
+entity `permissions` need `TWIN_ROLE_TOKENS` (JSON role to token). `twin
+discover-tools` shows which MCP servers Claude Code has approved.
+
 ## Pair and verify
 
 Populate workflow steps with a source `action`, exact `automation_id` and any

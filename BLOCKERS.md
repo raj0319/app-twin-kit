@@ -22,8 +22,15 @@
   model-listing command (`twin models --agent claude` reports `unavailable`).
   Codex has no currency limit; `--agent-budget-usd` therefore refuses Codex
   and routes `auto` to Claude only.
+- **Menus with native dialogs.** On the WinForms fixture, File > Save followed
+  by the confirmation dialog passed 3/3, 1/3 and 1/5 in three batches: the
+  Yes press closes the dialog but the save sometimes does not complete. The
+  observed status exposes each failure; the root cause is not found yet.
+  Keys and OCR were reliable in the same runs.
 - **Desktop inference.** Predictable Windows-to-browser control mappings now
-  resolve automatically and ambiguous ones are listed for review. The stateful demo uses a reviewed probe matrix. Broad
+  resolve automatically and ambiguous ones are listed for review. Bounded
+  hypotheses select validation, bounds, calculations, branches, persistence
+  and roles from probes. Broad
   autonomous hypothesis selection, role discovery, native dialogs, global input
   recording, and automatic vision or OCR navigation are incomplete. Custom
   controls and untested frameworks require additional fixtures and adapters.
@@ -43,6 +50,11 @@
   evolution, and unsupported behaviors require additional implementation.
 - **Product release.** The fixture measurement covers a declared subset.
   The UAS lists unknowns and release evidence remains incomplete.
-- **GitHub publication.** GitHub rejected the feature branch push because
-  the existing OAuth credential lacks the `workflow` scope required by
-  the new GitHub Actions files. The implementation is committed locally.
+- **GitHub publication.** Re-checked 2026-11-20: the `gh` token for raj0319
+  has scopes gist, read:org, repo, still no `workflow`, so the feature branch
+  (which adds GitHub Actions files) cannot be pushed. The owner can grant it
+  with `gh auth refresh -s workflow`. `main` on GitHub is **not** protected
+  (branch protection API: 404); enabling protection is a repository setting
+  the owner must approve.
+- **MCP servers.** Neither project MCP server (windows-mcp, playwright) is
+  approved in Claude Code's settings, and both use unpinned packages.
