@@ -16,19 +16,23 @@ from .desktop import (
     menu_item,
     read_control,
     send_keys_scoped,
+    settle,
     tree,
     utc,
+    wait_closed,
     window_for,
 )
 from .run_state import atomic_json, audit, exclusive
 
-READ_ONLY = {"observe", "read", "screenshot"}
-MUTATING = {"click", "fill", "select", "focus", "menu", "dialog_click", "keys"}
+READ_ONLY = {"observe", "read", "screenshot", "ocr_read"}
+MUTATING = {"click", "fill", "select", "focus", "menu", "dialog_click", "keys", "ocr_click"}
+CAPTURING = {"screenshot", "ocr_read", "ocr_click"}
 
 
 def allow_key(step):
     """The allowlist key of a step. menu: "File>Save"; dialog_click: "Confirm save|Yes";
-    keys: "<automation_id or window>:<keys>"; others: the automation ID."""
+    keys: "<automation_id or window>:<keys>"; ocr_click: "<automation_id>:<label>"; others: the
+    automation ID."""
     action = step["action"]
     if action == "menu":
         return ">".join(step.get("path") or [])
@@ -36,6 +40,8 @@ def allow_key(step):
         return f"{step.get('dialog', '')}|{step.get('button', '')}"
     if action == "keys":
         return f"{step.get('automation_id') or 'window'}:{step.get('value', '')}"
+    if action == "ocr_click":
+        return f"{step.get('automation_id', '')}:{step.get('label', '')}"
     return step.get("automation_id")
 
 
@@ -54,6 +60,14 @@ def validate_plan(plan, *, allow_mutation=False, sandbox_confirmed=False, allowe
             raise ValueError("invalid or sensitive menu path or dialog button")
         if action == "keys" and not KEYS.fullmatch(str(step.get("value", ""))):
             raise ValueError("keys must use the safe subset (no Alt)")
+        if action in {"ocr_click", "ocr_read"}:
+            label = step.get("label", "")
+            if not target or (
+                action == "ocr_click" and (not label or len(label) > 40 or SECRET.search(label))
+            ):
+                raise ValueError("OCR steps need an automation_id and, for a click, a short label")
+            if not 0.5 <= float(step.get("min_confidence", 0.8)) <= 1:
+                raise ValueError("min_confidence must be between 0.5 and 1")
         if action in MUTATING:
             if not (allow_mutation and sandbox_confirmed and key and (action, key) in allowed_targets):
                 raise PermissionError(
@@ -105,6 +119,10 @@ def _execute(
         raise PermissionError("screenshot capture requires a disposable source and evidence directory")
     if any(step["action"] == "screenshot" for step in plan) and not screenshots:
         raise PermissionError("screenshot capture is disabled")
+    if any(step["action"] in {"ocr_read", "ocr_click"} for step in plan) and not (
+        sandbox_confirmed and out_path
+    ):
+        raise PermissionError("OCR captures need a disposable source and an evidence directory")
     window = window_for(title, pid)
     entries = []
     initial = tree(window)
@@ -129,6 +147,8 @@ def _execute(
         }
         if action in {"menu", "dialog_click"}:
             event["target"] = allow_key(step)
+        if action in MUTATING and action != "dialog_click" and not settle(2.0):
+            event["unsettled_before"] = True  # an earlier blocked click is still running
         if out_path:
             audit(journal, "started", event)
         if action == "menu":
@@ -150,10 +170,24 @@ def _execute(
                     f"expected one {step['button']!r} button in the dialog, found {len(buttons)}"
                 )
             event["invoke"] = invoke_async(buttons[0])
+            # The click that opened the dialog only returns once its handler has finished.
+            event["settled"] = wait_closed(dialog) and settle()
             target = window
         elif action == "keys":
             target = control_for(window, selector) if selector else window
             send_keys_scoped(target if selector else None, window, step["value"])
+        elif action in {"ocr_click", "ocr_read"}:
+            from .ocr import click_label, read_text
+
+            target = control_for(window, selector)
+            image = out_path.with_name(f"{out_path.stem}-ocr-{index:03}.png")
+            if action == "ocr_read":
+                event["ocr"] = read_text(window, target, image)
+                event["value"] = event["ocr"]["text"]
+            else:
+                event["ocr"] = click_label(
+                    window, target, step["label"], image, float(step.get("min_confidence", 0.8))
+                )
         else:
             target = control_for(window, selector)
         if action in {"click", "fill", "select", "focus"}:

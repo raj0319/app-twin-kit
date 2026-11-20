@@ -88,6 +88,63 @@ def run_once(output):
     }
 
 
+OCR_PLAN = [
+    {"action": "ocr_read", "automation_id": "pad"},
+    {"action": "ocr_click", "automation_id": "pad", "label": "HIGH"},
+    {"action": "observe", "automation_id": "status"},
+    {"action": "ocr_click", "automation_id": "pad", "label": "MEDIUM"},
+    {"action": "observe", "automation_id": "status"},
+]
+OCR_ALLOWED = {("ocr_click", "pad:HIGH"), ("ocr_click", "pad:MEDIUM"), ("ocr_click", "pad:URGENT")}
+
+
+def run_ocr(output):
+    """Owner-drawn pad: no UIA children, so labels are found by Windows OCR and clicked by position."""
+    work = Path(tempfile.mkdtemp(prefix="ocr-", dir=output))
+    with fixture(
+        [str(LOCAL / "menus-dialogs.ps1"), "-FixtureDirectory", str(work)], TITLE, work / "app.log"
+    ) as app:
+        wait_until(lambda: window_for(TITLE, app.pid), app)
+        trace = execute_plan(
+            TITLE,
+            OCR_PLAN,
+            pid=app.pid,
+            allow_mutation=True,
+            sandbox_confirmed=True,
+            allowed_targets=OCR_ALLOWED,
+            out_path=work / "trace.json",
+        )
+        try:
+            execute_plan(
+                TITLE,
+                [{"action": "ocr_click", "automation_id": "pad", "label": "URGENT"}],
+                pid=app.pid,
+                allow_mutation=True,
+                sandbox_confirmed=True,
+                allowed_targets=OCR_ALLOWED,
+                out_path=work / "missing-label.json",
+            )
+            missing = "CLICKED"
+        except LookupError as exc:
+            missing = json.loads(str(exc))
+    events = trace["observations"]
+    seen = [e["value"] for e in events if e["action"] == "observe"]
+    clicks = [e["ocr"] for e in events if e["action"] == "ocr_click"]
+    read = next(e["ocr"] for e in events if e["action"] == "ocr_read")
+    return {
+        "evidence": str(work),
+        "ocr_text": read["text"],
+        "scale": read["scale"],
+        "clicks": [{k: c[k] for k in ("label", "confidence", "matches", "center")} for c in clicks],
+        "status_sequence": seen,
+        "missing_label": missing,
+        "passed": seen == ["Priority HIGH", "Priority MEDIUM"]
+        and all(c["confidence"] >= 0.8 for c in clicks)
+        and isinstance(missing, dict)
+        and missing.get("needs_review") is True,
+    }
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("directory", type=Path)
@@ -95,12 +152,15 @@ def main():
     args = parser.parse_args()
     output = args.directory.resolve()
     output.mkdir(parents=True, exist_ok=False)
-    runs = [run_once(output) for _ in range(max(1, min(args.repeat, 10)))]
+    repeat = max(1, min(args.repeat, 10))
+    runs = [run_once(output) for _ in range(repeat)]
+    ocr = [run_ocr(output) for _ in range(repeat)]
     report = {
         "refusals": refusals(),
         "runs": runs,
-        "passed": sum(r["passed"] for r in runs),
-        "total": len(runs),
+        "ocr_runs": ocr,
+        "passed": sum(r["passed"] for r in runs + ocr),
+        "total": len(runs) + len(ocr),
     }
     atomic_json(output / "report.json", report)
     print(json.dumps(report, indent=2))

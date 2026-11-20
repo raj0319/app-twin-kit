@@ -142,10 +142,41 @@ def invoke_async(control, wait=1.0):
     worker.start()
     worker.join(wait)
     if worker.is_alive():
+        PENDING.append(worker)
         return "modal_pending"
     if errors and not isinstance(errors[0], comtypes.COMError):
         raise errors[0]
     return "modal_pending" if errors else "completed"
+
+
+PENDING = []  # invokes still blocked inside the source's modal loop
+
+
+def settle(timeout=3.0):
+    """Wait for earlier blocked invokes to return (their dialog was answered and the source's handler
+    finished). Returns True when nothing is pending any more."""
+    from time import monotonic
+
+    deadline = monotonic() + timeout
+    for worker in list(PENDING):
+        worker.join(max(0.0, deadline - monotonic()))
+        if not worker.is_alive():
+            PENDING.remove(worker)
+    return not PENDING
+
+
+def wait_closed(dialog, timeout=3.0):
+    from time import monotonic, sleep
+
+    deadline = monotonic() + timeout
+    while monotonic() < deadline:
+        try:
+            if not dialog.is_visible():
+                return True
+        except Exception:  # noqa: BLE001 - the element is gone
+            return True
+        sleep(0.05)
+    return False
 
 
 def menu_item(window, path):
@@ -174,21 +205,31 @@ def menu_item(window, path):
     return current
 
 
-def dialog_for(window, title):
+def dialog_for(window, title, timeout=3.0):
     """A dialog window with this exact title owned by the same process: a child window of the main window
-    (WinForms MessageBox) or another top-level window of the process."""
+    (WinForms MessageBox) or another top-level window of the process. Waits up to `timeout` seconds for it
+    to appear, since the click that opens it returns before the dialog is shown."""
+    from time import monotonic, sleep
+
     from pywinauto import Desktop
 
     pid = window.process_id()
-    found = [
-        c for c in window.children() if c.element_info.control_type == "Window" and c.window_text() == title
-    ]
-    found += [
-        w
-        for w in Desktop(backend="uia").windows(process=pid, visible_only=True)
-        if w.window_text() == title and w.handle != window.handle
-    ]
-    unique = {item.element_info.runtime_id: item for item in found}
+    deadline = monotonic() + timeout
+    while True:
+        found = [
+            c
+            for c in window.children()
+            if c.element_info.control_type == "Window" and c.window_text() == title
+        ]
+        found += [
+            w
+            for w in Desktop(backend="uia").windows(process=pid, visible_only=True)
+            if w.window_text() == title and w.handle != window.handle
+        ]
+        unique = {item.element_info.runtime_id: item for item in found}
+        if len(unique) == 1 or monotonic() >= deadline:
+            break
+        sleep(0.1)
     if len(unique) != 1:
         raise RuntimeError(f"expected one dialog titled {redact(title)!r}, found {len(unique)}")
     return next(iter(unique.values()))
