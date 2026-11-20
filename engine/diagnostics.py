@@ -1,12 +1,13 @@
 """Prerequisite and extension inventory. Discovery never executes configuration."""
 
 import importlib.util
+import json
 import shutil
 import sys
 from pathlib import Path
 
 from .agents.runner import health
-from .mcp_registry import discover
+from .mcp_registry import approvals, discover, pinned
 
 
 def doctor(choice):
@@ -42,14 +43,24 @@ def tools(root):
             )
         except OSError:
             continue
-    return {
-        "mcp": discover(
-            [
-                root / ".mcp.json",
-                home / ".claude.json",
-                root / ".codex/config.toml",
-                home / ".codex/config.toml",
-            ]
-        ),
-        "skills": skills,
-    }
+    granted = approvals(root, home)
+    servers = discover(
+        [
+            root / ".mcp.json",
+            home / ".claude.json",
+            root / ".codex/config.toml",
+            home / ".codex/config.toml",
+        ]
+    )
+    declared = {}
+    try:
+        declared = json.loads((root / ".mcp.json").read_text(encoding="utf-8")).get("mcpServers", {})
+    except (OSError, ValueError):
+        pass
+    for server in servers:
+        server["authorized"] = server["name"] not in granted["disabled"] and (
+            server["name"] in granted["enabled"] or granted["all_project"]
+        )
+        if server["name"] in declared:
+            server["pinned"] = pinned(declared[server["name"]])
+    return {"mcp": servers, "skills": skills}
