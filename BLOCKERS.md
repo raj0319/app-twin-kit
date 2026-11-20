@@ -45,9 +45,10 @@
   disposable backup and restore passed. Clean-VM validation, Authenticode
   signing and hosted interactive CI still require infrastructure.
 - **Generated application scope.** The backend provides confirmed-rule
-  primitives, shared-token authentication hooks and relational constraints.
-  App-specific permissions, mature identity integration, automatic schema
-  evolution, and unsupported behaviors require additional implementation.
+  primitives, shared-token and role-token authorization, relational
+  constraints and additive schema evolution. Mature identity integration
+  (SSO, user accounts), destructive or type-changing migrations, and
+  unsupported behaviors require additional implementation.
 - **Product release.** The fixture measurement covers a declared subset.
   The UAS lists unknowns and release evidence remains incomplete.
 - **GitHub publication.** Re-checked 2026-11-20: the `gh` token for raj0319
