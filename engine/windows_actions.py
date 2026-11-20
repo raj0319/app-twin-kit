@@ -4,11 +4,39 @@ from pathlib import Path
 from tempfile import gettempdir
 from time import sleep
 
-from .desktop import SECRET, capture_window, control_for, identity, read_control, tree, utc, window_for
+from .desktop import (
+    KEYS,
+    SECRET,
+    capture_window,
+    control_for,
+    dialog_for,
+    dialog_text,
+    identity,
+    invoke_async,
+    menu_item,
+    read_control,
+    send_keys_scoped,
+    tree,
+    utc,
+    window_for,
+)
 from .run_state import atomic_json, audit, exclusive
 
 READ_ONLY = {"observe", "read", "screenshot"}
-MUTATING = {"click", "fill", "select", "focus"}
+MUTATING = {"click", "fill", "select", "focus", "menu", "dialog_click", "keys"}
+
+
+def allow_key(step):
+    """The allowlist key of a step. menu: "File>Save"; dialog_click: "Confirm save|Yes";
+    keys: "<automation_id or window>:<keys>"; others: the automation ID."""
+    action = step["action"]
+    if action == "menu":
+        return ">".join(step.get("path") or [])
+    if action == "dialog_click":
+        return f"{step.get('dialog', '')}|{step.get('button', '')}"
+    if action == "keys":
+        return f"{step.get('automation_id') or 'window'}:{step.get('value', '')}"
+    return step.get("automation_id")
 
 
 def validate_plan(plan, *, allow_mutation=False, sandbox_confirmed=False, allowed_targets=()):
@@ -21,8 +49,13 @@ def validate_plan(plan, *, allow_mutation=False, sandbox_confirmed=False, allowe
         target = step.get("automation_id")
         if target is not None and (not isinstance(target, str) or SECRET.search(target)):
             raise ValueError("invalid or sensitive Windows target")
+        key = allow_key(step)
+        if action in {"menu", "dialog_click"} and (not key or SECRET.search(key)):
+            raise ValueError("invalid or sensitive menu path or dialog button")
+        if action == "keys" and not KEYS.fullmatch(str(step.get("value", ""))):
+            raise ValueError("keys must use the safe subset (no Alt)")
         if action in MUTATING:
-            if not (allow_mutation and sandbox_confirmed and target and (action, target) in allowed_targets):
+            if not (allow_mutation and sandbox_confirmed and key and (action, key) in allowed_targets):
                 raise PermissionError(
                     "fixture consent and an exact allowlisted action/control pair are required"
                 )
@@ -87,27 +120,54 @@ def _execute(
     for index, step in enumerate(plan):
         action = step["action"]
         selector = step.get("automation_id")
-        target = control_for(window, selector)
         event = {
-            "id": identity(index, action, selector),
+            "id": identity(index, action, selector, allow_key(step)),
             "at": utc(),
             "step": index,
             "action": action,
             "automation_id": selector,
         }
+        if action in {"menu", "dialog_click"}:
+            event["target"] = allow_key(step)
         if out_path:
             audit(journal, "started", event)
-        if action in MUTATING:
+        if action == "menu":
+            item = menu_item(window, step["path"])
+            if not item.is_enabled():
+                raise PermissionError("disabled source menu item")
+            event["invoke"] = invoke_async(item)
+            target = window
+        elif action == "dialog_click":
+            dialog = dialog_for(window, step["dialog"])
+            event["dialog_text"] = dialog_text(dialog)
+            buttons = [
+                b
+                for b in dialog.descendants(control_type="Button")
+                if b.element_info.name.replace("&", "") == step["button"]
+            ]
+            if len(buttons) != 1:
+                raise RuntimeError(
+                    f"expected one {step['button']!r} button in the dialog, found {len(buttons)}"
+                )
+            event["invoke"] = invoke_async(buttons[0])
+            target = window
+        elif action == "keys":
+            target = control_for(window, selector) if selector else window
+            send_keys_scoped(target if selector else None, window, step["value"])
+        else:
+            target = control_for(window, selector)
+        if action in {"click", "fill", "select", "focus"}:
             if not target.is_enabled() or SECRET.search(target.element_info.name or ""):
                 raise PermissionError("disabled or sensitive source control")
             if action == "click":
-                target.invoke()
+                event["invoke"] = invoke_async(target)
             elif action == "fill":
                 target.iface_value.SetValue(step["value"])
             elif action == "select":
                 target.select(step["value"])
             elif action == "focus":
                 target.set_focus()
+        if action in MUTATING:
             sleep(0.12)  # UIA Invoke may schedule work on the target dispatcher.
         event["state"] = tree(window)
         next_state = event["state"]["state_id"]
