@@ -1,3 +1,4 @@
+import json
 import os
 from hmac import compare_digest
 from typing import Annotated
@@ -32,6 +33,32 @@ def authorize(credentials: HTTPAuthorizationCredentials | None = Depends(bearer)
             raise HTTPException(401, "Valid API token required")
     elif os.environ.get("TWIN_LOCAL_DEMO") != "1":
         raise HTTPException(503, "Authentication has not been configured")
+
+
+def caller_role(credentials):
+    """TWIN_ROLE_TOKENS (or _FILE) holds {"role": "token"}; the bearer token picks the role."""
+    raw = setting("TWIN_ROLE_TOKENS")
+    if not (raw and credentials):
+        return None
+    for role, token in json.loads(raw).items():
+        if compare_digest(credentials.credentials.encode(), str(token).encode()):
+            return role
+    return None
+
+
+def require(entity, operation):
+    allowed = set(entity.get("permissions", {}).get(operation, []))
+
+    def check(credentials: HTTPAuthorizationCredentials | None = Depends(bearer)):
+        if not allowed:
+            return authorize(credentials)
+        role = caller_role(credentials)
+        if role is None:
+            raise HTTPException(401, "A role token is required")
+        if role not in allowed:
+            raise HTTPException(403, f"Role {role} may not {operation} {entity['id']}")
+
+    return check
 
 
 @app.get("/api/health")
@@ -89,7 +116,8 @@ def register(entity):
             return [dict(row) for row in rows]
 
     path = f"/api/{key}"
-    auth = [Depends(authorize)]
+    auth = [Depends(require(entity, "create"))]
+    read_auth = [Depends(require(entity, "read"))]
     app.add_api_route(path + "/preview", preview, methods=["POST"], dependencies=auth, name=f"preview_{key}")
     app.add_api_route(
         path,
@@ -104,7 +132,7 @@ def register(entity):
         path,
         records,
         methods=["GET"],
-        dependencies=auth,
+        dependencies=read_auth,
         response_model=list[record_model],
         name=f"list_{key}",
     )

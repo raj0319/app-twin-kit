@@ -61,6 +61,9 @@ class Entity:
     evidence_ids: list[str] = field(default_factory=list)
     unique: list[str] = field(default_factory=list)
     relations: dict[str, str] = field(default_factory=dict)
+    # Observed role permissions, e.g. {"read": ["clerk", "manager"], "create": ["manager"]}.
+    # Empty means the shared API token guards the entity, as before.
+    permissions: dict[str, list[str]] = field(default_factory=dict)
 
 
 @dataclass
@@ -122,6 +125,14 @@ class UniversalAppSpec:
                     raise ValueError(f"invalid status on {item.id}")
                 if getattr(item, "status", None) == "confirmed" and not item.evidence_ids:
                     raise ValueError(f"confirmed item lacks evidence: {item.id}")
+        for entity in self.entities:
+            for operation, roles in entity.permissions.items():
+                if (
+                    operation not in {"read", "create"}
+                    or not roles
+                    or any(not re.fullmatch(r"[a-z][a-z0-9_]{0,39}", role) for role in roles)
+                ):
+                    raise ValueError(f"invalid permissions on entity {entity.id}")
         for workflow in self.workflows:
             if (
                 type(workflow.weight) is not int

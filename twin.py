@@ -51,6 +51,7 @@ def main(argv=None):
     parser.add_argument("--screenshots", action="store_true")
     parser.add_argument("--agent-timeout", type=int, default=900)
     parser.add_argument("--max-agent-calls", type=int, default=6)
+    parser.add_argument("--evolve", action="store_true", help="generate: add a migration to an existing app")
     parser.add_argument(
         "--agent-budget-usd",
         type=float,
@@ -164,7 +165,7 @@ def dispatch(args):
     if command == "generate":
         from engine.generate import generate
 
-        return generate(spec, output("app")), 0
+        return generate(spec, output("app"), evolve=args.evolve), 0
     if command == "infer-rules":
         from engine.rule_probes import save
 
