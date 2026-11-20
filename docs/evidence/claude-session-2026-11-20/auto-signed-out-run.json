@@ -1,0 +1,12 @@
+{
+  "title": "ZZTEST App Twin Order Entry",
+  "pid": 18344,
+  "agent": "auto",
+  "completed": [
+    "capture"
+  ],
+  "calls": 0,
+  "status": "blocked",
+  "agent_attempts": [],
+  "failure": "RuntimeError"
+}

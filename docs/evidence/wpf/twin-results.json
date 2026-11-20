@@ -1,0 +1,26 @@
+{
+  "calculate": {
+    "status": "Calculated",
+    "total": "33"
+  },
+  "required": {
+    "status": "Code failed required validation"
+  },
+  "quantity_min": {
+    "status": "Quantity failed min validation"
+  },
+  "price_min": {
+    "status": "Unit price failed min validation"
+  },
+  "save": {
+    "status": "Saved",
+    "total": "33"
+  },
+  "reopen": {
+    "latest_code": "ZZTEST_04013419",
+    "latest_total": "33"
+  },
+  "duplicate": {
+    "status": "Record conflicts with a unique field or required reference"
+  }
+}

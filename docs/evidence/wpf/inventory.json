@@ -1,0 +1,90 @@
+[
+  {
+    "id": "calculate",
+    "name": "Calculate order total",
+    "steps": [],
+    "evidence_ids": [],
+    "status": "unknown",
+    "weight": 3,
+    "permission": "read",
+    "dimensions": [
+      "behavior"
+    ]
+  },
+  {
+    "id": "required",
+    "name": "Reject empty order code",
+    "steps": [],
+    "evidence_ids": [],
+    "status": "unknown",
+    "weight": 2,
+    "permission": "read",
+    "dimensions": [
+      "behavior",
+      "ui"
+    ]
+  },
+  {
+    "id": "quantity_min",
+    "name": "Reject zero quantity",
+    "steps": [],
+    "evidence_ids": [],
+    "status": "unknown",
+    "weight": 2,
+    "permission": "read",
+    "dimensions": [
+      "behavior"
+    ]
+  },
+  {
+    "id": "price_min",
+    "name": "Reject negative price",
+    "steps": [],
+    "evidence_ids": [],
+    "status": "unknown",
+    "weight": 2,
+    "permission": "read",
+    "dimensions": [
+      "behavior"
+    ]
+  },
+  {
+    "id": "save",
+    "name": "Confirm and persist order",
+    "steps": [],
+    "evidence_ids": [],
+    "status": "unknown",
+    "weight": 5,
+    "permission": "fixture-write",
+    "dimensions": [
+      "behavior",
+      "data"
+    ]
+  },
+  {
+    "id": "reopen",
+    "name": "Read latest order",
+    "steps": [],
+    "evidence_ids": [],
+    "status": "unknown",
+    "weight": 4,
+    "permission": "read",
+    "dimensions": [
+      "data",
+      "ui"
+    ]
+  },
+  {
+    "id": "duplicate",
+    "name": "Reject duplicate code",
+    "steps": [],
+    "evidence_ids": [],
+    "status": "unknown",
+    "weight": 3,
+    "permission": "fixture-write",
+    "dimensions": [
+      "behavior",
+      "data"
+    ]
+  }
+]

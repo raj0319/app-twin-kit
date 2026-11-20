@@ -1,0 +1,12 @@
+{"time": "2026-11-20T13:15:58.663820+00:00", "event": "started", "details": {"id": "487ae5eab3dcd936b001", "step": 0, "action": "click", "automation_id": "entry"}}
+{"time": "2026-11-20T13:15:59.168033+00:00", "event": "finished", "details": {"id": "487ae5eab3dcd936b001", "state": "c6a0ced59fbb3d045e81"}}
+{"time": "2026-11-20T13:15:59.380778+00:00", "event": "started", "details": {"id": "c5d2e8d23a5b484867c9", "step": 1, "action": "fill", "automation_id": "code"}}
+{"time": "2026-11-20T13:15:59.877740+00:00", "event": "finished", "details": {"id": "c5d2e8d23a5b484867c9", "state": "c6a0ced59fbb3d045e81"}}
+{"time": "2026-11-20T13:16:00.038127+00:00", "event": "started", "details": {"id": "a5ad52596d8f1f184ab7", "step": 2, "action": "fill", "automation_id": "quantity"}}
+{"time": "2026-11-20T13:16:00.525552+00:00", "event": "finished", "details": {"id": "a5ad52596d8f1f184ab7", "state": "c6a0ced59fbb3d045e81"}}
+{"time": "2026-11-20T13:16:00.674381+00:00", "event": "started", "details": {"id": "aceaa09d0fb7b4940011", "step": 3, "action": "fill", "automation_id": "unit_price"}}
+{"time": "2026-11-20T13:16:01.088782+00:00", "event": "finished", "details": {"id": "aceaa09d0fb7b4940011", "state": "c6a0ced59fbb3d045e81"}}
+{"time": "2026-11-20T13:16:01.307714+00:00", "event": "started", "details": {"id": "3fac3788d3d026b5fedb", "step": 4, "action": "click", "automation_id": "save"}}
+{"time": "2026-11-20T13:16:01.742367+00:00", "event": "finished", "details": {"id": "3fac3788d3d026b5fedb", "state": "24e974faa8f0d30d8b5c"}}
+{"time": "2026-11-20T13:16:01.906975+00:00", "event": "started", "details": {"id": "3bab4601d997401b0b8f", "step": 5, "action": "click", "automation_id": "confirm_save"}}
+{"time": "2026-11-20T13:16:02.364481+00:00", "event": "finished", "details": {"id": "3bab4601d997401b0b8f", "state": "b3401fbabc2e6f4818f9"}}

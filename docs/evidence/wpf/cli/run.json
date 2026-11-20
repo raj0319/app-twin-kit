@@ -1,0 +1,11 @@
+{
+  "title": "ZZTEST App Twin Order Entry",
+  "pid": 20996,
+  "agent": "codex",
+  "completed": [
+    "capture",
+    "generate"
+  ],
+  "calls": 4,
+  "status": "awaiting_live_verification"
+}

@@ -1,0 +1,163 @@
+{
+  "state_id": "0174fce8af780fc9dfb8",
+  "captured_at": "2026-11-20T13:15:27.896790+00:00",
+  "pid": 7980,
+  "controls": [
+    {
+      "id": "4456807db61ba0efa86d",
+      "parent": "root",
+      "automation_id": "",
+      "name": "ZZTEST App Twin WinForms Compatibility",
+      "control_type": "Window",
+      "framework": "WinForm",
+      "bounds": [
+        130,
+        130,
+        375,
+        375
+      ],
+      "visible": true,
+      "enabled": true,
+      "depth": 0
+    },
+    {
+      "id": "5c332092c5e585fb97e1",
+      "parent": "4456807db61ba0efa86d",
+      "automation_id": "Reference",
+      "name": "[redacted]",
+      "control_type": "Edit",
+      "framework": "WinForm",
+      "bounds": [
+        160,
+        184,
+        125,
+        25
+      ],
+      "visible": true,
+      "enabled": true,
+      "depth": 1
+    },
+    {
+      "id": "498010aa9f280f245c3e",
+      "parent": "4456807db61ba0efa86d",
+      "automation_id": "2885754",
+      "name": "Lookup",
+      "control_type": "Button",
+      "framework": "WinForm",
+      "bounds": [
+        160,
+        231,
+        94,
+        29
+      ],
+      "visible": true,
+      "enabled": true,
+      "depth": 1
+    },
+    {
+      "id": "82cd7391e4993f20cd5e",
+      "parent": "4456807db61ba0efa86d",
+      "automation_id": "",
+      "name": "",
+      "control_type": "TitleBar",
+      "framework": "",
+      "bounds": [
+        160,
+        134,
+        335,
+        35
+      ],
+      "visible": true,
+      "enabled": true,
+      "depth": 1
+    },
+    {
+      "id": "3344aa3d07dae67973f5",
+      "parent": "82cd7391e4993f20cd5e",
+      "automation_id": "MenuBar",
+      "name": "System",
+      "control_type": "MenuBar",
+      "framework": "",
+      "bounds": [
+        140,
+        140,
+        28,
+        28
+      ],
+      "visible": true,
+      "enabled": true,
+      "depth": 2
+    },
+    {
+      "id": "33546b40526c6ddefef0",
+      "parent": "82cd7391e4993f20cd5e",
+      "automation_id": "",
+      "name": "Minimize",
+      "control_type": "Button",
+      "framework": "",
+      "bounds": [
+        318,
+        131,
+        60,
+        38
+      ],
+      "visible": true,
+      "enabled": true,
+      "depth": 2
+    },
+    {
+      "id": "4fdc87583ab2cba51307",
+      "parent": "82cd7391e4993f20cd5e",
+      "automation_id": "",
+      "name": "Maximize",
+      "control_type": "Button",
+      "framework": "",
+      "bounds": [
+        378,
+        131,
+        59,
+        38
+      ],
+      "visible": true,
+      "enabled": true,
+      "depth": 2
+    },
+    {
+      "id": "432c836203c4b490d946",
+      "parent": "82cd7391e4993f20cd5e",
+      "automation_id": "",
+      "name": "Close",
+      "control_type": "Button",
+      "framework": "",
+      "bounds": [
+        436,
+        131,
+        60,
+        38
+      ],
+      "visible": true,
+      "enabled": true,
+      "depth": 2
+    },
+    {
+      "id": "bf15eab3bc577d3e2f08",
+      "parent": "3344aa3d07dae67973f5",
+      "automation_id": "",
+      "name": "System",
+      "control_type": "MenuItem",
+      "framework": "",
+      "bounds": [
+        140,
+        140,
+        28,
+        28
+      ],
+      "visible": true,
+      "enabled": true,
+      "depth": 3
+    }
+  ],
+  "truncated": false,
+  "title": "ZZTEST App Twin WinForms Compatibility",
+  "status": "read_only_observation"
+}

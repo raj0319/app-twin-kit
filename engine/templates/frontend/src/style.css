@@ -1,0 +1,16 @@
+* { box-sizing: border-box; }
+body { margin: 0; font: 1rem system-ui, sans-serif; background: #edf2f7; color: #152c3b; }
+main { max-width: 54rem; margin: 2rem auto; padding: clamp(1rem, 4vw, 3rem); background: white; border-radius: 1rem; }
+nav, .actions { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1rem 0; }
+a { color: #005d78; text-underline-offset: .2em; }
+form { max-width: 28rem; }
+.field { display: grid; gap: .35rem; margin: .8rem 0; }
+input, button { font: inherit; padding: .5rem .7rem; }
+input[type=checkbox] { justify-self: start; }
+button { background: #075d73; color: white; border: 0; border-radius: .35rem; cursor: pointer; }
+button:disabled { opacity: .65; cursor: default; }
+:focus-visible { outline: 3px solid #7e4800; outline-offset: 3px; }
+.scroll { overflow: auto; }
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: .5rem; border-bottom: 1px solid #c1cbd3; }
+dialog { padding: 1.5rem; border: 1px solid #648498; border-radius: .5rem; }

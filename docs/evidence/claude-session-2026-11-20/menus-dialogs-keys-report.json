@@ -1,0 +1,89 @@
+{
+  "refusals": {
+    "unlisted dialog button": "refused: PermissionError",
+    "Alt+F4 keys": "refused: ValueError",
+    "unlisted menu": "refused: PermissionError"
+  },
+  "runs": [
+    {
+      "evidence": "F:\\Other\\app-twin-kit\\state\\menus-run\\source-qhisnk80",
+      "status_sequence": [
+        "Saved",
+        "Shortcut Ctrl+K",
+        "New note",
+        "Save cancelled"
+      ],
+      "dialogs": [
+        [
+          "Save this note?"
+        ],
+        [
+          "Save this note?"
+        ]
+      ],
+      "invoke": [
+        "modal_pending",
+        "completed",
+        "completed",
+        "modal_pending",
+        "completed"
+      ],
+      "saved_file": "ZZTEST note",
+      "passed": true
+    },
+    {
+      "evidence": "F:\\Other\\app-twin-kit\\state\\menus-run\\source-k_c1vmia",
+      "status_sequence": [
+        "Saved",
+        "Shortcut Ctrl+K",
+        "New note",
+        "Save cancelled"
+      ],
+      "dialogs": [
+        [
+          "Save this note?"
+        ],
+        [
+          "Save this note?"
+        ]
+      ],
+      "invoke": [
+        "modal_pending",
+        "completed",
+        "completed",
+        "modal_pending",
+        "completed"
+      ],
+      "saved_file": "ZZTEST note",
+      "passed": true
+    },
+    {
+      "evidence": "F:\\Other\\app-twin-kit\\state\\menus-run\\source-jss7vrw6",
+      "status_sequence": [
+        "Saved",
+        "Shortcut Ctrl+K",
+        "New note",
+        "Save cancelled"
+      ],
+      "dialogs": [
+        [
+          "Save this note?"
+        ],
+        [
+          "Save this note?"
+        ]
+      ],
+      "invoke": [
+        "modal_pending",
+        "completed",
+        "completed",
+        "modal_pending",
+        "completed"
+      ],
+      "saved_file": "ZZTEST note",
+      "passed": true
+    }
+  ],
+  "passed": 3,
+  "total": 3
+}
