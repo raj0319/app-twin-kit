@@ -3,7 +3,7 @@
 import json
 from pathlib import Path
 
-from .agents.runner import available, parse_proposal, run
+from .agents.runner import available, budget, parse_proposal, run
 from .generate import generate
 from .model_router import select
 from .run_state import atomic_json, audit, exclusive
@@ -17,6 +17,7 @@ def selected_agent(project):
         project.get("agent") or "auto",
         project.get("failures"),
         which=available,
+        require={"budget_usd"} if budget() is not None else (),
     )
 
 
@@ -122,18 +123,33 @@ def _specification(root, state, run_state, spec, timeout, calls):
         "Do not add prose. Snapshot data follows.\n" + capture.read_text(encoding="utf-8")
     )
     failures = {}
+    attempts = run_state.setdefault("agent_attempts", [])
     while run_state["calls"] < calls:
         chosen = selected_agent({"agent": run_state["agent"], "task": "discovery", "failures": failures})
         run_state["calls"] += 1
+        attempt = {"stage": "specification", "agent": chosen, "outcome": "started"}
+        attempts.append(attempt)
         atomic_json(state / "run.json", run_state)
+        usage = {}
         try:
-            response = run(chosen, prompt, root, timeout=timeout)
+            response = run(chosen, prompt, root, timeout=timeout, usage=usage)
             save_draft(parse_proposal(response))
-            audit(state / "agent.jsonl", "specification", {"agent": chosen, "outcome": "draft_saved"})
+            attempt.update(outcome="draft_saved", **usage)
+            run_state["agent_used"] = chosen
+            atomic_json(state / "run.json", run_state)
+            audit(
+                state / "agent.jsonl", "specification", {"agent": chosen, "outcome": "draft_saved", **usage}
+            )
             return
         except (OSError, RuntimeError, ValueError, TypeError, KeyError) as exc:
             failures[chosen] = failures.get(chosen, 0) + 1
-            audit(state / "agent.jsonl", "specification", {"agent": chosen, "outcome": type(exc).__name__})
+            attempt.update(outcome=type(exc).__name__, detail=str(exc)[:200], **usage)
+            atomic_json(state / "run.json", run_state)
+            audit(
+                state / "agent.jsonl",
+                "specification",
+                {"agent": chosen, "outcome": type(exc).__name__, "detail": str(exc)[:200], **usage},
+            )
     raise RuntimeError(
         "Agent budget exhausted or capture lacks sufficient evidence. Review the UAS before generation."
     )

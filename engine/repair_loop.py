@@ -58,7 +58,13 @@ def repair_file(
             accepted = False
             applied = False
             try:
-                response = run(chosen, prompt, app, timeout=timeout) if propose is None else propose(prompt)
+                usage = {}
+                response = (
+                    run(chosen, prompt, app, timeout=timeout, usage=usage)
+                    if propose is None
+                    else propose(prompt)
+                )
+                row.update(usage)
                 replacement = parse_proposal(response).get("content")
                 if not isinstance(replacement, str):
                     raise ValueError("repair proposal must have one content string")

@@ -51,6 +51,11 @@ def main(argv=None):
     parser.add_argument("--screenshots", action="store_true")
     parser.add_argument("--agent-timeout", type=int, default=900)
     parser.add_argument("--max-agent-calls", type=int, default=6)
+    parser.add_argument(
+        "--agent-budget-usd",
+        type=float,
+        help="Spend limit per provider request, enforced by the CLI (Claude only; Codex cannot enforce one)",
+    )
     parser.add_argument("--repair-file", type=Path, help="Generated file relative to the app directory")
     parser.add_argument("--report", type=Path, help="Baseline JSON report, refreshed by verification")
     parser.add_argument(
@@ -68,6 +73,12 @@ def main(argv=None):
 
 
 def dispatch(args):
+    if args.agent_budget_usd is not None:
+        import os
+
+        from engine.agents.runner import BUDGET_ENV
+
+        os.environ[BUDGET_ENV] = str(args.agent_budget_usd)
     root = args.root.resolve()
     state = root / "state" / "twin"
     command = args.command
@@ -101,10 +112,11 @@ def dispatch(args):
 
         return (doctor(args.agent or "auto") if command == "doctor" else tools(root)), 0
     if command == "models":
-        from engine.agents.runner import models
+        from engine.agents.runner import model_listing
 
-        provider = args.agent if args.agent not in {None, "auto"} else "codex"
-        return {"provider": provider, "models": models(provider)}, 0
+        if args.agent in {None, "auto"}:
+            return {"providers": [model_listing("claude"), model_listing("codex")]}, 0
+        return model_listing(args.agent), 0
     if command == "list-windows":
         from engine.desktop import list_windows
 
