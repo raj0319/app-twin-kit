@@ -21,3 +21,6 @@
   evolution, and unsupported behaviors require additional implementation.
 - **Product release.** The fixture measurement covers a declared subset.
   The UAS lists unknowns and release evidence remains incomplete.
+- **GitHub publication.** GitHub rejected the feature branch push because
+  the existing OAuth credential lacks the `workflow` scope required by
+  the new GitHub Actions files. The implementation is committed locally.
