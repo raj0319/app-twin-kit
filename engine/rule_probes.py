@@ -39,8 +39,23 @@ def infer(experiments):
 
 
 def save(experiments_path, out_path):
-    proposals = infer(json.loads(Path(experiments_path).read_text(encoding="utf-8")))
+    """Legacy experiment lists give candidates; {"probes": [...], "calculated": {...}} gives the bounded
+    hypothesis report (engine.hypotheses)."""
+    data = json.loads(Path(experiments_path).read_text(encoding="utf-8"))
     p = Path(out_path)
     p.parent.mkdir(parents=True, exist_ok=True)
+    if isinstance(data, dict) and "probes" in data:
+        from .hypotheses import analyse
+
+        report = analyse(data["probes"], calculated=data.get("calculated"))
+        p.write_text(json.dumps(report, indent=2), encoding="utf-8")
+        selected = sum(
+            1
+            for family in report["fields"].values()
+            for result in family.values()
+            if result.get("status") == "selected"
+        ) + sum(1 for result in report["calculations"].values() if result["status"] == "selected")
+        return {"hypothesis_report": str(p), "selected": selected, "confirmed": 0}
+    proposals = infer(data)
     p.write_text(json.dumps(proposals, indent=2), encoding="utf-8")
     return {"candidates": len(proposals), "confirmed": 0, "file": str(p)}
