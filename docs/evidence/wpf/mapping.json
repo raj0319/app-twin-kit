@@ -1,0 +1,482 @@
+[
+  {
+    "id": "calculate",
+    "windows": [
+      {
+        "action": "click",
+        "automation_id": "entry"
+      },
+      {
+        "action": "fill",
+        "automation_id": "code",
+        "value": "ZZTEST_04013419"
+      },
+      {
+        "action": "fill",
+        "automation_id": "quantity",
+        "value": "3"
+      },
+      {
+        "action": "fill",
+        "automation_id": "unit_price",
+        "value": "11"
+      },
+      {
+        "action": "click",
+        "automation_id": "calculate",
+        "wait_for_status": true
+      }
+    ],
+    "browser": {
+      "path": "/",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "#entry"
+        },
+        {
+          "action": "fill",
+          "selector": "#code",
+          "value": "ZZTEST_04013419"
+        },
+        {
+          "action": "fill",
+          "selector": "#quantity",
+          "value": "3"
+        },
+        {
+          "action": "fill",
+          "selector": "#unit_price",
+          "value": "11"
+        },
+        {
+          "action": "click",
+          "selector": "#calculate",
+          "wait_for": "#status"
+        }
+      ]
+    },
+    "observations": {
+      "status": {
+        "windows_automation_id": "status",
+        "browser_selector": "#status",
+        "normalize": "text"
+      },
+      "total": {
+        "windows_automation_id": "total",
+        "browser_selector": "#total",
+        "normalize": "number"
+      }
+    },
+    "status": "user_approved_not_behavior_verified",
+    "evidence_ids": [
+      "entry-uia",
+      "records-uia"
+    ]
+  },
+  {
+    "id": "required",
+    "windows": [
+      {
+        "action": "click",
+        "automation_id": "entry"
+      },
+      {
+        "action": "fill",
+        "automation_id": "code",
+        "value": ""
+      },
+      {
+        "action": "fill",
+        "automation_id": "quantity",
+        "value": "2"
+      },
+      {
+        "action": "fill",
+        "automation_id": "unit_price",
+        "value": "7"
+      },
+      {
+        "action": "click",
+        "automation_id": "calculate",
+        "wait_for_status": true
+      }
+    ],
+    "browser": {
+      "path": "/",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "#entry"
+        },
+        {
+          "action": "fill",
+          "selector": "#code",
+          "value": ""
+        },
+        {
+          "action": "fill",
+          "selector": "#quantity",
+          "value": "2"
+        },
+        {
+          "action": "fill",
+          "selector": "#unit_price",
+          "value": "7"
+        },
+        {
+          "action": "click",
+          "selector": "#calculate",
+          "wait_for": "#status"
+        }
+      ]
+    },
+    "observations": {
+      "status": {
+        "windows_automation_id": "status",
+        "browser_selector": "#status",
+        "normalize": "text"
+      }
+    },
+    "status": "user_approved_not_behavior_verified",
+    "evidence_ids": [
+      "entry-uia",
+      "records-uia"
+    ]
+  },
+  {
+    "id": "quantity_min",
+    "windows": [
+      {
+        "action": "click",
+        "automation_id": "entry"
+      },
+      {
+        "action": "fill",
+        "automation_id": "code",
+        "value": "ZZTEST_04013419"
+      },
+      {
+        "action": "fill",
+        "automation_id": "quantity",
+        "value": "0"
+      },
+      {
+        "action": "fill",
+        "automation_id": "unit_price",
+        "value": "7"
+      },
+      {
+        "action": "click",
+        "automation_id": "calculate",
+        "wait_for_status": true
+      }
+    ],
+    "browser": {
+      "path": "/",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "#entry"
+        },
+        {
+          "action": "fill",
+          "selector": "#code",
+          "value": "ZZTEST_04013419"
+        },
+        {
+          "action": "fill",
+          "selector": "#quantity",
+          "value": "0"
+        },
+        {
+          "action": "fill",
+          "selector": "#unit_price",
+          "value": "7"
+        },
+        {
+          "action": "click",
+          "selector": "#calculate",
+          "wait_for": "#status"
+        }
+      ]
+    },
+    "observations": {
+      "status": {
+        "windows_automation_id": "status",
+        "browser_selector": "#status",
+        "normalize": "text"
+      }
+    },
+    "status": "user_approved_not_behavior_verified",
+    "evidence_ids": [
+      "entry-uia",
+      "records-uia"
+    ]
+  },
+  {
+    "id": "price_min",
+    "windows": [
+      {
+        "action": "click",
+        "automation_id": "entry"
+      },
+      {
+        "action": "fill",
+        "automation_id": "code",
+        "value": "ZZTEST_04013419"
+      },
+      {
+        "action": "fill",
+        "automation_id": "quantity",
+        "value": "2"
+      },
+      {
+        "action": "fill",
+        "automation_id": "unit_price",
+        "value": "-1"
+      },
+      {
+        "action": "click",
+        "automation_id": "calculate",
+        "wait_for_status": true
+      }
+    ],
+    "browser": {
+      "path": "/",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "#entry"
+        },
+        {
+          "action": "fill",
+          "selector": "#code",
+          "value": "ZZTEST_04013419"
+        },
+        {
+          "action": "fill",
+          "selector": "#quantity",
+          "value": "2"
+        },
+        {
+          "action": "fill",
+          "selector": "#unit_price",
+          "value": "-1"
+        },
+        {
+          "action": "click",
+          "selector": "#calculate",
+          "wait_for": "#status"
+        }
+      ]
+    },
+    "observations": {
+      "status": {
+        "windows_automation_id": "status",
+        "browser_selector": "#status",
+        "normalize": "text"
+      }
+    },
+    "status": "user_approved_not_behavior_verified",
+    "evidence_ids": [
+      "entry-uia",
+      "records-uia"
+    ]
+  },
+  {
+    "id": "save",
+    "windows": [
+      {
+        "action": "click",
+        "automation_id": "entry"
+      },
+      {
+        "action": "fill",
+        "automation_id": "code",
+        "value": "ZZTEST_04013419"
+      },
+      {
+        "action": "fill",
+        "automation_id": "quantity",
+        "value": "3"
+      },
+      {
+        "action": "fill",
+        "automation_id": "unit_price",
+        "value": "11"
+      },
+      {
+        "action": "click",
+        "automation_id": "save"
+      },
+      {
+        "action": "click",
+        "automation_id": "confirm_save",
+        "wait_for_status": true
+      }
+    ],
+    "browser": {
+      "path": "/",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "#entry"
+        },
+        {
+          "action": "fill",
+          "selector": "#code",
+          "value": "ZZTEST_04013419"
+        },
+        {
+          "action": "fill",
+          "selector": "#quantity",
+          "value": "3"
+        },
+        {
+          "action": "fill",
+          "selector": "#unit_price",
+          "value": "11"
+        },
+        {
+          "action": "click",
+          "selector": "#save"
+        },
+        {
+          "action": "click",
+          "selector": "#confirm_save",
+          "wait_for": "#status"
+        }
+      ]
+    },
+    "observations": {
+      "status": {
+        "windows_automation_id": "status",
+        "browser_selector": "#status",
+        "normalize": "text"
+      },
+      "total": {
+        "windows_automation_id": "total",
+        "browser_selector": "#total",
+        "normalize": "number"
+      }
+    },
+    "status": "user_approved_not_behavior_verified",
+    "evidence_ids": [
+      "entry-uia",
+      "records-uia"
+    ]
+  },
+  {
+    "id": "reopen",
+    "windows": [
+      {
+        "action": "click",
+        "automation_id": "records"
+      }
+    ],
+    "browser": {
+      "path": "/",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "#records"
+        }
+      ]
+    },
+    "observations": {
+      "latest_code": {
+        "windows_automation_id": "latest_code",
+        "browser_selector": "#latest_code",
+        "normalize": "exact"
+      },
+      "latest_total": {
+        "windows_automation_id": "latest_total",
+        "browser_selector": "#latest_total",
+        "normalize": "number"
+      }
+    },
+    "status": "user_approved_not_behavior_verified",
+    "evidence_ids": [
+      "records-uia"
+    ]
+  },
+  {
+    "id": "duplicate",
+    "windows": [
+      {
+        "action": "click",
+        "automation_id": "entry"
+      },
+      {
+        "action": "fill",
+        "automation_id": "code",
+        "value": "ZZTEST_04013419"
+      },
+      {
+        "action": "fill",
+        "automation_id": "quantity",
+        "value": "3"
+      },
+      {
+        "action": "fill",
+        "automation_id": "unit_price",
+        "value": "11"
+      },
+      {
+        "action": "click",
+        "automation_id": "save"
+      },
+      {
+        "action": "click",
+        "automation_id": "confirm_save",
+        "wait_for_status": true
+      }
+    ],
+    "browser": {
+      "path": "/",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "#entry"
+        },
+        {
+          "action": "fill",
+          "selector": "#code",
+          "value": "ZZTEST_04013419"
+        },
+        {
+          "action": "fill",
+          "selector": "#quantity",
+          "value": "3"
+        },
+        {
+          "action": "fill",
+          "selector": "#unit_price",
+          "value": "11"
+        },
+        {
+          "action": "click",
+          "selector": "#save"
+        },
+        {
+          "action": "click",
+          "selector": "#confirm_save",
+          "wait_for": "#status"
+        }
+      ]
+    },
+    "observations": {
+      "status": {
+        "windows_automation_id": "status",
+        "browser_selector": "#status",
+        "normalize": "text"
+      }
+    },
+    "status": "user_approved_not_behavior_verified",
+    "evidence_ids": [
+      "entry-uia",
+      "records-uia"
+    ]
+  }
+]

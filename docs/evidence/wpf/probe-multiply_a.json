@@ -1,0 +1,3319 @@
+{
+  "pid": 16304,
+  "observations": [
+    {
+      "id": "487ae5eab3dcd936b001",
+      "at": "2026-11-20T13:15:17.712315+00:00",
+      "step": 0,
+      "action": "click",
+      "automation_id": "entry",
+      "state": {
+        "state_id": "c6a0ced59fbb3d045e81",
+        "captured_at": "2026-11-20T13:15:18.063328+00:00",
+        "pid": 16304,
+        "controls": [
+          {
+            "id": "4456807db61ba0efa86d",
+            "parent": "root",
+            "automation_id": "",
+            "name": "ZZTEST App Twin Order Entry",
+            "control_type": "Window",
+            "framework": "WPF",
+            "bounds": [
+              1364,
+              433,
+              713,
+              525
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 0
+          },
+          {
+            "id": "7762521ea98374f270f5",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "",
+            "name": "",
+            "control_type": "TitleBar",
+            "framework": "",
+            "bounds": [
+              1393,
+              436,
+              675,
+              35
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "844f7e9fe84b12b9f4b2",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "entry",
+            "name": "Entry",
+            "control_type": "Button",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              499,
+              71,
+              34
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "04692ae6804cdcaf987c",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "records",
+            "name": "Records",
+            "control_type": "Button",
+            "framework": "WPF",
+            "bounds": [
+              1482,
+              499,
+              90,
+              34
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "6ff31c966acf0e3526c0",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "",
+            "name": "Code",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              548,
+              640,
+              33
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "dd07d1b932e5349f5a4a",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "code",
+            "name": "[redacted]",
+            "control_type": "Edit",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              581,
+              640,
+              22
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "258a06d921a84ae4e92c",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "",
+            "name": "Quantity",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              603,
+              640,
+              33
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "63773a766b979aacf179",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "quantity",
+            "name": "[redacted]",
+            "control_type": "Edit",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              636,
+              640,
+              22
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "8fa2ac71039fa268953a",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "",
+            "name": "Unit price",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              658,
+              640,
+              33
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "752926e82005daddb05a",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "unit_price",
+            "name": "[redacted]",
+            "control_type": "Edit",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              691,
+              640,
+              22
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "778103d7271b313c7111",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "calculate",
+            "name": "Calculate",
+            "control_type": "Button",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              731,
+              97,
+              35
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "38479f2425acb0bc1d19",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "save",
+            "name": "Save",
+            "control_type": "Button",
+            "framework": "WPF",
+            "bounds": [
+              1508,
+              731,
+              68,
+              35
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "b6d4ddca57b212f795fd",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "confirm_save",
+            "name": "Confirm",
+            "control_type": "Button",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "8447d1641eeb66e33711",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "",
+            "name": "Total",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              766,
+              640,
+              32
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "e2ec8095e56ab42a04ac",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "total",
+            "name": "",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              798,
+              640,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "3a93d3f7435b4483b60f",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "",
+            "name": "Latest saved order",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "aacab3441933d71d401e",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "latest_code",
+            "name": "",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "b286eed72ac16477494e",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "latest_total",
+            "name": "",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "7a45f2987c981f18b4c5",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "status",
+            "name": "",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              836,
+              640,
+              19
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "db14c755ff5b69b3fac9",
+            "parent": "7762521ea98374f270f5",
+            "automation_id": "MenuBar",
+            "name": "System",
+            "control_type": "MenuBar",
+            "framework": "",
+            "bounds": [
+              1373,
+              442,
+              28,
+              28
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "bffdcef4d1f888be2004",
+            "parent": "7762521ea98374f270f5",
+            "automation_id": "",
+            "name": "Minimize",
+            "control_type": "Button",
+            "framework": "",
+            "bounds": [
+              1890,
+              434,
+              60,
+              37
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "0931f8c00c1e07d4c414",
+            "parent": "7762521ea98374f270f5",
+            "automation_id": "",
+            "name": "Maximize",
+            "control_type": "Button",
+            "framework": "",
+            "bounds": [
+              1950,
+              434,
+              59,
+              37
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "723b4e8fb3151a8bc149",
+            "parent": "7762521ea98374f270f5",
+            "automation_id": "",
+            "name": "Close",
+            "control_type": "Button",
+            "framework": "",
+            "bounds": [
+              2009,
+              434,
+              60,
+              37
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "f6b685e5a4f15ff9371b",
+            "parent": "844f7e9fe84b12b9f4b2",
+            "automation_id": "",
+            "name": "Entry",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1419,
+              506,
+              34,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "bad9528b56bfffc293a0",
+            "parent": "04692ae6804cdcaf987c",
+            "automation_id": "",
+            "name": "Records",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1500,
+              506,
+              53,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "7030144b20514bb12d69",
+            "parent": "6ff31c966acf0e3526c0",
+            "automation_id": "",
+            "name": "Code",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1407,
+              555,
+              35,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "db747008ce1020faec1a",
+            "parent": "dd07d1b932e5349f5a4a",
+            "automation_id": "VerticalScrollBar",
+            "name": "",
+            "control_type": "ScrollBar",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": false,
+            "depth": 2
+          },
+          {
+            "id": "9fe98b2e4b169ab817bb",
+            "parent": "dd07d1b932e5349f5a4a",
+            "automation_id": "HorizontalScrollBar",
+            "name": "",
+            "control_type": "ScrollBar",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": false,
+            "depth": 2
+          },
+          {
+            "id": "83558b83af9026fb2f00",
+            "parent": "258a06d921a84ae4e92c",
+            "automation_id": "",
+            "name": "Quantity",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1407,
+              610,
+              57,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "11beb4155828ac910a10",
+            "parent": "63773a766b979aacf179",
+            "automation_id": "VerticalScrollBar",
+            "name": "",
+            "control_type": "ScrollBar",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": false,
+            "depth": 2
+          },
+          {
+            "id": "d26b2facd79433c23285",
+            "parent": "63773a766b979aacf179",
+            "automation_id": "HorizontalScrollBar",
+            "name": "",
+            "control_type": "ScrollBar",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": false,
+            "depth": 2
+          },
+          {
+            "id": "d9bf2b0aa351c04a5846",
+            "parent": "8fa2ac71039fa268953a",
+            "automation_id": "",
+            "name": "Unit price",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1407,
+              665,
+              64,
+              19
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "17f837a7f7147e2656ce",
+            "parent": "752926e82005daddb05a",
+            "automation_id": "VerticalScrollBar",
+            "name": "",
+            "control_type": "ScrollBar",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": false,
+            "depth": 2
+          },
+          {
+            "id": "05f3a4efd077624e1197",
+            "parent": "752926e82005daddb05a",
+            "automation_id": "HorizontalScrollBar",
+            "name": "",
+            "control_type": "ScrollBar",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": false,
+            "depth": 2
+          },
+          {
+            "id": "035dcc590e0f24ef3ae7",
+            "parent": "778103d7271b313c7111",
+            "automation_id": "",
+            "name": "Calculate",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1419,
+              738,
+              60,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "77bec25eca6c70a2332f",
+            "parent": "38479f2425acb0bc1d19",
+            "automation_id": "",
+            "name": "Save",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1527,
+              738,
+              31,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "8fd26dc7589e83874e09",
+            "parent": "8447d1641eeb66e33711",
+            "automation_id": "",
+            "name": "Total",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1407,
+              772,
+              31,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "f982ea057d664970addf",
+            "parent": "db14c755ff5b69b3fac9",
+            "automation_id": "",
+            "name": "System",
+            "control_type": "MenuItem",
+            "framework": "",
+            "bounds": [
+              1373,
+              442,
+              28,
+              28
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 3
+          }
+        ],
+        "truncated": false
+      },
+      "screenshot": "probe-multiply_a-000.png"
+    },
+    {
+      "id": "c5d2e8d23a5b484867c9",
+      "at": "2026-11-20T13:15:18.188621+00:00",
+      "step": 1,
+      "action": "fill",
+      "automation_id": "code",
+      "state": {
+        "state_id": "c6a0ced59fbb3d045e81",
+        "captured_at": "2026-11-20T13:15:18.582121+00:00",
+        "pid": 16304,
+        "controls": [
+          {
+            "id": "4456807db61ba0efa86d",
+            "parent": "root",
+            "automation_id": "",
+            "name": "ZZTEST App Twin Order Entry",
+            "control_type": "Window",
+            "framework": "WPF",
+            "bounds": [
+              1364,
+              433,
+              713,
+              525
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 0
+          },
+          {
+            "id": "7762521ea98374f270f5",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "",
+            "name": "",
+            "control_type": "TitleBar",
+            "framework": "",
+            "bounds": [
+              1393,
+              436,
+              675,
+              35
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "844f7e9fe84b12b9f4b2",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "entry",
+            "name": "Entry",
+            "control_type": "Button",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              499,
+              71,
+              34
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "04692ae6804cdcaf987c",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "records",
+            "name": "Records",
+            "control_type": "Button",
+            "framework": "WPF",
+            "bounds": [
+              1482,
+              499,
+              90,
+              34
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "6ff31c966acf0e3526c0",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "",
+            "name": "Code",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              548,
+              640,
+              33
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "dd07d1b932e5349f5a4a",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "code",
+            "name": "[redacted]",
+            "control_type": "Edit",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              581,
+              640,
+              22
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "258a06d921a84ae4e92c",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "",
+            "name": "Quantity",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              603,
+              640,
+              33
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "63773a766b979aacf179",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "quantity",
+            "name": "[redacted]",
+            "control_type": "Edit",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              636,
+              640,
+              22
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "8fa2ac71039fa268953a",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "",
+            "name": "Unit price",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              658,
+              640,
+              33
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "752926e82005daddb05a",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "unit_price",
+            "name": "[redacted]",
+            "control_type": "Edit",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              691,
+              640,
+              22
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "778103d7271b313c7111",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "calculate",
+            "name": "Calculate",
+            "control_type": "Button",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              731,
+              97,
+              35
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "38479f2425acb0bc1d19",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "save",
+            "name": "Save",
+            "control_type": "Button",
+            "framework": "WPF",
+            "bounds": [
+              1508,
+              731,
+              68,
+              35
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "b6d4ddca57b212f795fd",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "confirm_save",
+            "name": "Confirm",
+            "control_type": "Button",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "8447d1641eeb66e33711",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "",
+            "name": "Total",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              766,
+              640,
+              32
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "e2ec8095e56ab42a04ac",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "total",
+            "name": "",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              798,
+              640,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "3a93d3f7435b4483b60f",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "",
+            "name": "Latest saved order",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "aacab3441933d71d401e",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "latest_code",
+            "name": "",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "b286eed72ac16477494e",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "latest_total",
+            "name": "",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "7a45f2987c981f18b4c5",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "status",
+            "name": "",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              836,
+              640,
+              19
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "db14c755ff5b69b3fac9",
+            "parent": "7762521ea98374f270f5",
+            "automation_id": "MenuBar",
+            "name": "System",
+            "control_type": "MenuBar",
+            "framework": "",
+            "bounds": [
+              1373,
+              442,
+              28,
+              28
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "bffdcef4d1f888be2004",
+            "parent": "7762521ea98374f270f5",
+            "automation_id": "",
+            "name": "Minimize",
+            "control_type": "Button",
+            "framework": "",
+            "bounds": [
+              1890,
+              434,
+              60,
+              37
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "0931f8c00c1e07d4c414",
+            "parent": "7762521ea98374f270f5",
+            "automation_id": "",
+            "name": "Maximize",
+            "control_type": "Button",
+            "framework": "",
+            "bounds": [
+              1950,
+              434,
+              59,
+              37
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "723b4e8fb3151a8bc149",
+            "parent": "7762521ea98374f270f5",
+            "automation_id": "",
+            "name": "Close",
+            "control_type": "Button",
+            "framework": "",
+            "bounds": [
+              2009,
+              434,
+              60,
+              37
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "f6b685e5a4f15ff9371b",
+            "parent": "844f7e9fe84b12b9f4b2",
+            "automation_id": "",
+            "name": "Entry",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1419,
+              506,
+              34,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "bad9528b56bfffc293a0",
+            "parent": "04692ae6804cdcaf987c",
+            "automation_id": "",
+            "name": "Records",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1500,
+              506,
+              53,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "7030144b20514bb12d69",
+            "parent": "6ff31c966acf0e3526c0",
+            "automation_id": "",
+            "name": "Code",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1407,
+              555,
+              35,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "db747008ce1020faec1a",
+            "parent": "dd07d1b932e5349f5a4a",
+            "automation_id": "VerticalScrollBar",
+            "name": "",
+            "control_type": "ScrollBar",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": false,
+            "depth": 2
+          },
+          {
+            "id": "9fe98b2e4b169ab817bb",
+            "parent": "dd07d1b932e5349f5a4a",
+            "automation_id": "HorizontalScrollBar",
+            "name": "",
+            "control_type": "ScrollBar",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": false,
+            "depth": 2
+          },
+          {
+            "id": "83558b83af9026fb2f00",
+            "parent": "258a06d921a84ae4e92c",
+            "automation_id": "",
+            "name": "Quantity",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1407,
+              610,
+              57,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "11beb4155828ac910a10",
+            "parent": "63773a766b979aacf179",
+            "automation_id": "VerticalScrollBar",
+            "name": "",
+            "control_type": "ScrollBar",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": false,
+            "depth": 2
+          },
+          {
+            "id": "d26b2facd79433c23285",
+            "parent": "63773a766b979aacf179",
+            "automation_id": "HorizontalScrollBar",
+            "name": "",
+            "control_type": "ScrollBar",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": false,
+            "depth": 2
+          },
+          {
+            "id": "d9bf2b0aa351c04a5846",
+            "parent": "8fa2ac71039fa268953a",
+            "automation_id": "",
+            "name": "Unit price",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1407,
+              665,
+              64,
+              19
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "17f837a7f7147e2656ce",
+            "parent": "752926e82005daddb05a",
+            "automation_id": "VerticalScrollBar",
+            "name": "",
+            "control_type": "ScrollBar",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": false,
+            "depth": 2
+          },
+          {
+            "id": "05f3a4efd077624e1197",
+            "parent": "752926e82005daddb05a",
+            "automation_id": "HorizontalScrollBar",
+            "name": "",
+            "control_type": "ScrollBar",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": false,
+            "depth": 2
+          },
+          {
+            "id": "035dcc590e0f24ef3ae7",
+            "parent": "778103d7271b313c7111",
+            "automation_id": "",
+            "name": "Calculate",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1419,
+              738,
+              60,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "77bec25eca6c70a2332f",
+            "parent": "38479f2425acb0bc1d19",
+            "automation_id": "",
+            "name": "Save",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1527,
+              738,
+              31,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "8fd26dc7589e83874e09",
+            "parent": "8447d1641eeb66e33711",
+            "automation_id": "",
+            "name": "Total",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1407,
+              772,
+              31,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "f982ea057d664970addf",
+            "parent": "db14c755ff5b69b3fac9",
+            "automation_id": "",
+            "name": "System",
+            "control_type": "MenuItem",
+            "framework": "",
+            "bounds": [
+              1373,
+              442,
+              28,
+              28
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 3
+          }
+        ],
+        "truncated": false
+      },
+      "screenshot": "probe-multiply_a-001.png"
+    },
+    {
+      "id": "a5ad52596d8f1f184ab7",
+      "at": "2026-11-20T13:15:18.705655+00:00",
+      "step": 2,
+      "action": "fill",
+      "automation_id": "quantity",
+      "state": {
+        "state_id": "c6a0ced59fbb3d045e81",
+        "captured_at": "2026-11-20T13:15:19.051280+00:00",
+        "pid": 16304,
+        "controls": [
+          {
+            "id": "4456807db61ba0efa86d",
+            "parent": "root",
+            "automation_id": "",
+            "name": "ZZTEST App Twin Order Entry",
+            "control_type": "Window",
+            "framework": "WPF",
+            "bounds": [
+              1364,
+              433,
+              713,
+              525
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 0
+          },
+          {
+            "id": "7762521ea98374f270f5",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "",
+            "name": "",
+            "control_type": "TitleBar",
+            "framework": "",
+            "bounds": [
+              1393,
+              436,
+              675,
+              35
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "844f7e9fe84b12b9f4b2",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "entry",
+            "name": "Entry",
+            "control_type": "Button",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              499,
+              71,
+              34
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "04692ae6804cdcaf987c",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "records",
+            "name": "Records",
+            "control_type": "Button",
+            "framework": "WPF",
+            "bounds": [
+              1482,
+              499,
+              90,
+              34
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "6ff31c966acf0e3526c0",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "",
+            "name": "Code",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              548,
+              640,
+              33
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "dd07d1b932e5349f5a4a",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "code",
+            "name": "[redacted]",
+            "control_type": "Edit",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              581,
+              640,
+              22
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "258a06d921a84ae4e92c",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "",
+            "name": "Quantity",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              603,
+              640,
+              33
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "63773a766b979aacf179",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "quantity",
+            "name": "[redacted]",
+            "control_type": "Edit",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              636,
+              640,
+              22
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "8fa2ac71039fa268953a",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "",
+            "name": "Unit price",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              658,
+              640,
+              33
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "752926e82005daddb05a",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "unit_price",
+            "name": "[redacted]",
+            "control_type": "Edit",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              691,
+              640,
+              22
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "778103d7271b313c7111",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "calculate",
+            "name": "Calculate",
+            "control_type": "Button",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              731,
+              97,
+              35
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "38479f2425acb0bc1d19",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "save",
+            "name": "Save",
+            "control_type": "Button",
+            "framework": "WPF",
+            "bounds": [
+              1508,
+              731,
+              68,
+              35
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "b6d4ddca57b212f795fd",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "confirm_save",
+            "name": "Confirm",
+            "control_type": "Button",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "8447d1641eeb66e33711",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "",
+            "name": "Total",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              766,
+              640,
+              32
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "e2ec8095e56ab42a04ac",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "total",
+            "name": "",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              798,
+              640,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "3a93d3f7435b4483b60f",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "",
+            "name": "Latest saved order",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "aacab3441933d71d401e",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "latest_code",
+            "name": "",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "b286eed72ac16477494e",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "latest_total",
+            "name": "",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "7a45f2987c981f18b4c5",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "status",
+            "name": "",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              836,
+              640,
+              19
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "db14c755ff5b69b3fac9",
+            "parent": "7762521ea98374f270f5",
+            "automation_id": "MenuBar",
+            "name": "System",
+            "control_type": "MenuBar",
+            "framework": "",
+            "bounds": [
+              1373,
+              442,
+              28,
+              28
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "bffdcef4d1f888be2004",
+            "parent": "7762521ea98374f270f5",
+            "automation_id": "",
+            "name": "Minimize",
+            "control_type": "Button",
+            "framework": "",
+            "bounds": [
+              1890,
+              434,
+              60,
+              37
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "0931f8c00c1e07d4c414",
+            "parent": "7762521ea98374f270f5",
+            "automation_id": "",
+            "name": "Maximize",
+            "control_type": "Button",
+            "framework": "",
+            "bounds": [
+              1950,
+              434,
+              59,
+              37
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "723b4e8fb3151a8bc149",
+            "parent": "7762521ea98374f270f5",
+            "automation_id": "",
+            "name": "Close",
+            "control_type": "Button",
+            "framework": "",
+            "bounds": [
+              2009,
+              434,
+              60,
+              37
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "f6b685e5a4f15ff9371b",
+            "parent": "844f7e9fe84b12b9f4b2",
+            "automation_id": "",
+            "name": "Entry",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1419,
+              506,
+              34,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "bad9528b56bfffc293a0",
+            "parent": "04692ae6804cdcaf987c",
+            "automation_id": "",
+            "name": "Records",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1500,
+              506,
+              53,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "7030144b20514bb12d69",
+            "parent": "6ff31c966acf0e3526c0",
+            "automation_id": "",
+            "name": "Code",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1407,
+              555,
+              35,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "db747008ce1020faec1a",
+            "parent": "dd07d1b932e5349f5a4a",
+            "automation_id": "VerticalScrollBar",
+            "name": "",
+            "control_type": "ScrollBar",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": false,
+            "depth": 2
+          },
+          {
+            "id": "9fe98b2e4b169ab817bb",
+            "parent": "dd07d1b932e5349f5a4a",
+            "automation_id": "HorizontalScrollBar",
+            "name": "",
+            "control_type": "ScrollBar",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": false,
+            "depth": 2
+          },
+          {
+            "id": "83558b83af9026fb2f00",
+            "parent": "258a06d921a84ae4e92c",
+            "automation_id": "",
+            "name": "Quantity",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1407,
+              610,
+              57,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "11beb4155828ac910a10",
+            "parent": "63773a766b979aacf179",
+            "automation_id": "VerticalScrollBar",
+            "name": "",
+            "control_type": "ScrollBar",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": false,
+            "depth": 2
+          },
+          {
+            "id": "d26b2facd79433c23285",
+            "parent": "63773a766b979aacf179",
+            "automation_id": "HorizontalScrollBar",
+            "name": "",
+            "control_type": "ScrollBar",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": false,
+            "depth": 2
+          },
+          {
+            "id": "d9bf2b0aa351c04a5846",
+            "parent": "8fa2ac71039fa268953a",
+            "automation_id": "",
+            "name": "Unit price",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1407,
+              665,
+              64,
+              19
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "17f837a7f7147e2656ce",
+            "parent": "752926e82005daddb05a",
+            "automation_id": "VerticalScrollBar",
+            "name": "",
+            "control_type": "ScrollBar",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": false,
+            "depth": 2
+          },
+          {
+            "id": "05f3a4efd077624e1197",
+            "parent": "752926e82005daddb05a",
+            "automation_id": "HorizontalScrollBar",
+            "name": "",
+            "control_type": "ScrollBar",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": false,
+            "depth": 2
+          },
+          {
+            "id": "035dcc590e0f24ef3ae7",
+            "parent": "778103d7271b313c7111",
+            "automation_id": "",
+            "name": "Calculate",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1419,
+              738,
+              60,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "77bec25eca6c70a2332f",
+            "parent": "38479f2425acb0bc1d19",
+            "automation_id": "",
+            "name": "Save",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1527,
+              738,
+              31,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "8fd26dc7589e83874e09",
+            "parent": "8447d1641eeb66e33711",
+            "automation_id": "",
+            "name": "Total",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1407,
+              772,
+              31,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "f982ea057d664970addf",
+            "parent": "db14c755ff5b69b3fac9",
+            "automation_id": "",
+            "name": "System",
+            "control_type": "MenuItem",
+            "framework": "",
+            "bounds": [
+              1373,
+              442,
+              28,
+              28
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 3
+          }
+        ],
+        "truncated": false
+      },
+      "screenshot": "probe-multiply_a-002.png"
+    },
+    {
+      "id": "aceaa09d0fb7b4940011",
+      "at": "2026-11-20T13:15:19.174134+00:00",
+      "step": 3,
+      "action": "fill",
+      "automation_id": "unit_price",
+      "state": {
+        "state_id": "c6a0ced59fbb3d045e81",
+        "captured_at": "2026-11-20T13:15:19.510790+00:00",
+        "pid": 16304,
+        "controls": [
+          {
+            "id": "4456807db61ba0efa86d",
+            "parent": "root",
+            "automation_id": "",
+            "name": "ZZTEST App Twin Order Entry",
+            "control_type": "Window",
+            "framework": "WPF",
+            "bounds": [
+              1364,
+              433,
+              713,
+              525
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 0
+          },
+          {
+            "id": "7762521ea98374f270f5",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "",
+            "name": "",
+            "control_type": "TitleBar",
+            "framework": "",
+            "bounds": [
+              1393,
+              436,
+              675,
+              35
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "844f7e9fe84b12b9f4b2",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "entry",
+            "name": "Entry",
+            "control_type": "Button",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              499,
+              71,
+              34
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "04692ae6804cdcaf987c",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "records",
+            "name": "Records",
+            "control_type": "Button",
+            "framework": "WPF",
+            "bounds": [
+              1482,
+              499,
+              90,
+              34
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "6ff31c966acf0e3526c0",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "",
+            "name": "Code",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              548,
+              640,
+              33
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "dd07d1b932e5349f5a4a",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "code",
+            "name": "[redacted]",
+            "control_type": "Edit",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              581,
+              640,
+              22
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "258a06d921a84ae4e92c",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "",
+            "name": "Quantity",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              603,
+              640,
+              33
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "63773a766b979aacf179",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "quantity",
+            "name": "[redacted]",
+            "control_type": "Edit",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              636,
+              640,
+              22
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "8fa2ac71039fa268953a",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "",
+            "name": "Unit price",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              658,
+              640,
+              33
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "752926e82005daddb05a",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "unit_price",
+            "name": "[redacted]",
+            "control_type": "Edit",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              691,
+              640,
+              22
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "778103d7271b313c7111",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "calculate",
+            "name": "Calculate",
+            "control_type": "Button",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              731,
+              97,
+              35
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "38479f2425acb0bc1d19",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "save",
+            "name": "Save",
+            "control_type": "Button",
+            "framework": "WPF",
+            "bounds": [
+              1508,
+              731,
+              68,
+              35
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "b6d4ddca57b212f795fd",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "confirm_save",
+            "name": "Confirm",
+            "control_type": "Button",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "8447d1641eeb66e33711",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "",
+            "name": "Total",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              766,
+              640,
+              32
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "e2ec8095e56ab42a04ac",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "total",
+            "name": "",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              798,
+              640,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "3a93d3f7435b4483b60f",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "",
+            "name": "Latest saved order",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "aacab3441933d71d401e",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "latest_code",
+            "name": "",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "b286eed72ac16477494e",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "latest_total",
+            "name": "",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "7a45f2987c981f18b4c5",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "status",
+            "name": "",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              836,
+              640,
+              19
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "db14c755ff5b69b3fac9",
+            "parent": "7762521ea98374f270f5",
+            "automation_id": "MenuBar",
+            "name": "System",
+            "control_type": "MenuBar",
+            "framework": "",
+            "bounds": [
+              1373,
+              442,
+              28,
+              28
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "bffdcef4d1f888be2004",
+            "parent": "7762521ea98374f270f5",
+            "automation_id": "",
+            "name": "Minimize",
+            "control_type": "Button",
+            "framework": "",
+            "bounds": [
+              1890,
+              434,
+              60,
+              37
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "0931f8c00c1e07d4c414",
+            "parent": "7762521ea98374f270f5",
+            "automation_id": "",
+            "name": "Maximize",
+            "control_type": "Button",
+            "framework": "",
+            "bounds": [
+              1950,
+              434,
+              59,
+              37
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "723b4e8fb3151a8bc149",
+            "parent": "7762521ea98374f270f5",
+            "automation_id": "",
+            "name": "Close",
+            "control_type": "Button",
+            "framework": "",
+            "bounds": [
+              2009,
+              434,
+              60,
+              37
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "f6b685e5a4f15ff9371b",
+            "parent": "844f7e9fe84b12b9f4b2",
+            "automation_id": "",
+            "name": "Entry",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1419,
+              506,
+              34,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "bad9528b56bfffc293a0",
+            "parent": "04692ae6804cdcaf987c",
+            "automation_id": "",
+            "name": "Records",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1500,
+              506,
+              53,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "7030144b20514bb12d69",
+            "parent": "6ff31c966acf0e3526c0",
+            "automation_id": "",
+            "name": "Code",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1407,
+              555,
+              35,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "db747008ce1020faec1a",
+            "parent": "dd07d1b932e5349f5a4a",
+            "automation_id": "VerticalScrollBar",
+            "name": "",
+            "control_type": "ScrollBar",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": false,
+            "depth": 2
+          },
+          {
+            "id": "9fe98b2e4b169ab817bb",
+            "parent": "dd07d1b932e5349f5a4a",
+            "automation_id": "HorizontalScrollBar",
+            "name": "",
+            "control_type": "ScrollBar",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": false,
+            "depth": 2
+          },
+          {
+            "id": "83558b83af9026fb2f00",
+            "parent": "258a06d921a84ae4e92c",
+            "automation_id": "",
+            "name": "Quantity",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1407,
+              610,
+              57,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "11beb4155828ac910a10",
+            "parent": "63773a766b979aacf179",
+            "automation_id": "VerticalScrollBar",
+            "name": "",
+            "control_type": "ScrollBar",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": false,
+            "depth": 2
+          },
+          {
+            "id": "d26b2facd79433c23285",
+            "parent": "63773a766b979aacf179",
+            "automation_id": "HorizontalScrollBar",
+            "name": "",
+            "control_type": "ScrollBar",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": false,
+            "depth": 2
+          },
+          {
+            "id": "d9bf2b0aa351c04a5846",
+            "parent": "8fa2ac71039fa268953a",
+            "automation_id": "",
+            "name": "Unit price",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1407,
+              665,
+              64,
+              19
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "17f837a7f7147e2656ce",
+            "parent": "752926e82005daddb05a",
+            "automation_id": "VerticalScrollBar",
+            "name": "",
+            "control_type": "ScrollBar",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": false,
+            "depth": 2
+          },
+          {
+            "id": "05f3a4efd077624e1197",
+            "parent": "752926e82005daddb05a",
+            "automation_id": "HorizontalScrollBar",
+            "name": "",
+            "control_type": "ScrollBar",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": false,
+            "depth": 2
+          },
+          {
+            "id": "035dcc590e0f24ef3ae7",
+            "parent": "778103d7271b313c7111",
+            "automation_id": "",
+            "name": "Calculate",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1419,
+              738,
+              60,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "77bec25eca6c70a2332f",
+            "parent": "38479f2425acb0bc1d19",
+            "automation_id": "",
+            "name": "Save",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1527,
+              738,
+              31,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "8fd26dc7589e83874e09",
+            "parent": "8447d1641eeb66e33711",
+            "automation_id": "",
+            "name": "Total",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1407,
+              772,
+              31,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "f982ea057d664970addf",
+            "parent": "db14c755ff5b69b3fac9",
+            "automation_id": "",
+            "name": "System",
+            "control_type": "MenuItem",
+            "framework": "",
+            "bounds": [
+              1373,
+              442,
+              28,
+              28
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 3
+          }
+        ],
+        "truncated": false
+      },
+      "screenshot": "probe-multiply_a-003.png"
+    },
+    {
+      "id": "e17499f37cc47888edae",
+      "at": "2026-11-20T13:15:19.617041+00:00",
+      "step": 4,
+      "action": "click",
+      "automation_id": "calculate",
+      "state": {
+        "state_id": "c6a0ced59fbb3d045e81",
+        "captured_at": "2026-11-20T13:15:19.992760+00:00",
+        "pid": 16304,
+        "controls": [
+          {
+            "id": "4456807db61ba0efa86d",
+            "parent": "root",
+            "automation_id": "",
+            "name": "ZZTEST App Twin Order Entry",
+            "control_type": "Window",
+            "framework": "WPF",
+            "bounds": [
+              1364,
+              433,
+              713,
+              525
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 0
+          },
+          {
+            "id": "7762521ea98374f270f5",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "",
+            "name": "",
+            "control_type": "TitleBar",
+            "framework": "",
+            "bounds": [
+              1393,
+              436,
+              675,
+              35
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "844f7e9fe84b12b9f4b2",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "entry",
+            "name": "Entry",
+            "control_type": "Button",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              499,
+              71,
+              34
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "04692ae6804cdcaf987c",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "records",
+            "name": "Records",
+            "control_type": "Button",
+            "framework": "WPF",
+            "bounds": [
+              1482,
+              499,
+              90,
+              34
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "6ff31c966acf0e3526c0",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "",
+            "name": "Code",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              548,
+              640,
+              33
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "dd07d1b932e5349f5a4a",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "code",
+            "name": "[redacted]",
+            "control_type": "Edit",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              581,
+              640,
+              22
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "258a06d921a84ae4e92c",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "",
+            "name": "Quantity",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              603,
+              640,
+              33
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "63773a766b979aacf179",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "quantity",
+            "name": "[redacted]",
+            "control_type": "Edit",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              636,
+              640,
+              22
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "8fa2ac71039fa268953a",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "",
+            "name": "Unit price",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              658,
+              640,
+              33
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "752926e82005daddb05a",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "unit_price",
+            "name": "[redacted]",
+            "control_type": "Edit",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              691,
+              640,
+              22
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "778103d7271b313c7111",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "calculate",
+            "name": "Calculate",
+            "control_type": "Button",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              731,
+              97,
+              35
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "38479f2425acb0bc1d19",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "save",
+            "name": "Save",
+            "control_type": "Button",
+            "framework": "WPF",
+            "bounds": [
+              1508,
+              731,
+              68,
+              35
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "b6d4ddca57b212f795fd",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "confirm_save",
+            "name": "Confirm",
+            "control_type": "Button",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "8447d1641eeb66e33711",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "",
+            "name": "Total",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              766,
+              640,
+              32
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "e2ec8095e56ab42a04ac",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "total",
+            "name": "14",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              798,
+              640,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "3a93d3f7435b4483b60f",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "",
+            "name": "Latest saved order",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "aacab3441933d71d401e",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "latest_code",
+            "name": "",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "b286eed72ac16477494e",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "latest_total",
+            "name": "",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "7a45f2987c981f18b4c5",
+            "parent": "4456807db61ba0efa86d",
+            "automation_id": "status",
+            "name": "Calculated",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1401,
+              836,
+              640,
+              19
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 1
+          },
+          {
+            "id": "db14c755ff5b69b3fac9",
+            "parent": "7762521ea98374f270f5",
+            "automation_id": "MenuBar",
+            "name": "System",
+            "control_type": "MenuBar",
+            "framework": "",
+            "bounds": [
+              1373,
+              442,
+              28,
+              28
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "bffdcef4d1f888be2004",
+            "parent": "7762521ea98374f270f5",
+            "automation_id": "",
+            "name": "Minimize",
+            "control_type": "Button",
+            "framework": "",
+            "bounds": [
+              1890,
+              434,
+              60,
+              37
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "0931f8c00c1e07d4c414",
+            "parent": "7762521ea98374f270f5",
+            "automation_id": "",
+            "name": "Maximize",
+            "control_type": "Button",
+            "framework": "",
+            "bounds": [
+              1950,
+              434,
+              59,
+              37
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "723b4e8fb3151a8bc149",
+            "parent": "7762521ea98374f270f5",
+            "automation_id": "",
+            "name": "Close",
+            "control_type": "Button",
+            "framework": "",
+            "bounds": [
+              2009,
+              434,
+              60,
+              37
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "f6b685e5a4f15ff9371b",
+            "parent": "844f7e9fe84b12b9f4b2",
+            "automation_id": "",
+            "name": "Entry",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1419,
+              506,
+              34,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "bad9528b56bfffc293a0",
+            "parent": "04692ae6804cdcaf987c",
+            "automation_id": "",
+            "name": "Records",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1500,
+              506,
+              53,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "7030144b20514bb12d69",
+            "parent": "6ff31c966acf0e3526c0",
+            "automation_id": "",
+            "name": "Code",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1407,
+              555,
+              35,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "db747008ce1020faec1a",
+            "parent": "dd07d1b932e5349f5a4a",
+            "automation_id": "VerticalScrollBar",
+            "name": "",
+            "control_type": "ScrollBar",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": false,
+            "depth": 2
+          },
+          {
+            "id": "9fe98b2e4b169ab817bb",
+            "parent": "dd07d1b932e5349f5a4a",
+            "automation_id": "HorizontalScrollBar",
+            "name": "",
+            "control_type": "ScrollBar",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": false,
+            "depth": 2
+          },
+          {
+            "id": "83558b83af9026fb2f00",
+            "parent": "258a06d921a84ae4e92c",
+            "automation_id": "",
+            "name": "Quantity",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1407,
+              610,
+              57,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "11beb4155828ac910a10",
+            "parent": "63773a766b979aacf179",
+            "automation_id": "VerticalScrollBar",
+            "name": "",
+            "control_type": "ScrollBar",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": false,
+            "depth": 2
+          },
+          {
+            "id": "d26b2facd79433c23285",
+            "parent": "63773a766b979aacf179",
+            "automation_id": "HorizontalScrollBar",
+            "name": "",
+            "control_type": "ScrollBar",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": false,
+            "depth": 2
+          },
+          {
+            "id": "d9bf2b0aa351c04a5846",
+            "parent": "8fa2ac71039fa268953a",
+            "automation_id": "",
+            "name": "Unit price",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1407,
+              665,
+              64,
+              19
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "17f837a7f7147e2656ce",
+            "parent": "752926e82005daddb05a",
+            "automation_id": "VerticalScrollBar",
+            "name": "",
+            "control_type": "ScrollBar",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": false,
+            "depth": 2
+          },
+          {
+            "id": "05f3a4efd077624e1197",
+            "parent": "752926e82005daddb05a",
+            "automation_id": "HorizontalScrollBar",
+            "name": "",
+            "control_type": "ScrollBar",
+            "framework": "WPF",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "visible": false,
+            "enabled": false,
+            "depth": 2
+          },
+          {
+            "id": "035dcc590e0f24ef3ae7",
+            "parent": "778103d7271b313c7111",
+            "automation_id": "",
+            "name": "Calculate",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1419,
+              738,
+              60,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "77bec25eca6c70a2332f",
+            "parent": "38479f2425acb0bc1d19",
+            "automation_id": "",
+            "name": "Save",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1527,
+              738,
+              31,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "8fd26dc7589e83874e09",
+            "parent": "8447d1641eeb66e33711",
+            "automation_id": "",
+            "name": "Total",
+            "control_type": "Text",
+            "framework": "WPF",
+            "bounds": [
+              1407,
+              772,
+              31,
+              20
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 2
+          },
+          {
+            "id": "f982ea057d664970addf",
+            "parent": "db14c755ff5b69b3fac9",
+            "automation_id": "",
+            "name": "System",
+            "control_type": "MenuItem",
+            "framework": "",
+            "bounds": [
+              1373,
+              442,
+              28,
+              28
+            ],
+            "visible": true,
+            "enabled": true,
+            "depth": 3
+          }
+        ],
+        "truncated": false
+      },
+      "screenshot": "probe-multiply_a-004.png"
+    }
+  ],
+  "values": {
+    "status": "Calculated",
+    "total": "14"
+  }
+}

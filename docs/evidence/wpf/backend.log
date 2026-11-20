@@ -1,0 +1,33 @@
+INFO:     Started server process [18264]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:5178 (Press CTRL+C to quit)
+INFO:     127.0.0.1:62357 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62374 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62374 - "GET /assets/index-BIw7xnLE.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62375 - "GET /assets/index-B0_WMbwA.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62377 - "POST /api/order_entry/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62378 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62378 - "GET /assets/index-BIw7xnLE.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62379 - "GET /assets/index-B0_WMbwA.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62379 - "POST /api/order_entry/preview HTTP/1.1" 422 Unprocessable Entity
+INFO:     127.0.0.1:62383 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62383 - "GET /assets/index-BIw7xnLE.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62384 - "GET /assets/index-B0_WMbwA.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62384 - "POST /api/order_entry/preview HTTP/1.1" 422 Unprocessable Entity
+INFO:     127.0.0.1:62386 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62387 - "GET /assets/index-B0_WMbwA.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62386 - "GET /assets/index-BIw7xnLE.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62386 - "POST /api/order_entry/preview HTTP/1.1" 422 Unprocessable Entity
+INFO:     127.0.0.1:62397 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62397 - "GET /assets/index-BIw7xnLE.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62398 - "GET /assets/index-B0_WMbwA.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62398 - "POST /api/order_entry HTTP/1.1" 201 Created
+INFO:     127.0.0.1:62403 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62403 - "GET /assets/index-BIw7xnLE.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62404 - "GET /assets/index-B0_WMbwA.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62404 - "GET /api/order_entry?limit=25&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62408 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62408 - "GET /assets/index-BIw7xnLE.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62410 - "GET /assets/index-B0_WMbwA.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62410 - "POST /api/order_entry HTTP/1.1" 409 Conflict

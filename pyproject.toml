@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "app-twin-kit"
+version = "0.2.0"
+description = "Evidence-based Windows to web application workflow toolkit"
+requires-python = ">=3.11"
+
+[project.optional-dependencies]
+windows = ["pywinauto==0.6.9; sys_platform == 'win32'", "pillow==13.0.0"]
+browser = ["playwright==1.65.2"]
+dev = ["pytest==9.2.0", "ruff==0.17.6", "httpx==0.28.1"]
+
+[project.scripts]
+twin = "twin:main"
+
+[tool.setuptools]
+py-modules = ["twin"]
+
+[tool.setuptools.packages.find]
+include = ["engine*"]
+namespaces = false
+
+[tool.setuptools.package-data]
+engine = ["templates/**/*", "templates/*", "templates/.dockerignore"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["live: requires an interactive Windows desktop and local services"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 110
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "B023"]

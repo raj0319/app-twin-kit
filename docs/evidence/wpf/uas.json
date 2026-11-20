@@ -1,0 +1,464 @@
+{
+  "app_name": "Order Entry",
+  "source_platform": "windows",
+  "target_platform": "web",
+  "schema_version": "0.2.0",
+  "screens": [
+    {
+      "id": "entry",
+      "title": "Entry",
+      "controls": [
+        {
+          "id": "844f7e9fe84b12b9f4b2",
+          "role": "Button",
+          "name": "Entry",
+          "bounds": [
+            1401,
+            499,
+            71,
+            34
+          ],
+          "evidence_ids": [
+            "entry-uia"
+          ],
+          "automation_id": "entry"
+        },
+        {
+          "id": "04692ae6804cdcaf987c",
+          "role": "Button",
+          "name": "Records",
+          "bounds": [
+            1482,
+            499,
+            90,
+            34
+          ],
+          "evidence_ids": [
+            "entry-uia"
+          ],
+          "automation_id": "records"
+        },
+        {
+          "id": "dd07d1b932e5349f5a4a",
+          "role": "Edit",
+          "name": "[redacted]",
+          "bounds": [
+            1401,
+            581,
+            640,
+            22
+          ],
+          "evidence_ids": [
+            "entry-uia"
+          ],
+          "automation_id": "code"
+        },
+        {
+          "id": "63773a766b979aacf179",
+          "role": "Edit",
+          "name": "[redacted]",
+          "bounds": [
+            1401,
+            636,
+            640,
+            22
+          ],
+          "evidence_ids": [
+            "entry-uia"
+          ],
+          "automation_id": "quantity"
+        },
+        {
+          "id": "752926e82005daddb05a",
+          "role": "Edit",
+          "name": "[redacted]",
+          "bounds": [
+            1401,
+            691,
+            640,
+            22
+          ],
+          "evidence_ids": [
+            "entry-uia"
+          ],
+          "automation_id": "unit_price"
+        },
+        {
+          "id": "778103d7271b313c7111",
+          "role": "Button",
+          "name": "Calculate",
+          "bounds": [
+            1401,
+            731,
+            97,
+            35
+          ],
+          "evidence_ids": [
+            "entry-uia"
+          ],
+          "automation_id": "calculate"
+        },
+        {
+          "id": "38479f2425acb0bc1d19",
+          "role": "Button",
+          "name": "Save",
+          "bounds": [
+            1508,
+            731,
+            68,
+            35
+          ],
+          "evidence_ids": [
+            "entry-uia"
+          ],
+          "automation_id": "save"
+        },
+        {
+          "id": "b6d4ddca57b212f795fd",
+          "role": "Button",
+          "name": "Confirm",
+          "bounds": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "evidence_ids": [
+            "entry-uia"
+          ],
+          "automation_id": "confirm_save"
+        },
+        {
+          "id": "e2ec8095e56ab42a04ac",
+          "role": "Text",
+          "name": "",
+          "bounds": [
+            1401,
+            798,
+            640,
+            20
+          ],
+          "evidence_ids": [
+            "entry-uia"
+          ],
+          "automation_id": "total"
+        },
+        {
+          "id": "7a45f2987c981f18b4c5",
+          "role": "Text",
+          "name": "",
+          "bounds": [
+            1401,
+            836,
+            640,
+            19
+          ],
+          "evidence_ids": [
+            "entry-uia"
+          ],
+          "automation_id": "status"
+        }
+      ],
+      "evidence_ids": [
+        "entry-uia"
+      ]
+    },
+    {
+      "id": "records",
+      "title": "Records",
+      "controls": [
+        {
+          "id": "844f7e9fe84b12b9f4b2",
+          "role": "Button",
+          "name": "Entry",
+          "bounds": [
+            1401,
+            499,
+            71,
+            34
+          ],
+          "evidence_ids": [
+            "records-uia"
+          ],
+          "automation_id": "entry"
+        },
+        {
+          "id": "04692ae6804cdcaf987c",
+          "role": "Button",
+          "name": "Records",
+          "bounds": [
+            1482,
+            499,
+            90,
+            34
+          ],
+          "evidence_ids": [
+            "records-uia"
+          ],
+          "automation_id": "records"
+        },
+        {
+          "id": "aacab3441933d71d401e",
+          "role": "Text",
+          "name": "",
+          "bounds": [
+            1401,
+            581,
+            640,
+            20
+          ],
+          "evidence_ids": [
+            "records-uia"
+          ],
+          "automation_id": "latest_code"
+        },
+        {
+          "id": "b286eed72ac16477494e",
+          "role": "Text",
+          "name": "",
+          "bounds": [
+            1401,
+            601,
+            640,
+            20
+          ],
+          "evidence_ids": [
+            "records-uia"
+          ],
+          "automation_id": "latest_total"
+        }
+      ],
+      "evidence_ids": [
+        "records-uia"
+      ]
+    }
+  ],
+  "workflows": [
+    {
+      "id": "calculate",
+      "name": "Calculate order total",
+      "steps": [],
+      "evidence_ids": [],
+      "status": "unknown",
+      "weight": 3,
+      "permission": "read",
+      "dimensions": [
+        "behavior"
+      ]
+    },
+    {
+      "id": "required",
+      "name": "Reject empty order code",
+      "steps": [],
+      "evidence_ids": [],
+      "status": "unknown",
+      "weight": 2,
+      "permission": "read",
+      "dimensions": [
+        "behavior",
+        "ui"
+      ]
+    },
+    {
+      "id": "quantity_min",
+      "name": "Reject zero quantity",
+      "steps": [],
+      "evidence_ids": [],
+      "status": "unknown",
+      "weight": 2,
+      "permission": "read",
+      "dimensions": [
+        "behavior"
+      ]
+    },
+    {
+      "id": "price_min",
+      "name": "Reject negative price",
+      "steps": [],
+      "evidence_ids": [],
+      "status": "unknown",
+      "weight": 2,
+      "permission": "read",
+      "dimensions": [
+        "behavior"
+      ]
+    },
+    {
+      "id": "save",
+      "name": "Confirm and persist order",
+      "steps": [],
+      "evidence_ids": [],
+      "status": "unknown",
+      "weight": 5,
+      "permission": "fixture-write",
+      "dimensions": [
+        "behavior",
+        "data"
+      ]
+    },
+    {
+      "id": "reopen",
+      "name": "Read latest order",
+      "steps": [],
+      "evidence_ids": [],
+      "status": "unknown",
+      "weight": 4,
+      "permission": "read",
+      "dimensions": [
+        "data",
+        "ui"
+      ]
+    },
+    {
+      "id": "duplicate",
+      "name": "Reject duplicate code",
+      "steps": [],
+      "evidence_ids": [],
+      "status": "unknown",
+      "weight": 3,
+      "permission": "fixture-write",
+      "dimensions": [
+        "behavior",
+        "data"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "id": "required",
+      "kind": "controlled-uia-probe",
+      "artifact": "probe-required.json",
+      "observed_at": "2026-11-20T13:15:11.920036+00:00",
+      "confidence": 1.0
+    },
+    {
+      "id": "quantity_min",
+      "kind": "controlled-uia-probe",
+      "artifact": "probe-quantity_min.json",
+      "observed_at": "2026-11-20T13:15:14.344412+00:00",
+      "confidence": 1.0
+    },
+    {
+      "id": "price_min",
+      "kind": "controlled-uia-probe",
+      "artifact": "probe-price_min.json",
+      "observed_at": "2026-11-20T13:15:16.981232+00:00",
+      "confidence": 1.0
+    },
+    {
+      "id": "multiply_a",
+      "kind": "controlled-uia-probe",
+      "artifact": "probe-multiply_a.json",
+      "observed_at": "2026-11-20T13:15:19.617041+00:00",
+      "confidence": 1.0
+    },
+    {
+      "id": "multiply_b",
+      "kind": "controlled-uia-probe",
+      "artifact": "probe-multiply_b.json",
+      "observed_at": "2026-11-20T13:15:22.319580+00:00",
+      "confidence": 1.0
+    },
+    {
+      "id": "multiply_c",
+      "kind": "controlled-uia-probe",
+      "artifact": "probe-multiply_c.json",
+      "observed_at": "2026-11-20T13:15:24.894717+00:00",
+      "confidence": 1.0
+    },
+    {
+      "id": "entry-uia",
+      "kind": "uia",
+      "artifact": "wpf.json",
+      "observed_at": "2026-11-20T13:15:09.950954+00:00",
+      "confidence": 1.0
+    },
+    {
+      "id": "records-uia",
+      "kind": "uia",
+      "artifact": "records.json",
+      "observed_at": "2026-11-20T13:15:26.285448+00:00",
+      "confidence": 1.0
+    }
+  ],
+  "entities": [
+    {
+      "id": "order_entry",
+      "title": "Orders",
+      "fields": {
+        "code": "text",
+        "quantity": "integer",
+        "unit_price": "integer",
+        "total": "integer"
+      },
+      "evidence_ids": [
+        "entry-uia",
+        "records-uia"
+      ],
+      "unique": [
+        "code"
+      ],
+      "relations": {}
+    }
+  ],
+  "rules": [
+    {
+      "id": "code",
+      "entity": "order_entry",
+      "field": "code",
+      "operator": "required",
+      "status": "confirmed",
+      "evidence_ids": [
+        "required"
+      ],
+      "value": null,
+      "confidence": 1
+    },
+    {
+      "id": "quantity",
+      "entity": "order_entry",
+      "field": "quantity",
+      "operator": "min",
+      "status": "confirmed",
+      "evidence_ids": [
+        "quantity_min",
+        "multiply_a"
+      ],
+      "value": 1,
+      "confidence": 1
+    },
+    {
+      "id": "price",
+      "entity": "order_entry",
+      "field": "unit_price",
+      "operator": "min",
+      "status": "confirmed",
+      "evidence_ids": [
+        "price_min",
+        "multiply_a"
+      ],
+      "value": 0,
+      "confidence": 1
+    },
+    {
+      "id": "total",
+      "entity": "order_entry",
+      "field": "total",
+      "operator": "multiply",
+      "status": "confirmed",
+      "evidence_ids": [
+        "multiply_a",
+        "multiply_b",
+        "multiply_c"
+      ],
+      "value": [
+        "quantity",
+        "unit_price"
+      ],
+      "confidence": 1
+    }
+  ],
+  "unknowns": [
+    "Whitespace, pricing limits and behavior outside the seven declared workflows are unmeasured."
+  ]
+}

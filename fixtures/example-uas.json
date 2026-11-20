@@ -1,0 +1,90 @@
+{
+  "schema_version": "0.2.0",
+  "app_name": "Order Entry Example",
+  "evidence": [
+    {
+      "id": "example",
+      "kind": "synthetic-example",
+      "artifact": "example-uas.json",
+      "observed_at": "2026-11-20T00:00:00Z"
+    }
+  ],
+  "entities": [
+    {
+      "id": "customer",
+      "title": "Customers",
+      "fields": {
+        "name": "text"
+      },
+      "unique": [
+        "name"
+      ],
+      "evidence_ids": [
+        "example"
+      ]
+    },
+    {
+      "id": "order_entry",
+      "title": "Orders",
+      "fields": {
+        "code": "text",
+        "customer_id": "integer",
+        "quantity": "integer",
+        "unit_price": "integer",
+        "total": "integer"
+      },
+      "relations": {
+        "customer_id": "customer"
+      },
+      "unique": [
+        "code"
+      ],
+      "evidence_ids": [
+        "example"
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "id": "required_code",
+      "entity": "order_entry",
+      "field": "code",
+      "operator": "required",
+      "status": "confirmed",
+      "confidence": 1,
+      "evidence_ids": [
+        "example"
+      ]
+    },
+    {
+      "id": "quantity_min",
+      "entity": "order_entry",
+      "field": "quantity",
+      "operator": "min",
+      "value": 1,
+      "status": "confirmed",
+      "confidence": 1,
+      "evidence_ids": [
+        "example"
+      ]
+    },
+    {
+      "id": "total",
+      "entity": "order_entry",
+      "field": "total",
+      "operator": "multiply",
+      "value": [
+        "quantity",
+        "unit_price"
+      ],
+      "status": "confirmed",
+      "confidence": 1,
+      "evidence_ids": [
+        "example"
+      ]
+    }
+  ],
+  "unknowns": [
+    "Synthetic schema for generator and database regression tests."
+  ]
+}

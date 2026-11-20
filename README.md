@@ -2,6 +2,13 @@
 
 Build a working twin of a desktop app you already use, verified task by task.
 
+The Windows CLI supports Codex and Claude Code with automatic provider selection.
+It captures UI Automation evidence, validates a versioned application spec,
+generates React/TypeScript and FastAPI/PostgreSQL, and runs paired Windows and
+Playwright scenarios. See the [CLI guide](docs/TOOLKIT.md),
+[implementation status](IMPLEMENTATION_STATUS.md), and
+[live test evidence](TEST_EVIDENCE.md). The original Claude Code workflow follows.
+
 ## What this is, in plain words
 
 You have a desktop software your team uses every day. You want a new system

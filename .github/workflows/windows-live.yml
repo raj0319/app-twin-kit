@@ -1,0 +1,36 @@
+name: Interactive Windows to Web verification
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  fixture:
+    if: github.ref == 'refs/heads/main'
+    runs-on: [self-hosted, Windows, interactive-desktop, app-twin-fixture]
+    env:
+      DATABASE_URL: ${{ secrets.TWIN_FIXTURE_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: python -m pip install ".[windows,browser,dev]" -r engine/templates/backend/requirements.txt
+      - run: python -m playwright install chromium
+      - run: python -m fixtures.windows.demo prepare state/live
+      - run: npm ci --ignore-scripts --prefix state/live/app/frontend
+      - run: npm run build --prefix state/live/app/frontend
+      - run: python -m fixtures.windows.demo verify state/live
+      - run: python -m fixtures.windows.demo verify state/live
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: windows-live-evidence
+          path: |
+            state/live/**/*.json
+            !state/live/app/**
+            state/live/**/*.jsonl
+            state/live/**/*.png
+            state/live/**/*.log

@@ -4,4 +4,13 @@ docs/verify/shots/
 app/node_modules/
 app/.venv/
 __pycache__/
+*.egg-info/
+.venv/
+dist/
+build/
+.pytest_cache/
+.ruff_cache/
+.env
+docs/raw/windows-*.json
+docs/verify/live/
 mods/twin-status/.claude-plugin/types/

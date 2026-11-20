@@ -1,0 +1,54 @@
+services:
+  db:
+    image: postgres:18
+    environment:
+      POSTGRES_USER: twin
+      POSTGRES_DB: twin
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+    secrets: [postgres_password]
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U twin -d twin"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+  migrate:
+    image: ${TWIN_IMAGE:-generated-app-twin:local}
+    pull_policy: build
+    build: .
+    command: ["python", "-m", "alembic", "upgrade", "head"]
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL_FILE: /run/secrets/database_url
+    secrets: [database_url]
+  web:
+    image: ${TWIN_IMAGE:-generated-app-twin:local}
+    pull_policy: never
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    environment:
+      DATABASE_URL_FILE: /run/secrets/database_url
+      TWIN_API_TOKEN_FILE: /run/secrets/api_token
+    secrets: [database_url, api_token]
+    ports:
+      - "127.0.0.1:${TWIN_HTTP_PORT:-8000}:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "from urllib.request import urlopen; urlopen('http://127.0.0.1:8000/api/health', timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 4
+    restart: unless-stopped
+secrets:
+  postgres_password:
+    file: ./secrets/postgres_password
+  database_url:
+    file: ./secrets/database_url
+  api_token:
+    file: ./secrets/api_token
+volumes:
+  postgres_data:

@@ -1,0 +1,129 @@
+{
+  "weight": 21,
+  "executed_weight": 21,
+  "matching_weight": 6,
+  "coverage": 1.0,
+  "fidelity": 0.2857142857142857,
+  "dimensions": {
+    "behavior": {
+      "weight": 17,
+      "executed_weight": 17,
+      "matching_weight": 6,
+      "coverage": 1.0,
+      "fidelity": 0.35294117647058826
+    },
+    "data": {
+      "weight": 12,
+      "executed_weight": 12,
+      "matching_weight": 0,
+      "coverage": 1.0,
+      "fidelity": 0.0
+    },
+    "ui": {
+      "weight": 6,
+      "executed_weight": 6,
+      "matching_weight": 2,
+      "coverage": 1.0,
+      "fidelity": 0.3333333333333333
+    }
+  },
+  "results": [
+    {
+      "id": "calculate",
+      "weight": 3,
+      "dimensions": [
+        "behavior"
+      ],
+      "status": "fail",
+      "differences": {
+        "total": {
+          "source": "33",
+          "twin": "34"
+        }
+      }
+    },
+    {
+      "id": "required",
+      "weight": 2,
+      "dimensions": [
+        "behavior",
+        "ui"
+      ],
+      "status": "pass",
+      "differences": {}
+    },
+    {
+      "id": "quantity_min",
+      "weight": 2,
+      "dimensions": [
+        "behavior"
+      ],
+      "status": "pass",
+      "differences": {}
+    },
+    {
+      "id": "price_min",
+      "weight": 2,
+      "dimensions": [
+        "behavior"
+      ],
+      "status": "pass",
+      "differences": {}
+    },
+    {
+      "id": "save",
+      "weight": 5,
+      "dimensions": [
+        "behavior",
+        "data"
+      ],
+      "status": "fail",
+      "differences": {
+        "total": {
+          "source": "33",
+          "twin": "34"
+        },
+        "persistence": {
+          "reason": "persisted records do not agree"
+        }
+      }
+    },
+    {
+      "id": "reopen",
+      "weight": 4,
+      "dimensions": [
+        "data",
+        "ui"
+      ],
+      "status": "fail",
+      "differences": {
+        "latest_total": {
+          "source": "33",
+          "twin": "34"
+        },
+        "persistence": {
+          "reason": "persisted records do not agree"
+        }
+      }
+    },
+    {
+      "id": "duplicate",
+      "weight": 3,
+      "dimensions": [
+        "behavior",
+        "data"
+      ],
+      "status": "fail",
+      "differences": {
+        "persistence": {
+          "reason": "persisted records do not agree"
+        }
+      }
+    }
+  ],
+  "unknowns": [
+    "Whitespace, pricing limits and behavior outside the seven declared workflows are unmeasured."
+  ],
+  "threshold": 1.0,
+  "gate_passed": false
+}
