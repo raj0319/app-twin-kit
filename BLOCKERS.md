@@ -51,11 +51,9 @@
   unsupported behaviors require additional implementation.
 - **Product release.** The fixture measurement covers a declared subset.
   The UAS lists unknowns and release evidence remains incomplete.
-- **GitHub publication.** Re-checked 2026-11-20: the `gh` token for raj0319
-  has scopes gist, read:org, repo, still no `workflow`, so the feature branch
-  (which adds GitHub Actions files) cannot be pushed. The owner can grant it
-  with `gh auth refresh -s workflow`. `main` on GitHub is **not** protected
-  (branch protection API: 404); enabling protection is a repository setting
-  the owner must approve.
+- **GitHub publication.** The owner granted the `workflow` scope on
+  2026-11-20 and `codex/complete-p0-p2` is pushed. It is not merged; `main`
+  on GitHub is **not** protected (branch protection API: 404), and enabling
+  protection is a repository setting the owner must approve.
 - **MCP servers.** Neither project MCP server (windows-mcp, playwright) is
   approved in Claude Code's settings, and both use unpinned packages.
