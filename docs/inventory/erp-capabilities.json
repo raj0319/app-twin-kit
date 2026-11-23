@@ -1,0 +1,252 @@
+{
+  "id": "erp-capabilities",
+  "version": 1,
+  "declared": "2026-11-23",
+  "rules": {
+    "coverage": "executed weight / total weight",
+    "fidelity": "weight matched on both systems / total weight",
+    "stability": "a capability counts as matched only after 3 consecutive matching full runs",
+    "zero": "missing, skipped, redacted or flaky cases score zero",
+    "frozen": "entries and weights may not change after measurement starts; add a new version instead",
+    "target": "fidelity >= 0.90 and coverage >= 0.95 on fixtures/windows/mini-erp, stable over 3 full runs"
+  },
+  "capabilities": [
+    {
+      "number": 1,
+      "id": "master_data",
+      "name": "Master data: create, edit, list, delete-protect (customers, items)",
+      "weight": 5,
+      "dimensions": [
+        "behavior",
+        "data",
+        "ui"
+      ],
+      "proof": "Create customer and item; edit name; deleting a customer used on an invoice is refused with a message.",
+      "status": "not_measured"
+    },
+    {
+      "number": 2,
+      "id": "lookups",
+      "name": "Lookups and combo boxes bound to other tables",
+      "weight": 4,
+      "dimensions": [
+        "behavior",
+        "ui"
+      ],
+      "proof": "Invoice customer combo lists saved customers; line item combo fills price and tax rate.",
+      "status": "not_measured"
+    },
+    {
+      "number": 3,
+      "id": "validation",
+      "name": "Field validation: required, min/max, formats, uniqueness, cross-field",
+      "weight": 5,
+      "dimensions": [
+        "behavior",
+        "ui"
+      ],
+      "proof": "Empty code, duplicate code, bad GSTIN format, negative price, credit limit exceeded each give their message.",
+      "status": "not_measured"
+    },
+    {
+      "number": 4,
+      "id": "numbering",
+      "name": "Document numbering per type and year",
+      "weight": 4,
+      "dimensions": [
+        "data"
+      ],
+      "proof": "Saving drafts gives INV-2026-0001, INV-2026-0002; numbers are not reused after cancel.",
+      "status": "not_measured"
+    },
+    {
+      "number": 5,
+      "id": "header_lines",
+      "name": "Header + line documents with add/edit/remove lines",
+      "weight": 5,
+      "dimensions": [
+        "behavior",
+        "data",
+        "ui"
+      ],
+      "proof": "Invoice with three lines; edit qty on one; remove one; saved lines match.",
+      "status": "not_measured"
+    },
+    {
+      "number": 6,
+      "id": "line_maths",
+      "name": "Line maths: qty x price, line and document discount, tax, rounding, totals",
+      "weight": 5,
+      "dimensions": [
+        "behavior",
+        "data"
+      ],
+      "proof": "Known invoice gives exact subtotal, discount, tax per rate and grand total, rounded half-up to 2 decimals.",
+      "status": "not_measured"
+    },
+    {
+      "number": 7,
+      "id": "status_flow",
+      "name": "Status flow draft -> confirmed -> posted -> cancelled with forbidden transitions",
+      "weight": 5,
+      "dimensions": [
+        "behavior",
+        "data"
+      ],
+      "proof": "Draft can be confirmed and posted; posted cannot be edited; cancelling a posted invoice reverses its effects.",
+      "status": "not_measured"
+    },
+    {
+      "number": 8,
+      "id": "stock",
+      "name": "Stock on hand, movements per document, negative-stock rule",
+      "weight": 4,
+      "dimensions": [
+        "data",
+        "behavior"
+      ],
+      "proof": "Posting reduces stock by line qty; posting beyond stock is refused; cancel restores stock.",
+      "status": "not_measured"
+    },
+    {
+      "number": 9,
+      "id": "accounting",
+      "name": "Double-entry postings and ledger balances",
+      "weight": 4,
+      "dimensions": [
+        "data"
+      ],
+      "proof": "Posting writes Receivable debit = Sales credit + Tax credit; ledger report balances to zero.",
+      "status": "not_measured"
+    },
+    {
+      "number": 10,
+      "id": "lists",
+      "name": "Lists: search, filter, sort, paging, columns",
+      "weight": 4,
+      "dimensions": [
+        "behavior",
+        "ui"
+      ],
+      "proof": "Invoice list search by customer, status filter, sort by total, page 2 of results.",
+      "status": "not_measured"
+    },
+    {
+      "number": 11,
+      "id": "reports",
+      "name": "On-screen report with grouping and totals",
+      "weight": 4,
+      "dimensions": [
+        "report",
+        "data"
+      ],
+      "proof": "Sales by customer report shows one row per customer and a grand total equal to posted invoices.",
+      "status": "not_measured"
+    },
+    {
+      "number": 12,
+      "id": "print_export",
+      "name": "Print to PDF and CSV export with the same fields and totals",
+      "weight": 3,
+      "dimensions": [
+        "report"
+      ],
+      "proof": "Invoice PDF text and list CSV contain the same numbers as the screen.",
+      "status": "not_measured"
+    },
+    {
+      "number": 13,
+      "id": "roles",
+      "name": "Users, roles and permissions per action",
+      "weight": 3,
+      "dimensions": [
+        "behavior"
+      ],
+      "proof": "Clerk can create drafts but cannot post or close a period; admin can.",
+      "status": "not_measured"
+    },
+    {
+      "number": 14,
+      "id": "audit",
+      "name": "Audit trail of changes",
+      "weight": 2,
+      "dimensions": [
+        "data"
+      ],
+      "proof": "Each save, post and cancel writes user, time, action and document to the audit log.",
+      "status": "not_measured"
+    },
+    {
+      "number": 15,
+      "id": "periods",
+      "name": "Dates, fiscal periods and period lock",
+      "weight": 3,
+      "dimensions": [
+        "behavior",
+        "data"
+      ],
+      "proof": "After closing a month, posting an invoice dated in it is refused.",
+      "status": "not_measured"
+    },
+    {
+      "number": 16,
+      "id": "company",
+      "name": "Company or branch selection at login",
+      "weight": 2,
+      "dimensions": [
+        "behavior",
+        "data"
+      ],
+      "proof": "Data entered under one company is not visible under the other.",
+      "status": "not_measured"
+    },
+    {
+      "number": 17,
+      "id": "navigation",
+      "name": "Menus, toolbar, tabs, shortcuts and confirmation dialogs",
+      "weight": 4,
+      "dimensions": [
+        "behavior",
+        "ui"
+      ],
+      "proof": "Every screen reachable by menu and toolbar; Ctrl+S saves; delete asks for confirmation.",
+      "status": "not_measured"
+    },
+    {
+      "number": 18,
+      "id": "layout",
+      "name": "Same screen layout: positions, sizes, order, grouping, grid columns",
+      "weight": 4,
+      "dimensions": [
+        "layout"
+      ],
+      "proof": "scripts/layout.py compare scores each screen 90% or more.",
+      "status": "not_measured"
+    },
+    {
+      "number": 19,
+      "id": "import",
+      "name": "CSV import of master data",
+      "weight": 2,
+      "dimensions": [
+        "data",
+        "behavior"
+      ],
+      "proof": "Importing a customer CSV adds valid rows and reports rejected rows with reasons.",
+      "status": "not_measured"
+    },
+    {
+      "number": 20,
+      "id": "messages",
+      "name": "Error and confirmation messages: same text, place and moment",
+      "weight": 3,
+      "dimensions": [
+        "ui",
+        "behavior"
+      ],
+      "proof": "Each validation and confirmation message matches the source word for word.",
+      "status": "not_measured"
+    }
+  ],
+  "total_weight": 75
+}

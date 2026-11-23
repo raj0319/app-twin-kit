@@ -106,11 +106,37 @@ def control_for(window, selector):
         and control.process_id() == window.process_id()
         and control.is_visible()
     ]
+    if not matches:
+        matches = _native_controls(window, selector)
     if len(matches) != 1:
         raise RuntimeError(
             f"expected a unique visible control for {redact(selector)!r}, found {len(matches)}"
         )
     return matches[0]
+
+
+def _native_controls(window, selector):
+    """Visible controls with this automation ID found through the window's native child windows. In
+    .NET 8 WinForms the UIA search from the window root sometimes returned nothing after several screen
+    changes while the app stayed responsive (measured live); each control is still its own native window,
+    and UIA wraps a native handle directly."""
+    import win32gui
+    from pywinauto.controls.uiawrapper import UIAWrapper
+    from pywinauto.uia_element_info import UIAElementInfo
+
+    handles = []
+    win32gui.EnumChildWindows(window.handle, lambda h, bucket: bucket.append(h), handles)
+    found = []
+    for handle in handles:
+        if not win32gui.IsWindowVisible(handle):
+            continue
+        try:
+            control = UIAWrapper(UIAElementInfo(handle))
+            if control.element_info.automation_id == selector and control.process_id() == window.process_id():
+                found.append(control)
+        except Exception:  # noqa: BLE001 - a child window without a UIA element
+            continue
+    return found
 
 
 def _label(text):
@@ -181,8 +207,8 @@ def wait_closed(dialog, timeout=3.0):
 
 def menu_item(window, path, timeout=3.0):
     """The menu item at `path` (e.g. ["File", "Save"]), found through UIA parent links from a top-level
-    item of the window's menu bar. Each level must match exactly one item. Parents are not opened:
-    opening a WinForms menu first made the following dialog close on its own in repeated live runs.
+    item of the window's menu bar. Each level must match exactly one item. A parent is expanded only when
+    its toolkit hides sub-items until the menu opens; the final item is never opened, only invoked.
     Waits up to `timeout` for the menu bar, which a freshly opened window may not expose yet."""
     from time import monotonic, sleep
 
@@ -192,9 +218,10 @@ def menu_item(window, path, timeout=3.0):
     while True:
         level = [
             item
-            for item in window.descendants(control_type="MenuItem")
-            if _label(item.element_info.name) == _label(path[0])
-            and item.parent().element_info.control_type == "MenuBar"
+            for bar in menu_bars(window)
+            for item in bar.children()
+            if item.element_info.control_type == "MenuItem"
+            and _label(item.element_info.name) == _label(path[0])
             and item.process_id() == window.process_id()
         ]
         if level or monotonic() >= deadline:
@@ -202,15 +229,87 @@ def menu_item(window, path, timeout=3.0):
         sleep(0.1)
     for depth, name in enumerate(path):
         if len(level) != 1:
-            raise RuntimeError(f"menu path {' > '.join(path[: depth + 1])!r} matched {len(level)} items")
+            seen = []
+            if depth == 0:
+                for bar in menu_bars(window):
+                    seen.append([(c.element_info.control_type, c.element_info.name) for c in bar.children()])
+            raise RuntimeError(
+                f"menu path {' > '.join(path[: depth + 1])!r} matched {len(level)} items"
+                + (f"; menu bars seen: {seen}" if depth == 0 else "")
+            )
         current = level[0]
         if depth + 1 < len(path):
-            level = [
-                item
-                for item in current.children(control_type="MenuItem")
-                if _label(item.element_info.name) == _label(path[depth + 1])
-            ]
+            level = _submenu(current, path[depth + 1])
+            if not level and _can_expand(current):
+                # .NET (Core) WinForms and many other toolkits expose sub-items only while the menu is open
+                # (measured on the .NET 8 Mini ERP fixture). Expanding returns at once; it does not click.
+                current.expand()
+                deadline = monotonic() + 2.0
+                while not level and monotonic() < deadline:
+                    sleep(0.1)
+                    level = _submenu(current, path[depth + 1])
     return current
+
+
+def menu_bars(window):
+    """The window's menu bars. After a .NET 8 WinForms menu had been used and the screen changed, the
+    window's UIA child list no longer contained its MenuStrip (measured live), so menu bars are also found
+    through the native child windows, which UIA wraps directly."""
+    import win32gui
+    from pywinauto.controls.uiawrapper import UIAWrapper
+    from pywinauto.uia_element_info import UIAElementInfo
+
+    bars = {}
+    for child in window.children():
+        if child.element_info.control_type == "MenuBar":
+            bars[tuple(child.element_info.runtime_id or ())] = child
+    handles = []
+    win32gui.EnumChildWindows(window.handle, lambda h, bucket: bucket.append(h), handles)
+    for handle in handles:
+        try:
+            element = UIAWrapper(UIAElementInfo(handle))
+            if element.element_info.control_type == "MenuBar":
+                bars.setdefault(tuple(element.element_info.runtime_id or ()), element)
+        except Exception:  # noqa: BLE001 - a child window without a UIA element
+            continue
+    return list(bars.values())
+
+
+def select_tab(window, tabs_id, name):
+    """Switch to the tab page `name` of the tab control `tabs_id` with SelectionItem.Select (no mouse)."""
+    control = control_for(window, tabs_id)
+    pages = [
+        t
+        for t in control.children()
+        if t.element_info.control_type == "TabItem" and _label(t.element_info.name) == _label(name)
+    ]
+    if len(pages) != 1:
+        raise RuntimeError(f"expected one tab {redact(name)!r}, found {len(pages)}")
+    pages[0].iface_selection_item.Select()
+
+
+def _can_expand(item):
+    try:
+        return bool(item.element_info.element.GetCurrentPattern(10005))  # ExpandCollapse
+    except Exception:  # noqa: BLE001 - provider without the pattern
+        return False
+
+
+def _submenu(parent, name):
+    """Menu items named `name` directly under `parent`, walking children level by level (direct children
+    in .NET Framework WinForms, one level deeper under a Menu container in .NET 8 WinForms). A UIA
+    descendants search skipped whole menus after a dropdown had been used once (measured live), so the
+    walk uses children only and never enters another menu item."""
+    found, queue = [], [(child, 0) for child in parent.children()]
+    while queue:
+        node, depth = queue.pop(0)
+        kind = node.element_info.control_type
+        if kind == "MenuItem":
+            if _label(node.element_info.name) == _label(name):
+                found.append(node)
+        elif depth < 2:
+            queue.extend((child, depth + 1) for child in node.children())
+    return found
 
 
 DETACHED = []  # helper processes whose menu Invoke is still blocked by a dialog the click opened
@@ -227,25 +326,43 @@ if window.process_id() != pid:
 item = menu_item(window, path)
 if not item.is_enabled():
     sys.exit(3)
+print("READY", flush=True)
 item.invoke()
 """
 
 
-def invoke_menu_detached(handle, pid, path, wait=1.5):
+def invoke_menu_detached(handle, pid, path, wait=1.5, startup=20.0):
     """Invoke a menu item from a separate helper process. A click that opens a modal dialog keeps its UIA
     Invoke call blocked for 20 s or more (measured live on WinForms); in this process that blocked later
     UIA calls and made the next menu click or dialog press fail. The helper holds the blocked call instead,
-    and is ended once the dialog is answered or the plan finishes. The app receives exactly one click."""
+    and is ended once the dialog is answered or the plan finishes. The app receives exactly one click.
+
+    The helper prints READY just before it clicks. Only then does the `wait` for a modal start, so the
+    helper's own start-up time (1-2 s) can never let the click land after later steps have begun."""
     import json
     import subprocess
     import sys
+    import threading
 
     helper = subprocess.Popen(
         [sys.executable, "-c", _MENU_HELPER, str(handle), str(pid), json.dumps(list(path))],
-        stdout=subprocess.DEVNULL,
+        stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True,
     )
+    ready = threading.Event()
+
+    def watch():
+        for line in helper.stdout:
+            if line.strip() == "READY":
+                ready.set()
+                return
+
+    threading.Thread(target=watch, daemon=True).start()
+    if not ready.wait(startup) and helper.poll() is None:
+        helper.kill()
+        helper.wait(5)
+        raise RuntimeError("the menu helper did not reach the menu item in time; nothing was clicked")
     try:
         code = helper.wait(wait)
     except subprocess.TimeoutExpired:
@@ -338,6 +455,44 @@ def native_dialog(pid, title, timeout=3.0):
     return found[0]
 
 
+def open_dialogs(pid, main_handle):
+    """Visible standard dialog windows (#32770, e.g. message boxes) of the process other than the main
+    window, with their title and static text (redacted). Plain Win32 calls only."""
+    import win32gui
+    import win32process
+
+    found = []
+
+    def collect(handle, bucket):
+        # Any other visible top-level window of the process: standard dialogs (#32770) and the app's own
+        # dialog forms (e.g. WinForms error windows), which real apps use as often as message boxes.
+        if (
+            handle != main_handle
+            and win32gui.IsWindowVisible(handle)
+            and win32process.GetWindowThreadProcessId(handle)[1] == pid
+            and win32gui.GetWindowText(handle)
+            and not win32gui.GetClassName(handle).startswith(("tooltips", "IME", "MSCTFIME"))
+        ):
+            bucket.append(handle)
+
+    win32gui.EnumWindows(collect, found)
+    result = []
+    for handle in found:
+        children = []
+        win32gui.EnumChildWindows(handle, lambda h, bucket: bucket.append(h), children)
+        text = [redact(win32gui.GetWindowText(h)) for h in children if win32gui.GetClassName(h) == "Static"]
+        if not text:  # an app's own dialog form: take the visible text of its child controls
+            text = [redact(win32gui.GetWindowText(h)) for h in children if win32gui.IsWindowVisible(h)]
+        result.append(
+            {
+                "title": redact(win32gui.GetWindowText(handle)),
+                "class": win32gui.GetClassName(handle)[:40],
+                "text": [t for t in text if t][:6],
+            }
+        )
+    return result
+
+
 def native_dialog_click(pid, title, button):
     """Press `button` in the dialog by posting the WM_COMMAND/BN_CLICKED its button would send. This
     does not depend on the dialog being the active window, unlike BM_CLICK or UIA Invoke. Returns the
@@ -393,6 +548,164 @@ def send_keys_scoped(control, window, keys):
         raise ValueError("keys must use the safe subset: letters, digits, Ctrl (^), Shift (+), named keys")
     handle = getattr(control, "handle", None) or window.handle
     HwndWrapper(handle).send_keystrokes(keys)
+
+
+def select_scoped(combo, value, timeout=2.0):
+    """Choose `value` in a combo box through UIA patterns only: expand, SelectionItem.Select on the list
+    item, collapse, then confirm the combo shows the value. pywinauto's select() can fall back to a real
+    mouse click at screen coordinates; on the Mini ERP fixture that click landed on the button under the
+    drop-down. If the item cannot be selected without the mouse, nothing is clicked and an error is raised."""
+    from time import monotonic, sleep
+
+    if _native_combo_select(combo, value):
+        return
+
+    def items():
+        return [
+            item
+            for item in combo.descendants(control_type="ListItem")
+            if _label(item.element_info.name) == _label(value)
+        ]
+
+    expanded = False
+    found = items()
+    if not found and _can_expand(combo):
+        combo.expand()
+        expanded = True
+        deadline = monotonic() + timeout
+        while not found and monotonic() < deadline:
+            sleep(0.1)
+            found = items()
+    try:
+        if len(found) != 1:
+            raise RuntimeError(
+                f"expected one list item {redact(value)!r} in the combo box, found {len(found)}"
+            )
+        found[0].iface_selection_item.Select()
+    finally:
+        if expanded or _is_expanded(combo):
+            combo.collapse()
+    sleep(0.1)
+    shown = combo.window_text() or combo.element_info.name
+    if _label(shown) != _label(value):
+        try:
+            shown = combo.iface_value.CurrentValue
+        except Exception:  # noqa: BLE001 - combo without a Value pattern
+            pass
+    if _label(shown) != _label(value):
+        raise RuntimeError(f"the combo box shows {redact(shown)!r} after selecting {redact(value)!r}")
+
+
+def _native_combo_select(combo, value):
+    """Select by standard combo-box messages sent to this one native control: read the items
+    (CB_GETLBTEXT), set the selection (CB_SETCURSEL) and notify the owner with CBN_SELCHANGE, as a user's
+    choice would. No popup and no mouse. .NET 8 WinForms drop-downs did not always expose their list items
+    to UIA after expanding (measured live). Returns False when the control is not a native combo box."""
+    import ctypes
+    from ctypes import wintypes
+
+    import win32gui
+
+    handle = getattr(combo, "handle", None)
+    if not handle or "COMBOBOX" not in win32gui.GetClassName(handle).upper():
+        return False
+    user32 = ctypes.windll.user32
+    user32.SendMessageW.restype = ctypes.c_ssize_t
+    user32.SendMessageW.argtypes = [wintypes.HWND, wintypes.UINT, wintypes.WPARAM, wintypes.LPARAM]
+    count = user32.SendMessageW(handle, 0x0146, 0, 0)  # CB_GETCOUNT
+    matches = []
+    for index in range(max(0, count)):
+        length = user32.SendMessageW(handle, 0x0149, index, 0)  # CB_GETLBTEXTLEN
+        if length < 0 or length > 500:
+            continue
+        buffer = ctypes.create_unicode_buffer(length + 1)
+        user32.SendMessageW(handle, 0x0148, index, ctypes.cast(buffer, ctypes.c_void_p).value)  # CB_GETLBTEXT
+        if _label(buffer.value) == _label(value):
+            matches.append(index)
+    if len(matches) != 1:
+        raise RuntimeError(f"expected one item {redact(value)!r} in the combo box, found {len(matches)}")
+    user32.SendMessageW(handle, 0x014E, matches[0], 0)  # CB_SETCURSEL
+    control_id = user32.GetDlgCtrlID(handle)
+    parent = user32.GetParent(handle)
+    result = ctypes.c_size_t()
+    user32.SendMessageTimeoutW(
+        parent, 0x0111, ((1 << 16) | (control_id & 0xFFFF)), handle, 0x0002, 5000, ctypes.byref(result)
+    )  # WM_COMMAND, CBN_SELCHANGE
+    if user32.SendMessageW(handle, 0x0147, 0, 0) != matches[0]:  # CB_GETCURSEL
+        raise RuntimeError(f"the combo box did not keep {redact(value)!r} selected")
+    return True
+
+
+def _is_expanded(control):
+    try:
+        return control.iface_expand_collapse.CurrentExpandCollapseState == 1
+    except Exception:  # noqa: BLE001 - no ExpandCollapse pattern
+        return False
+
+
+def wait_idle(window, timeout_ms=3000):
+    """Wait until the source's UI thread has handled what the last action queued. .NET 8 WinForms runs a
+    UIA Invoke's click handler after Invoke returns; at full speed the next steps overtook it (a "New" click
+    cleared fields typed after it, measured live). WaitForInputIdle returns once the thread waits for input
+    with an empty queue; the WM_NULL round trip then confirms it is processing messages again."""
+    import ctypes
+    from ctypes import wintypes
+
+    kernel32, user32 = ctypes.windll.kernel32, ctypes.windll.user32
+    process = kernel32.OpenProcess(
+        0x00100000 | 0x0400, False, window.process_id()
+    )  # SYNCHRONIZE | QUERY_INFO
+    try:
+        if process:
+            user32.WaitForInputIdle(process, timeout_ms)
+    finally:
+        if process:
+            kernel32.CloseHandle(process)
+    result = ctypes.c_size_t()
+    for _ in range(2):
+        user32.SendMessageTimeoutW(
+            wintypes.HWND(window.handle), 0, 0, 0, 0x0002, timeout_ms, ctypes.byref(result)
+        )
+
+
+def native_pid(window):
+    """The window's process ID from Win32, not UIA: a UIA call can block while the source sits in a modal
+    loop started by an earlier UIA Invoke."""
+    import win32process
+
+    return win32process.GetWindowThreadProcessId(window.handle)[1]
+
+
+def click_control(control, timeout_ms=1500):
+    """Click a button. A native button gets the WM_COMMAND/BN_CLICKED it would send its parent itself, via
+    SendMessageTimeout: it returns once the click handler has finished (so the next step cannot overtake
+    it), or after `timeout_ms` when the handler opened a modal dialog, without blocking anything here.
+    In .NET 8 WinForms a UIA Invoke runs the handler inside the UIA call; when the handler showed a
+    message box every later UIA call from this process hung behind it (measured live). Controls without a
+    native button handle fall back to a UIA Invoke on a worker thread."""
+    import ctypes
+    from ctypes import wintypes
+
+    import win32gui
+
+    handle = getattr(control, "handle", None)
+    if handle and "BUTTON" in win32gui.GetClassName(handle).upper():
+        user32 = ctypes.windll.user32
+        parent = user32.GetParent(handle)
+        control_id = user32.GetDlgCtrlID(handle)
+        if parent and control_id:
+            result = ctypes.c_size_t()
+            done = user32.SendMessageTimeoutW(
+                wintypes.HWND(parent),
+                0x0111,
+                control_id & 0xFFFF,
+                handle,
+                0x0002,
+                timeout_ms,
+                ctypes.byref(result),
+            )  # WM_COMMAND, BN_CLICKED (0), SMTO_ABORTIFHUNG
+            return "completed" if done else "modal_pending"
+    return invoke_async(control)
 
 
 def read_control(control):

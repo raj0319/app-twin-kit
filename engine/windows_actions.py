@@ -8,24 +8,28 @@ from .desktop import (
     KEYS,
     SECRET,
     capture_window,
+    click_control,
     control_for,
     end_detached,
     identity,
-    invoke_async,
     invoke_menu_detached,
-    menu_item,
     native_dialog_click,
+    native_pid,
+    open_dialogs,
     read_control,
+    select_scoped,
+    select_tab,
     send_keys_scoped,
     settle,
     tree,
     utc,
+    wait_idle,
     window_for,
 )
 from .run_state import atomic_json, audit, exclusive
 
 READ_ONLY = {"observe", "read", "screenshot", "ocr_read"}
-MUTATING = {"click", "fill", "select", "focus", "menu", "dialog_click", "keys", "ocr_click"}
+MUTATING = {"click", "fill", "select", "focus", "menu", "dialog_click", "keys", "ocr_click", "tab"}
 CAPTURING = {"screenshot", "ocr_read", "ocr_click"}
 
 
@@ -40,6 +44,8 @@ def allow_key(step):
         return f"{step.get('dialog', '')}|{step.get('button', '')}"
     if action == "keys":
         return f"{step.get('automation_id') or 'window'}:{step.get('value', '')}"
+    if action == "tab":
+        return f"{step.get('automation_id', '')}:{step.get('value', '')}"
     if action == "ocr_click":
         return f"{step.get('automation_id', '')}:{step.get('label', '')}"
     return step.get("automation_id")
@@ -152,11 +158,13 @@ def _execute(
         if out_path:
             audit(journal, "started", event)
         if action == "menu":
-            menu_item(window, step["path"])  # validate the path here; the helper invokes it
             event["invoke"] = invoke_menu_detached(window.handle, window.process_id(), step["path"])
             target = window
         elif action == "dialog_click":
-            event.update(native_dialog_click(window.process_id(), step["dialog"], step["button"]))
+            event.update(native_dialog_click(native_pid(window), step["dialog"], step["button"]))
+            target = window
+        elif action == "tab":
+            select_tab(window, selector, step["value"])
             target = window
         elif action == "keys":
             target = control_for(window, selector) if selector else window
@@ -179,15 +187,26 @@ def _execute(
             if not target.is_enabled() or SECRET.search(target.element_info.name or ""):
                 raise PermissionError("disabled or sensitive source control")
             if action == "click":
-                event["invoke"] = invoke_async(target)
+                event["invoke"] = click_control(target)
             elif action == "fill":
                 target.iface_value.SetValue(step["value"])
             elif action == "select":
-                target.select(step["value"])
+                select_scoped(target, step["value"])
             elif action == "focus":
                 target.set_focus()
         if action in MUTATING:
             sleep(0.12)  # UIA Invoke may schedule work on the target dispatcher.
+            wait_idle(window)
+            following = plan[index + 1]["action"] if index + 1 < len(plan) else None
+            if following != "dialog_click":
+                # A refused action in a real app usually shows a message box. Carrying on behind it hides the
+                # cause, so stop here and report exactly what the source said.
+                dialogs = open_dialogs(native_pid(window), window.handle)
+                if dialogs:
+                    event["unexpected_dialog"] = dialogs
+                    if out_path:
+                        audit(journal, "unexpected_dialog", {"id": event["id"], "dialogs": dialogs})
+                    raise RuntimeError(f"the source showed a dialog after step {index} ({action}): {dialogs}")
         event["state"] = tree(window)
         next_state = event["state"]["state_id"]
         if next_state != previous_state:

@@ -1,0 +1,150 @@
+{
+  "Companies": {
+    "Main": {
+      "Customers": [
+        {
+          "Code": "C1",
+          "Name": "Customer One",
+          "Gstin": "",
+          "CreditLimit": 0
+        }
+      ],
+      "Items": [
+        {
+          "Code": "A",
+          "Name": "Item A",
+          "Price": 100,
+          "TaxRate": 18,
+          "Stock": 7
+        },
+        {
+          "Code": "B",
+          "Name": "Item B",
+          "Price": 45.50,
+          "TaxRate": 5,
+          "Stock": 3
+        }
+      ],
+      "Invoices": [
+        {
+          "Number": "INV-2026-0001",
+          "Date": "2026-11-20T00:00:00",
+          "CustomerCode": "C1",
+          "DocDiscountPct": 5,
+          "Lines": [
+            {
+              "ItemCode": "A",
+              "Qty": 3,
+              "Price": 100,
+              "DiscountPct": 10,
+              "TaxRate": 18,
+              "Net": 270.0,
+              "Tax": 46.17
+            },
+            {
+              "ItemCode": "B",
+              "Qty": 2,
+              "Price": 45.50,
+              "DiscountPct": 0,
+              "TaxRate": 5,
+              "Net": 91.00,
+              "Tax": 4.32
+            }
+          ],
+          "Status": "Posted",
+          "Subtotal": 361.00,
+          "Discount": 18.05,
+          "Tax": 50.49,
+          "Total": 393.44
+        }
+      ],
+      "Ledger": [
+        {
+          "Date": "2026-11-20T00:00:00",
+          "Document": "INV-2026-0001",
+          "Account": "Receivable",
+          "Debit": 393.44,
+          "Credit": 0
+        },
+        {
+          "Date": "2026-11-20T00:00:00",
+          "Document": "INV-2026-0001",
+          "Account": "Sales",
+          "Debit": 0,
+          "Credit": 342.95
+        },
+        {
+          "Date": "2026-11-20T00:00:00",
+          "Document": "INV-2026-0001",
+          "Account": "Tax",
+          "Debit": 0,
+          "Credit": 50.49
+        }
+      ],
+      "StockMoves": [
+        {
+          "Document": "INV-2026-0001",
+          "ItemCode": "A",
+          "Qty": -3
+        },
+        {
+          "Document": "INV-2026-0001",
+          "ItemCode": "B",
+          "Qty": -2
+        }
+      ],
+      "Audit": [
+        {
+          "Time": "2026-11-23 19:46:15",
+          "User": "admin",
+          "Action": "Item created",
+          "Document": "A"
+        },
+        {
+          "Time": "2026-11-23 19:46:18",
+          "User": "admin",
+          "Action": "Item created",
+          "Document": "B"
+        },
+        {
+          "Time": "2026-11-23 19:46:20",
+          "User": "admin",
+          "Action": "Customer saved",
+          "Document": "C1"
+        },
+        {
+          "Time": "2026-11-23 19:46:27",
+          "User": "admin",
+          "Action": "Invoice created",
+          "Document": "INV-2026-0001"
+        },
+        {
+          "Time": "2026-11-23 19:46:30",
+          "User": "admin",
+          "Action": "Invoice confirmed",
+          "Document": "INV-2026-0001"
+        },
+        {
+          "Time": "2026-11-23 19:46:30",
+          "User": "admin",
+          "Action": "Invoice posted",
+          "Document": "INV-2026-0001"
+        }
+      ],
+      "Sequences": {
+        "INV-2026": 1
+      },
+      "ClosedThrough": null
+    },
+    "Branch": {
+      "Customers": [],
+      "Items": [],
+      "Invoices": [],
+      "Ledger": [],
+      "StockMoves": [],
+      "Audit": [],
+      "Sequences": {},
+      "ClosedThrough": null
+    }
+  }
+}

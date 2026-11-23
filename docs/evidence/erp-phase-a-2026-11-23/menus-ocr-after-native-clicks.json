@@ -1,0 +1,333 @@
+{
+  "refusals": {
+    "unlisted dialog button": "refused: PermissionError",
+    "Alt+F4 keys": "refused: ValueError",
+    "unlisted menu": "refused: PermissionError"
+  },
+  "runs": [
+    {
+      "evidence": "F:\\Other\\app-twin-kit\\state\\menus-run9\\source-40wf3iif",
+      "status_sequence": [
+        "Saved",
+        "Shortcut Ctrl+K",
+        "New note",
+        "Save cancelled"
+      ],
+      "dialogs": [
+        [
+          "Save this note?"
+        ],
+        [
+          "Save this note?"
+        ]
+      ],
+      "invoke": [
+        "modal_pending",
+        "completed",
+        "modal_pending"
+      ],
+      "saved_file": "ZZTEST note",
+      "passed": true
+    },
+    {
+      "evidence": "F:\\Other\\app-twin-kit\\state\\menus-run9\\source-rfapdli9",
+      "status_sequence": [
+        "Saved",
+        "Shortcut Ctrl+K",
+        "New note",
+        "Save cancelled"
+      ],
+      "dialogs": [
+        [
+          "Save this note?"
+        ],
+        [
+          "Save this note?"
+        ]
+      ],
+      "invoke": [
+        "modal_pending",
+        "completed",
+        "modal_pending"
+      ],
+      "saved_file": "ZZTEST note",
+      "passed": true
+    },
+    {
+      "evidence": "F:\\Other\\app-twin-kit\\state\\menus-run9\\source-gohtzfk8",
+      "status_sequence": [
+        "Saved",
+        "Shortcut Ctrl+K",
+        "New note",
+        "Save cancelled"
+      ],
+      "dialogs": [
+        [
+          "Save this note?"
+        ],
+        [
+          "Save this note?"
+        ]
+      ],
+      "invoke": [
+        "modal_pending",
+        "completed",
+        "modal_pending"
+      ],
+      "saved_file": "ZZTEST note",
+      "passed": true
+    },
+    {
+      "evidence": "F:\\Other\\app-twin-kit\\state\\menus-run9\\source-z7aligw7",
+      "status_sequence": [
+        "Saved",
+        "Shortcut Ctrl+K",
+        "New note",
+        "Save cancelled"
+      ],
+      "dialogs": [
+        [
+          "Save this note?"
+        ],
+        [
+          "Save this note?"
+        ]
+      ],
+      "invoke": [
+        "modal_pending",
+        "completed",
+        "modal_pending"
+      ],
+      "saved_file": "ZZTEST note",
+      "passed": true
+    },
+    {
+      "evidence": "F:\\Other\\app-twin-kit\\state\\menus-run9\\source-7bxb4lex",
+      "status_sequence": [
+        "Saved",
+        "Shortcut Ctrl+K",
+        "New note",
+        "Save cancelled"
+      ],
+      "dialogs": [
+        [
+          "Save this note?"
+        ],
+        [
+          "Save this note?"
+        ]
+      ],
+      "invoke": [
+        "modal_pending",
+        "completed",
+        "modal_pending"
+      ],
+      "saved_file": "ZZTEST note",
+      "passed": true
+    }
+  ],
+  "ocr_runs": [
+    {
+      "evidence": "F:\\Other\\app-twin-kit\\state\\menus-run9\\ocr-1fmtdo3k",
+      "ocr_text": "LOW MEDIUM HIGH",
+      "scale": 1.25,
+      "clicks": [
+        {
+          "label": "HIGH",
+          "confidence": 0.95,
+          "matches": 1,
+          "center": [
+            268,
+            35
+          ]
+        },
+        {
+          "label": "MEDIUM",
+          "confidence": 0.95,
+          "matches": 1,
+          "center": [
+            162,
+            35
+          ]
+        }
+      ],
+      "status_sequence": [
+        "Priority HIGH",
+        "Priority MEDIUM"
+      ],
+      "missing_label": {
+        "method": "ocr",
+        "label": "URGENT",
+        "image": "missing-label-ocr-000.png",
+        "scale": 1.25,
+        "found": false,
+        "confidence": 0.0,
+        "matches": 0,
+        "needs_review": true
+      },
+      "passed": true
+    },
+    {
+      "evidence": "F:\\Other\\app-twin-kit\\state\\menus-run9\\ocr-n2qff5_q",
+      "ocr_text": "LOW MEDIUM HIGH",
+      "scale": 1.25,
+      "clicks": [
+        {
+          "label": "HIGH",
+          "confidence": 0.95,
+          "matches": 1,
+          "center": [
+            268,
+            35
+          ]
+        },
+        {
+          "label": "MEDIUM",
+          "confidence": 0.95,
+          "matches": 1,
+          "center": [
+            162,
+            35
+          ]
+        }
+      ],
+      "status_sequence": [
+        "Priority HIGH",
+        "Priority MEDIUM"
+      ],
+      "missing_label": {
+        "method": "ocr",
+        "label": "URGENT",
+        "image": "missing-label-ocr-000.png",
+        "scale": 1.25,
+        "found": false,
+        "confidence": 0.0,
+        "matches": 0,
+        "needs_review": true
+      },
+      "passed": true
+    },
+    {
+      "evidence": "F:\\Other\\app-twin-kit\\state\\menus-run9\\ocr-fu3p_nfd",
+      "ocr_text": "LOW MEDIUM HIGH",
+      "scale": 1.25,
+      "clicks": [
+        {
+          "label": "HIGH",
+          "confidence": 0.95,
+          "matches": 1,
+          "center": [
+            268,
+            35
+          ]
+        },
+        {
+          "label": "MEDIUM",
+          "confidence": 0.95,
+          "matches": 1,
+          "center": [
+            162,
+            35
+          ]
+        }
+      ],
+      "status_sequence": [
+        "Priority HIGH",
+        "Priority MEDIUM"
+      ],
+      "missing_label": {
+        "method": "ocr",
+        "label": "URGENT",
+        "image": "missing-label-ocr-000.png",
+        "scale": 1.25,
+        "found": false,
+        "confidence": 0.0,
+        "matches": 0,
+        "needs_review": true
+      },
+      "passed": true
+    },
+    {
+      "evidence": "F:\\Other\\app-twin-kit\\state\\menus-run9\\ocr-csxkzuhj",
+      "ocr_text": "LOW MEDIUM HIGH",
+      "scale": 1.25,
+      "clicks": [
+        {
+          "label": "HIGH",
+          "confidence": 0.95,
+          "matches": 1,
+          "center": [
+            268,
+            35
+          ]
+        },
+        {
+          "label": "MEDIUM",
+          "confidence": 0.95,
+          "matches": 1,
+          "center": [
+            162,
+            35
+          ]
+        }
+      ],
+      "status_sequence": [
+        "Priority HIGH",
+        "Priority MEDIUM"
+      ],
+      "missing_label": {
+        "method": "ocr",
+        "label": "URGENT",
+        "image": "missing-label-ocr-000.png",
+        "scale": 1.25,
+        "found": false,
+        "confidence": 0.0,
+        "matches": 0,
+        "needs_review": true
+      },
+      "passed": true
+    },
+    {
+      "evidence": "F:\\Other\\app-twin-kit\\state\\menus-run9\\ocr-x6bsgtpa",
+      "ocr_text": "LOW MEDIUM HIGH",
+      "scale": 1.25,
+      "clicks": [
+        {
+          "label": "HIGH",
+          "confidence": 0.95,
+          "matches": 1,
+          "center": [
+            268,
+            35
+          ]
+        },
+        {
+          "label": "MEDIUM",
+          "confidence": 0.95,
+          "matches": 1,
+          "center": [
+            162,
+            35
+          ]
+        }
+      ],
+      "status_sequence": [
+        "Priority HIGH",
+        "Priority MEDIUM"
+      ],
+      "missing_label": {
+        "method": "ocr",
+        "label": "URGENT",
+        "image": "missing-label-ocr-000.png",
+        "scale": 1.25,
+        "found": false,
+        "confidence": 0.0,
+        "matches": 0,
+        "needs_review": true
+      },
+      "passed": true
+    }
+  ],
+  "passed": 10,
+  "total": 10
+}
