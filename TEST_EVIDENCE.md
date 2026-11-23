@@ -35,7 +35,7 @@ the checkout's private PostgreSQL 18 cluster on loopback port 55431.
 | Unit tests | 39 passed, 1 skipped (PostgreSQL integration, needs `TWIN_TEST_DATABASE_URL`), including adapter, routing, budget and mapping-resolution tests. Ruff lint and format pass for `engine`, `twin.py`, `tests` and `fixtures`; the legacy `scripts/` folder has 22 pre-existing lint findings. |
 
 | Hypothesis selection (live probes) | From six recorded probes: `code` required selected, `product(quantity, unit_price)` selected (5 formulas rejected). Four allowlisted live probes then gave quantity >= 1 and unit_price >= 0 exactly. |
-| Menus, dialogs, keys (WinForms fixture) | Keys (Ctrl+K posted to the window's thread) passed in every run. Menu > Save > dialog: 3/3, then 1/3, then 1/5 - not reliable. Unlisted dialog button, unlisted menu and Alt+F4 refused before execution. |
+| Menus, dialogs, keys (WinForms fixture) | Before the fix: 3/3, 1/3, 1/5. After (2026-11-23): menu, dialog and keys 8/8 and OCR 8/8 in each of two batches (16/16 twice). Unlisted dialog button, unlisted menu and Alt+F4 refused. WPF paired regression afterwards: 21/21 twice; 59 tests pass. |
 | OCR fallback (owner-drawn pad) | Windows OCR read "LOW MEDIUM HIGH" at 125% scaling; clicks on HIGH then MEDIUM correct in 8/8 runs (confidence 0.95); a missing label was refused with `needs_review`. |
 | PostgreSQL integration | 2/2 with the private cluster: generated API, `generate --evolve` (0002 migration, backfilled old row), role tokens 401/403/201, drop refused, downgrade to base. Full suite: 59 passed. |
 | WPF regression after the click change | 21/21 twice; one run before that had a browser-side Playwright timeout on `calculate` (6/21 points lost, recorded). |

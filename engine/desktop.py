@@ -179,19 +179,27 @@ def wait_closed(dialog, timeout=3.0):
     return False
 
 
-def menu_item(window, path):
+def menu_item(window, path, timeout=3.0):
     """The menu item at `path` (e.g. ["File", "Save"]), found through UIA parent links from a top-level
     item of the window's menu bar. Each level must match exactly one item. Parents are not opened:
-    opening a WinForms menu first made the following dialog close on its own in repeated live runs."""
+    opening a WinForms menu first made the following dialog close on its own in repeated live runs.
+    Waits up to `timeout` for the menu bar, which a freshly opened window may not expose yet."""
+    from time import monotonic, sleep
+
     if not path or len(path) > 6:
         raise ValueError("menu path needs 1 to 6 items")
-    level = [
-        item
-        for item in window.descendants(control_type="MenuItem")
-        if _label(item.element_info.name) == _label(path[0])
-        and item.parent().element_info.control_type == "MenuBar"
-        and item.process_id() == window.process_id()
-    ]
+    deadline = monotonic() + timeout
+    while True:
+        level = [
+            item
+            for item in window.descendants(control_type="MenuItem")
+            if _label(item.element_info.name) == _label(path[0])
+            and item.parent().element_info.control_type == "MenuBar"
+            and item.process_id() == window.process_id()
+        ]
+        if level or monotonic() >= deadline:
+            break
+        sleep(0.1)
     for depth, name in enumerate(path):
         if len(level) != 1:
             raise RuntimeError(f"menu path {' > '.join(path[: depth + 1])!r} matched {len(level)} items")
@@ -203,6 +211,71 @@ def menu_item(window, path):
                 if _label(item.element_info.name) == _label(path[depth + 1])
             ]
     return current
+
+
+DETACHED = []  # helper processes whose menu Invoke is still blocked by a dialog the click opened
+
+_MENU_HELPER = """
+import json, sys
+from pywinauto.controls.uiawrapper import UIAWrapper
+from pywinauto.uia_element_info import UIAElementInfo
+from engine.desktop import menu_item
+handle, pid, path = int(sys.argv[1]), int(sys.argv[2]), json.loads(sys.argv[3])
+window = UIAWrapper(UIAElementInfo(handle))
+if window.process_id() != pid:
+    sys.exit(4)
+item = menu_item(window, path)
+if not item.is_enabled():
+    sys.exit(3)
+item.invoke()
+"""
+
+
+def invoke_menu_detached(handle, pid, path, wait=1.5):
+    """Invoke a menu item from a separate helper process. A click that opens a modal dialog keeps its UIA
+    Invoke call blocked for 20 s or more (measured live on WinForms); in this process that blocked later
+    UIA calls and made the next menu click or dialog press fail. The helper holds the blocked call instead,
+    and is ended once the dialog is answered or the plan finishes. The app receives exactly one click."""
+    import json
+    import subprocess
+    import sys
+
+    helper = subprocess.Popen(
+        [sys.executable, "-c", _MENU_HELPER, str(handle), str(pid), json.dumps(list(path))],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+    try:
+        code = helper.wait(wait)
+    except subprocess.TimeoutExpired:
+        DETACHED.append(helper)
+        return "modal_pending"
+    if code == 4:
+        raise RuntimeError("the window handle no longer belongs to the source process")
+    if code == 3:
+        raise PermissionError("disabled source menu item")
+    if code:
+        raise RuntimeError(
+            "menu invoke failed: " + (helper.stderr.read().strip().splitlines() or ["?"])[-1][:160]
+        )
+    return "completed"
+
+
+def end_detached(timeout=2.0):
+    """Let helpers whose dialog was answered finish, then end the rest. Returns how many were ended."""
+    import subprocess
+
+    ended = 0
+    for helper in list(DETACHED):
+        try:
+            helper.wait(timeout)
+        except subprocess.TimeoutExpired:
+            helper.kill()
+            helper.wait(5)
+            ended += 1
+        DETACHED.remove(helper)
+    return ended
 
 
 def dialog_for(window, title, timeout=3.0):
@@ -233,6 +306,72 @@ def dialog_for(window, title, timeout=3.0):
     if len(unique) != 1:
         raise RuntimeError(f"expected one dialog titled {redact(title)!r}, found {len(unique)}")
     return next(iter(unique.values()))
+
+
+def native_dialog(pid, title, timeout=3.0):
+    """The visible top-level window of `pid` with this exact title, found with plain Win32 calls. UIA
+    reads of a dialog opened by a still-blocked UIA Invoke made the dialog ignore its buttons in about
+    half of the live runs; these calls do not touch the dialog's UI Automation provider."""
+    from time import monotonic, sleep
+
+    import win32gui
+    import win32process
+
+    deadline = monotonic() + timeout
+    while True:
+        found = []
+
+        def collect(handle, bucket):
+            if (
+                win32gui.IsWindowVisible(handle)
+                and win32process.GetWindowThreadProcessId(handle)[1] == pid
+                and win32gui.GetWindowText(handle) == title
+            ):
+                bucket.append(handle)
+
+        win32gui.EnumWindows(collect, found)
+        if len(found) == 1 or monotonic() >= deadline:
+            break
+        sleep(0.1)
+    if len(found) != 1:
+        raise RuntimeError(f"expected one dialog titled {redact(title)!r}, found {len(found)}")
+    return found[0]
+
+
+def native_dialog_click(pid, title, button):
+    """Press `button` in the dialog by posting the WM_COMMAND/BN_CLICKED its button would send. This
+    does not depend on the dialog being the active window, unlike BM_CLICK or UIA Invoke. Returns the
+    dialog's text (redacted) and whether it closed."""
+    from ctypes import windll
+    from time import monotonic, sleep
+
+    import win32gui
+
+    dialog = native_dialog(pid, title)
+    children = []
+    win32gui.EnumChildWindows(dialog, lambda handle, _: children.append(handle), None)
+    texts = [redact(win32gui.GetWindowText(h)) for h in children if win32gui.GetClassName(h) == "Static"]
+    matches = [
+        h
+        for h in children
+        if win32gui.GetClassName(h) == "Button" and _label(win32gui.GetWindowText(h)) == _label(button)
+    ]
+    if len(matches) != 1:
+        raise RuntimeError(f"expected one {button!r} button in the dialog, found {len(matches)}")
+    control_id = windll.user32.GetDlgCtrlID(matches[0])
+    windll.user32.PostMessageW(dialog, 0x0111, control_id & 0xFFFF, matches[0])  # WM_COMMAND, BN_CLICKED
+    deadline = monotonic() + 3.0
+    while monotonic() < deadline and win32gui.IsWindow(dialog) and win32gui.IsWindowVisible(dialog):
+        sleep(0.05)
+    closed = not (win32gui.IsWindow(dialog) and win32gui.IsWindowVisible(dialog))
+    if not closed:
+        raise RuntimeError("the dialog stayed open after its button command; nothing more was sent")
+    return {
+        "dialog_text": [t for t in texts if t][:10],
+        "press": "wm_command",
+        "closed": True,
+        "settled": settle(),
+    }
 
 
 def dialog_text(dialog):

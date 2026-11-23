@@ -132,20 +132,44 @@ def locate(words, label):
     }
 
 
-def post_click(control, x, y, scale=1.0):
+def post_click(window, control, x, y, scale=1.0):
     """Left click at client (x, y) of the control's own window handle, posted to that window only.
     (x, y) are in the control's own pixels. Windows converts posted mouse coordinates for DPI-unaware
-    windows as if they were physical, so they are scaled up first (measured live at 125%)."""
-    from ctypes import windll
+    windows as if they were physical, so they are scaled up first (measured live at 125%).
 
+    WinForms raises Click only when the control is the window at that screen point, so a click under an
+    overlapping window is silently ignored (measured live: 0/8 while covered). The source window is
+    therefore raised in z-order without activation or focus, the hit test is checked, and a covered
+    control is refused for review instead of clicked."""
+    from ctypes import windll, wintypes
+
+    user32 = windll.user32
     handle = getattr(control, "handle", None)
     if not handle:
         raise RuntimeError("the control has no window handle to post a click to")
-    x, y = round(x * scale), round(y * scale)
-    point = (y << 16) | (x & 0xFFFF)
-    windll.user32.PostMessageW(handle, 0x0200, 0, point)  # WM_MOUSEMOVE
-    windll.user32.PostMessageW(handle, 0x0201, 0x0001, point)  # WM_LBUTTONDOWN, MK_LBUTTON
-    windll.user32.PostMessageW(handle, 0x0202, 0, point)  # WM_LBUTTONUP
+    from time import sleep
+
+    flags = 0x0001 | 0x0002 | 0x0010  # SWP_NOSIZE | SWP_NOMOVE | SWP_NOACTIVATE
+    topmost, not_topmost = -1, -2
+    user32.SetWindowPos.argtypes = [wintypes.HWND, wintypes.HWND, *(wintypes.INT,) * 4, wintypes.UINT]
+    # Above every other window for the moment of the click only; no activation, no keyboard focus.
+    user32.SetWindowPos(window.handle, topmost, 0, 0, 0, 0, flags)
+    try:
+        rect = control.rectangle()
+        px, py = round(x * scale), round(y * scale)
+        hit = user32.WindowFromPoint(wintypes.POINT(rect.left + px, rect.top + py))
+        if hit != handle:
+            raise LookupError(
+                json.dumps({"method": "ocr", "needs_review": True, "reason": "control is covered"})
+            )
+        point = (py << 16) | (px & 0xFFFF)
+        user32.PostMessageW(handle, 0x0200, 0, point)  # WM_MOUSEMOVE
+        user32.PostMessageW(handle, 0x0201, 0x0001, point)  # WM_LBUTTONDOWN, MK_LBUTTON
+        user32.PostMessageW(handle, 0x0202, 0, point)  # WM_LBUTTONUP
+        sleep(0.3)  # the hit test in WinForms runs when the posted button-up is handled
+    finally:
+        user32.SetWindowPos(window.handle, not_topmost, 0, 0, 0, 0, flags)
+    return {"raised": "topmost_during_click", "hit_test": "control"}
 
 
 def read_text(window, control, evidence_path):
@@ -174,5 +198,5 @@ def click_label(window, control, label, evidence_path, min_confidence=0.8):
     if not found["found"] or found["confidence"] < min_confidence:
         record["needs_review"] = True
         raise LookupError(json.dumps(record))
-    post_click(control, *found["center"], scale=shot["scale"])
+    record.update(post_click(window, control, *found["center"], scale=shot["scale"]))
     return record

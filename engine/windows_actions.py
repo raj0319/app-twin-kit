@@ -9,17 +9,17 @@ from .desktop import (
     SECRET,
     capture_window,
     control_for,
-    dialog_for,
-    dialog_text,
+    end_detached,
     identity,
     invoke_async,
+    invoke_menu_detached,
     menu_item,
+    native_dialog_click,
     read_control,
     send_keys_scoped,
     settle,
     tree,
     utc,
-    wait_closed,
     window_for,
 )
 from .run_state import atomic_json, audit, exclusive
@@ -152,26 +152,11 @@ def _execute(
         if out_path:
             audit(journal, "started", event)
         if action == "menu":
-            item = menu_item(window, step["path"])
-            if not item.is_enabled():
-                raise PermissionError("disabled source menu item")
-            event["invoke"] = invoke_async(item)
+            menu_item(window, step["path"])  # validate the path here; the helper invokes it
+            event["invoke"] = invoke_menu_detached(window.handle, window.process_id(), step["path"])
             target = window
         elif action == "dialog_click":
-            dialog = dialog_for(window, step["dialog"])
-            event["dialog_text"] = dialog_text(dialog)
-            buttons = [
-                b
-                for b in dialog.descendants(control_type="Button")
-                if b.element_info.name.replace("&", "") == step["button"]
-            ]
-            if len(buttons) != 1:
-                raise RuntimeError(
-                    f"expected one {step['button']!r} button in the dialog, found {len(buttons)}"
-                )
-            event["invoke"] = invoke_async(buttons[0])
-            # The click that opened the dialog only returns once its handler has finished.
-            event["settled"] = wait_closed(dialog) and settle()
+            event.update(native_dialog_click(window.process_id(), step["dialog"], step["button"]))
             target = window
         elif action == "keys":
             target = control_for(window, selector) if selector else window
@@ -224,7 +209,9 @@ def _execute(
     values = {
         name: read_control(control_for(window, selector)) for name, selector in (observations or {}).items()
     }
+    leftover = end_detached()
     result = {
+        "helpers_ended": leftover,
         "pid": window.process_id(),
         "initial_state": initial,
         "transitions": edges,

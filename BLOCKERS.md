@@ -22,11 +22,14 @@
   model-listing command (`twin models --agent claude` reports `unavailable`).
   Codex has no currency limit; `--agent-budget-usd` therefore refuses Codex
   and routes `auto` to Claude only.
-- **Menus with native dialogs.** On the WinForms fixture, File > Save followed
-  by the confirmation dialog passed 3/3, 1/3 and 1/5 in three batches: the
-  Yes press closes the dialog but the save sometimes does not complete. The
-  observed status exposes each failure; the root cause is not found yet.
-  Keys and OCR were reliable in the same runs.
+- **Menus with native dialogs: fixed 2026-11-23.** Causes found live: a menu
+  click that opens a dialog keeps its UI Automation call blocked for 20 s or
+  more, which stalled later calls; UIA reads of that dialog made it ignore its
+  buttons; and the menu bar is not exposed for a moment after the window opens.
+  Menu clicks now run in a short-lived helper process, dialog buttons are
+  pressed with a WM_COMMAND posted to the dialog, and lookups wait briefly.
+  Two batches of 8 runs: 16/16 each. Still measured on one self-authored
+  WinForms fixture only.
 - **Desktop inference.** Predictable Windows-to-browser control mappings now
   resolve automatically and ambiguous ones are listed for review. Bounded
   hypotheses select validation, bounds, calculations, branches, persistence
